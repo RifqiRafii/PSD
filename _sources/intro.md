@@ -1,11 +1,18 @@
-# Welcome to your Jupyter Book
+# Proyek Sains Data
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
+## Pengantar Mata Kuliah Proyek Sains Data
 
-Check out the content pages bundled with this sample book to see more.
+Mata kuliah Proyek Sains Data dirancang untuk membekali mahasiswa dengan kemampuan merancang, mengolah, menganalisis, hingga mempublikasikan solusi berbasis data secara nyata. Dalam lingkup akademik semester ini, fokus utama pembelajaran tidak hanya bertumpu pada ketepatan algoritma pemodelan atau pembersihan dataset, tetapi juga pada kemampuan komunikasi teknis melalui dokumentasi portofolio digital yang profesional.
+
+### Tujuan Pembelajaran
+
+* **Penerapan Alur Sains Data End-to-End:** Mengintegrasikan proses *Business Understanding*, pengumpulan data satelit/open data, eksplorasi, pembersihan *missing values*, deteksi anomali (*outliers*), hingga visualisasi interaktif.
+
+
+* **Reproduksibilitas Kode:** Memastikan setiap analisis tersusun secara sistematis di dalam dokumen komputasi interaktif yang bersih dan terdokumentasi.
+
+
+* **Publikasi Portofolio Mandiri:** Mengmengubah lembar kerja kode dan narasi analitis menjadi sebuah website statis portofolio yang dapat diakses secara publik melalui integrasi *version control* GitHub.
 
 ```{tableofcontents}
 ```
