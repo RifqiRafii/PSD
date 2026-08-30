@@ -1,5 +1,8 @@
 # Proyek Sains Data
 
+Nama: Rifqi Fairurrafi
+NIM: 240411100201
+
 ## Pengantar Mata Kuliah Proyek Sains Data
 
 Mata kuliah Proyek Sains Data dirancang untuk membekali mahasiswa dengan kemampuan merancang, mengolah, menganalisis, hingga mempublikasikan solusi berbasis data secara nyata. Dalam lingkup akademik semester ini, fokus utama pembelajaran tidak hanya bertumpu pada ketepatan algoritma pemodelan atau pembersihan dataset, tetapi juga pada kemampuan komunikasi teknis melalui dokumentasi portofolio digital yang profesional.
