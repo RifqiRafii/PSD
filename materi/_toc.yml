@@ -5,3 +5,8 @@ format: jb-book
 root: intro
 chapters:
 - file: tugas01_kualitas_udara_bangkalan
+- file: pengantar-analisis-polutan-bangkalan
+  sections:
+  - file: 1-ekstraksi-data
+  - file: 2-analisis-bangkalan
+  - file: 1-business-data-understanding-bangkalan
