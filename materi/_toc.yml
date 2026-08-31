@@ -7,6 +7,8 @@ chapters:
 - file: tugas01_kualitas_udara_bangkalan
 - file: pengantar-analisis-polutan-bangkalan
   sections:
-  - file: 1-ekstraksi-data
-  - file: 2-analisis-bangkalan
-  - file: 1-business-data-understanding-bangkalan
+  - file: 1-business-understanding-bangkalan
+  - file: 2-data-understanding-bangkalan
+  - file: 3-eksplorasi-data-bangkalan
+  - file: 4-ekstraksi-data
+  - file: 5-analisis-bangkalan

@@ -12,7 +12,7 @@ kernelspec:
   name: python3
 ---
 
-# Business Understanding & Data Understanding — Kabupaten Bangkalan
+# Business Understanding & Data Understanding Kabupaten Bangkalan
 
 Dokumen ini merangkum dua tahap awal analisis kualitas udara di **Kabupaten
 Bangkalan, Jawa Timur**, mengikuti kerangka kerja **CRISP-DM**:
@@ -39,7 +39,7 @@ lain:
   aksesibilitas baru pasca-Suramadu.
 - **Rencana fasilitas stockpile (gudang penyangga) batu bara** di pesisir
   utara (Kecamatan Klampis) untuk menopang kebutuhan industri manufaktur
-  Jawa Timur — aktivitas bongkar-muat batu bara di daerah lain yang serupa
+  Jawa Timur aktivitas bongkar-muat batu bara di daerah lain yang serupa
   diketahui memicu keluhan warga terkait debu dan polusi udara.
 - **Aktivitas pertanian dan perikanan** yang tetap menjadi sumber emisi
   metana (CH4) skala lokal.
@@ -54,7 +54,7 @@ pembangunan lebih lanjut berlangsung.
 Proyek ini bertujuan untuk:
 
 1. **Memantau tren konsentrasi polutan udara utama** (NO2, CO, SO2, CH4) di
-   Kabupaten Bangkalan sepanjang periode 24 Agustus 2025 — 24 Agustus 2026
+   Kabupaten Bangkalan sepanjang periode 24 Agustus 2025 24 Agustus 2026
    menggunakan data penginderaan jauh Sentinel-5P.
 2. **Mengidentifikasi periode dengan konsentrasi tidak wajar (anomali/outlier)**
    yang dapat mengindikasikan kejadian tertentu (mis. lonjakan aktivitas
@@ -63,8 +63,8 @@ Proyek ini bertujuan untuk:
 3. **Menyediakan baseline data kualitas udara** yang dapat dipakai sebagai
    pembanding di masa depan, terutama seiring rencana pertumbuhan kawasan
    industri di wilayah pesisir.
-4. **Menyusun alur kerja (pipeline) yang reusable** — mulai dari ekstraksi
-   data satelit, pembersihan data, hingga deteksi anomali — sehingga dapat
+4. **Menyusun alur kerja (pipeline) yang reusable** mulai dari ekstraksi
+   data satelit, pembersihan data, hingga deteksi anomali sehingga dapat
    diterapkan kembali untuk kabupaten/kota lain atau periode waktu
    berikutnya.
 
@@ -123,9 +123,9 @@ pesisir utara.
 #### d. CH4 (Metana)
 
 Gas rumah kaca yang sangat efektif memerangkap panas. Sumber utama:
-- Aktivitas pertanian — pencernaan hewan ternak dan sawah.
-- Limbah organik — pembusukan sampah di TPA.
-- Emisi industri — kebocoran gas alam dan proses industri.
+- Aktivitas pertanian pencernaan hewan ternak dan sawah.
+- Limbah organik pembusukan sampah di TPA.
+- Emisi industri kebocoran gas alam dan proses industri.
 
 **Dampak lingkungan:** CH4 sekitar **80 kali lebih kuat** dari CO2 dalam
 memerangkap panas jangka pendek, sehingga berkontribusi signifikan pada
@@ -135,7 +135,7 @@ perubahan iklim.
 
 - **Wilayah:** Kabupaten Bangkalan, Jawa Timur (bounding box, lihat Bagian 2.3).
 - **Polutan:** NO2, CO, SO2, CH4.
-- **Periode:** 24 Agustus 2025 — 24 Agustus 2026 (deret waktu harian).
+- **Periode:** 24 Agustus 2025 24 Agustus 2026 (deret waktu harian).
 - **Sumber data:** Sentinel-5P L2 (TROPOMI) via Copernicus Data Space Ecosystem.
 - **Keluaran:** deret waktu harian per polutan, visualisasi tren, dan daftar
   tanggal dengan anomali/outlier terdeteksi.
@@ -307,7 +307,7 @@ Detail lengkap kode ekstraksi & konversi tersedia di
 Sesuai prinsip CRISP-DM, tahap Data Understanding hanya **menemukan dan
 mencatat** masalah kualitas data (missing values, outlier, noise).
 Penanganannya (imputasi, penghapusan, dsb.) dilakukan pada tahap
-selanjutnya (Data Preparation) — lihat `2-analisis-bangkalan.ipynb`.
+selanjutnya (Data Preparation) lihat `2-analisis-bangkalan.ipynb`.
 
 #### a. Missing Values
 
@@ -362,7 +362,7 @@ plt.show()
 ```
 
 Pola kode yang sama diulang untuk `bangkalan_CO.csv`,
-`bangkalan_SO2.csv`, dan `bangkalan_CH4.csv` — cukup mengganti nama file
+`bangkalan_SO2.csv`, dan `bangkalan_CH4.csv` cukup mengganti nama file
 dan nama kolom polutan.
 
 #### c. Noise
@@ -378,10 +378,10 @@ belum difilter pada tahap ekstraksi.
 
 | Tahap | Status | Referensi |
 |-------|--------|-----------|
-| Business Understanding | Selesai — tujuan & konteks wilayah terdefinisi | Bagian 1 |
-| Data Understanding — sumber & AOI | Selesai | Bagian 2.1 – 2.4 |
-| Data Understanding — ekstraksi | Membutuhkan eksekusi notebook | `1-ekstraksi-data.ipynb` |
-| Data Understanding — kualitas data | Membutuhkan data hasil ekstraksi | `2-analisis-bangkalan.ipynb` |
+| Business Understanding | Selesai tujuan & konteks wilayah terdefinisi | Bagian 1 |
+| Data Understanding sumber & AOI | Selesai | Bagian 2.1 – 2.4 |
+| Data Understanding ekstraksi | Membutuhkan eksekusi notebook | `1-ekstraksi-data.ipynb` |
+| Data Understanding kualitas data | Membutuhkan data hasil ekstraksi | `2-analisis-bangkalan.ipynb` |
 
 Setelah notebook ekstraksi dijalankan dan file CSV tersedia di
 `../data/csv/`, seluruh sel kode pada Bagian 2.6 di atas akan otomatis
@@ -396,7 +396,7 @@ sebagai gerbang utama Jembatan Suramadu meningkatkan potensi emisi dari
 sektor transportasi, sementara rencana pertumbuhan kawasan industri dan
 fasilitas stockpile batu bara di pesisir utara berpotensi menambah beban
 polutan seperti SO2 dan partikel debu di masa depan. Empat polutan yang
-dipilih — NO2, CO, SO2, dan CH4 — mewakili sumber emisi yang berbeda
+dipilih NO2, CO, SO2, dan CH4 mewakili sumber emisi yang berbeda
 (transportasi, industri, dan aktivitas agraris), sehingga analisis ini
 dapat menjadi **baseline** kualitas udara sebelum pembangunan lebih lanjut
 berlangsung, sekaligus alat pemantauan tren dan deteksi anomali yang bisa

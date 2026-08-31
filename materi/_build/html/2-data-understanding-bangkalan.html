@@ -1,0 +1,792 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Data Understanding - Kabupaten Bangkalan &#8212; Proyek Sains Data</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2-data-understanding-bangkalan';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Eksplorasi Data - Kabupaten Bangkalan" href="3-eksplorasi-data-bangkalan.html" />
+    <link rel="prev" title="Business Understanding - Kabupaten Bangkalan" href="1-business-understanding-bangkalan.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Proyek Sains Data - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Proyek Sains Data - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Proyek Sains Data
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tugas01_kualitas_udara_bangkalan.html">Analisis Kualitas Udara dan Sumber Polutan di Bangkalan</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="pengantar-analisis-polutan-bangkalan.html">Pengantar Analisis Polutan Kabupaten Bangkalan</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Data Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-eksplorasi-data-bangkalan.html">Eksplorasi Data - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-ekstraksi-data.html">Ekstraksi Data Kualitas Udara Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5-analisis-bangkalan.html">Analisis Kualitas Udara Kabupaten Bangkalan</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F2-data-understanding-bangkalan.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/2-data-understanding-bangkalan.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data Understanding - Kabupaten Bangkalan</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sumber-data">1. Sumber Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resolusi-spasial-per-polutan">1.1 Resolusi Spasial per Polutan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#koneksi-dan-otentikasi">2. Koneksi dan Otentikasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#area-of-interest-aoi-kabupaten-bangkalan">3. Area of Interest (AOI) Kabupaten Bangkalan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-ekstraksi-data">4. Proses Ekstraksi Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-data-hasil">5. Struktur Data Hasil</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keterbatasan-data">6. Keterbatasan Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">7. Kesimpulan</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="data-understanding-kabupaten-bangkalan">
+<h1>Data Understanding - Kabupaten Bangkalan<a class="headerlink" href="#data-understanding-kabupaten-bangkalan" title="Link to this heading">#</a></h1>
+<p>Data Understanding adalah tahap untuk mengenali sumber data, cakupan
+wilayah dan waktu, cara memperoleh data, serta struktur data yang akan
+dipakai pada analisis kualitas udara Kabupaten Bangkalan. Tahap
+pemeriksaan kualitas data secara mendetail (missing values, outlier)
+dibahas terpisah pada bagian <strong>Eksplorasi Data</strong>.</p>
+<section id="sumber-data">
+<h2>1. Sumber Data<a class="headerlink" href="#sumber-data" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Item</p></th>
+<th class="head"><p>Keterangan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sumber</p></td>
+<td><p>Copernicus Data Space Ecosystem</p></td>
+</tr>
+<tr class="row-odd"><td><p>Layanan</p></td>
+<td><p>openEO</p></td>
+</tr>
+<tr class="row-even"><td><p>Server</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openeo.dataspace.copernicus.eu</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Produk / Koleksi</p></td>
+<td><p>Sentinel-5P L2 (<code class="docutils literal notranslate"><span class="pre">SENTINEL_5P_L2</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>Instrumen</p></td>
+<td><p>TROPOMI (TROPOspheric Monitoring Instrument)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Polutan</p></td>
+<td><p>NO2, CO, SO2, CH4</p></td>
+</tr>
+<tr class="row-even"><td><p>Periode</p></td>
+<td><p>24 Agustus 2025 sampai dengan 24 Agustus 2026</p></td>
+</tr>
+<tr class="row-odd"><td><p>Lokasi</p></td>
+<td><p>Kabupaten Bangkalan, Jawa Timur</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sentinel-5P adalah satelit milik European Space Agency (ESA) yang membawa
+instrumen TROPOMI, dirancang khusus untuk memantau komposisi atmosfer
+Bumi, termasuk gas rumah kaca dan polutan udara. Satelit ini memiliki
+waktu kunjung ulang (revisit time) sekitar satu hari untuk cakupan
+global, sehingga cocok dipakai untuk analisis deret waktu harian.</p>
+<section id="resolusi-spasial-per-polutan">
+<h3>1.1 Resolusi Spasial per Polutan<a class="headerlink" href="#resolusi-spasial-per-polutan" title="Link to this heading">#</a></h3>
+<p>Perlu dicatat bahwa resolusi spasial data TROPOMI berbeda untuk tiap
+polutan, sehingga tingkat kedetailan spasial yang diperoleh juga berbeda.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Polutan</p></th>
+<th class="head"><p>Resolusi Spasial (perkiraan)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NO2</p></td>
+<td><p>sekitar 5.5 km x 3.5 km</p></td>
+</tr>
+<tr class="row-odd"><td><p>SO2</p></td>
+<td><p>sekitar 5.5 km x 3.5 km</p></td>
+</tr>
+<tr class="row-even"><td><p>CO</p></td>
+<td><p>sekitar 7 km x 7 km</p></td>
+</tr>
+<tr class="row-odd"><td><p>CH4</p></td>
+<td><p>sekitar 7 km x 7 km</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Karena luas Kabupaten Bangkalan hanya sekitar 1.260 km persegi, setiap
+piksel Sentinel-5P dapat mencakup area yang cukup luas relatif terhadap
+ukuran kabupaten. Oleh karena itu, agregasi spasial (dijelaskan pada
+bagian 3) digunakan untuk merangkum seluruh piksel yang berada di dalam
+wilayah Bangkalan menjadi satu nilai representatif per hari.</p>
+</section>
+</section>
+<section id="koneksi-dan-otentikasi">
+<h2>2. Koneksi dan Otentikasi<a class="headerlink" href="#koneksi-dan-otentikasi" title="Link to this heading">#</a></h2>
+<p>Koneksi ke server openEO dilakukan menggunakan akun Copernicus Data Space
+Ecosystem, melalui metode <strong>device code flow</strong>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">openeo</span>
+
+<span class="n">connection</span> <span class="o">=</span> <span class="n">openeo</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;openeo.dataspace.copernicus.eu&quot;</span><span class="p">)</span>
+<span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">authenticate_oidc</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Saat kode di atas dijalankan, klien akan menampilkan tautan login beserta
+kode singkat di layar. Setelah login berhasil dilakukan melalui browser,
+koneksi akan terautentikasi secara otomatis untuk seluruh permintaan
+data berikutnya.</p>
+<p>Perlu dicatat bahwa backend Sentinel Hub untuk koleksi <code class="docutils literal notranslate"><span class="pre">SENTINEL_5P_L2</span></code>
+hanya mengizinkan satu band, yaitu satu polutan, pada setiap proses
+permintaan data. Oleh karena itu, proses ekstraksi harus dilakukan secara
+terpisah untuk NO2, CO, SO2, dan CH4, bukan sekaligus dalam satu
+permintaan.</p>
+</section>
+<section id="area-of-interest-aoi-kabupaten-bangkalan">
+<h2>3. Area of Interest (AOI) Kabupaten Bangkalan<a class="headerlink" href="#area-of-interest-aoi-kabupaten-bangkalan" title="Link to this heading">#</a></h2>
+<p>AOI didefinisikan sebagai bounding box yang mencakup wilayah administratif
+Kabupaten Bangkalan.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Atribut</p></th>
+<th class="head"><p>Nilai</p></th>
+<th class="head"><p>Keterangan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">west</span></code></p></td>
+<td><p>112.671</p></td>
+<td><p>Longitude terkecil, batas kiri</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">east</span></code></p></td>
+<td><p>113.116</p></td>
+<td><p>Longitude terbesar, batas kanan</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">south</span></code></p></td>
+<td><p>-7.227</p></td>
+<td><p>Latitude terkecil, batas bawah</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">north</span></code></p></td>
+<td><p>-6.848</p></td>
+<td><p>Latitude terbesar, batas atas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Parameter <code class="docutils literal notranslate"><span class="pre">spatial_extent</span></code> pada <code class="docutils literal notranslate"><span class="pre">load_collection</span></code> menggunakan bounding
+box (<code class="docutils literal notranslate"><span class="pre">west</span></code>, <code class="docutils literal notranslate"><span class="pre">south</span></code>, <code class="docutils literal notranslate"><span class="pre">east</span></code>, <code class="docutils literal notranslate"><span class="pre">north</span></code>) di atas. Untuk agregasi spasial
+pada <code class="docutils literal notranslate"><span class="pre">aggregate_spatial</span></code>, bounding box yang sama direpresentasikan
+sebagai polygon GeoJSON yang tertutup, artinya titik pertama dan titik
+terakhir pada koordinat sama.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bangkalan_polygon</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[[</span>
+        <span class="p">[</span><span class="mf">112.671</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.227</span><span class="p">],</span>   <span class="c1"># kiri bawah, barat daya</span>
+        <span class="p">[</span><span class="mf">113.116</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.227</span><span class="p">],</span>   <span class="c1"># kanan bawah, tenggara</span>
+        <span class="p">[</span><span class="mf">113.116</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.848</span><span class="p">],</span>   <span class="c1"># kanan atas, timur laut</span>
+        <span class="p">[</span><span class="mf">112.671</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.848</span><span class="p">],</span>   <span class="c1"># kiri atas, barat laut</span>
+        <span class="p">[</span><span class="mf">112.671</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.227</span><span class="p">],</span>   <span class="c1"># kembali ke titik awal</span>
+    <span class="p">]],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Visualisasi peta interaktif dari AOI ini, lengkap dengan titik acuan
+kontekstual seperti akses Suramadu dan pesisir Klampis, dibahas pada
+bagian <strong>Eksplorasi Data</strong>.</p>
+</section>
+<section id="proses-ekstraksi-data">
+<h2>4. Proses Ekstraksi Data<a class="headerlink" href="#proses-ekstraksi-data" title="Link to this heading">#</a></h2>
+<p>Untuk setiap polutan, data dimuat, diagregasi secara temporal (harian,
+mean), lalu diagregasi secara spasial (mean di dalam polygon AOI).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s5</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">load_collection</span><span class="p">(</span>
+    <span class="s2">&quot;SENTINEL_5P_L2&quot;</span><span class="p">,</span>
+    <span class="n">temporal_extent</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2025-08-24&quot;</span><span class="p">,</span> <span class="s2">&quot;2026-08-24&quot;</span><span class="p">],</span>
+    <span class="n">spatial_extent</span><span class="o">=</span><span class="n">bangkalan_bbox</span><span class="p">,</span>
+    <span class="n">bands</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span>  <span class="c1"># ganti sesuai polutan: NO2, CO, SO2, atau CH4</span>
+<span class="p">)</span>
+<span class="n">s5</span> <span class="o">=</span> <span class="n">s5</span><span class="o">.</span><span class="n">aggregate_temporal_period</span><span class="p">(</span><span class="n">reducer</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">)</span>
+<span class="n">s5</span> <span class="o">=</span> <span class="n">s5</span><span class="o">.</span><span class="n">aggregate_spatial</span><span class="p">(</span><span class="n">reducer</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">geometries</span><span class="o">=</span><span class="n">bangkalan_polygon</span><span class="p">)</span>
+
+<span class="n">job</span> <span class="o">=</span> <span class="n">s5</span><span class="o">.</span><span class="n">execute_batch</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;NO2 Bangkalan&quot;</span><span class="p">,</span>
+    <span class="n">outputfile</span><span class="o">=</span><span class="s2">&quot;../data/nc/bangkalan_NO2.nc&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Proses ini dijalankan sebagai batch job di server openEO, dan dapat
+dipantau melalui openEO Web Editor. Setelah selesai, hasil diunduh dalam
+format NetCDF (<code class="docutils literal notranslate"><span class="pre">.nc</span></code>), lalu dikonversi menjadi CSV agar mudah dipakai
+pada tahap eksplorasi dan analisis lanjutan. Detail lengkap kode
+ekstraksi dan konversi tersedia pada notebook <code class="docutils literal notranslate"><span class="pre">1-ekstraksi-data.ipynb</span></code>.</p>
+</section>
+<section id="struktur-data-hasil">
+<h2>5. Struktur Data Hasil<a class="headerlink" href="#struktur-data-hasil" title="Link to this heading">#</a></h2>
+<p>Setiap file CSV hasil ekstraksi memiliki struktur (skema) yang sama:
+kolom tanggal, dan kolom nilai konsentrasi polutan.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Kolom</p></th>
+<th class="head"><p>Tipe Data</p></th>
+<th class="head"><p>Keterangan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">date</span></code></p></td>
+<td><p>datetime</p></td>
+<td><p>Tanggal pengukuran (harian)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NO2</span></code> / <code class="docutils literal notranslate"><span class="pre">CO</span></code> / <code class="docutils literal notranslate"><span class="pre">SO2</span></code> / <code class="docutils literal notranslate"><span class="pre">CH4</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Nilai konsentrasi rata rata harian pada wilayah Bangkalan</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Contoh isi file <code class="docutils literal notranslate"><span class="pre">bangkalan_NO2.csv</span></code>:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>date</p></th>
+<th class="head"><p>NO2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2025-08-24</p></td>
+<td><p>0.000123</p></td>
+</tr>
+<tr class="row-odd"><td><p>2025-08-25</p></td>
+<td><p>0.000119</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Terdapat empat file CSV yang dihasilkan, masing masing untuk satu
+polutan: <code class="docutils literal notranslate"><span class="pre">bangkalan_NO2.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">bangkalan_CO.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">bangkalan_SO2.csv</span></code>, dan
+<code class="docutils literal notranslate"><span class="pre">bangkalan_CH4.csv</span></code>, seluruhnya tersimpan di folder <code class="docutils literal notranslate"><span class="pre">../data/csv/</span></code>.</p>
+</section>
+<section id="keterbatasan-data">
+<h2>6. Keterbatasan Data<a class="headerlink" href="#keterbatasan-data" title="Link to this heading">#</a></h2>
+<p>Beberapa keterbatasan yang perlu disadari sejak tahap ini:</p>
+<ol class="arabic simple">
+<li><p><strong>Resolusi spasial relatif kasar</strong> dibanding luas Kabupaten Bangkalan,
+sehingga nilai yang diperoleh merupakan rata rata area yang cukup
+luas, bukan potret polusi pada titik tertentu.</p></li>
+<li><p><strong>Kemungkinan data kosong pada hari tertentu</strong>, terutama akibat
+tutupan awan yang menghalangi pengukuran instrumen berbasis optik.</p></li>
+<li><p><strong>Nilai dapat berupa estimasi kolom atmosfer</strong>, bukan konsentrasi
+permukaan tanah secara langsung, sehingga interpretasinya perlu
+berhati hati saat dikaitkan dengan dampak kesehatan langsung pada
+manusia di permukaan.</p></li>
+</ol>
+</section>
+<section id="kesimpulan">
+<h2>7. Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h2>
+<p>Data Sentinel-5P L2 yang diakses melalui openEO Copernicus Data Space
+Ecosystem terbukti dapat diambil untuk wilayah dan rentang waktu yang
+ditentukan, yaitu 24 Agustus 2025 sampai dengan 24 Agustus 2026, dengan
+catatan penting bahwa ekstraksi harus dilakukan per polutan karena
+keterbatasan backend. Area of Interest yang didefinisikan dalam bentuk
+bounding box dan polygon sudah jelas cakupannya, dan struktur data hasil
+ekstraksi berupa CSV harian per polutan sudah dirancang agar mudah dipakai
+pada tahap berikutnya. Dengan mempertimbangkan keterbatasan resolusi
+spasial dan kemungkinan data kosong, data ini dinyatakan cukup untuk
+dilanjutkan ke tahap <strong>Eksplorasi Data</strong>, tempat kualitas data akan
+diperiksa lebih lanjut sebelum dianalisis secara mendalam.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="1-business-understanding-bangkalan.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Business Understanding - Kabupaten Bangkalan</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="3-eksplorasi-data-bangkalan.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Eksplorasi Data - Kabupaten Bangkalan</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sumber-data">1. Sumber Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resolusi-spasial-per-polutan">1.1 Resolusi Spasial per Polutan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#koneksi-dan-otentikasi">2. Koneksi dan Otentikasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#area-of-interest-aoi-kabupaten-bangkalan">3. Area of Interest (AOI) Kabupaten Bangkalan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-ekstraksi-data">4. Proses Ekstraksi Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-data-hasil">5. Struktur Data Hasil</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keterbatasan-data">6. Keterbatasan Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">7. Kesimpulan</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rifqi Fairurrafi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
