@@ -1,8 +1,8 @@
 # Proyek Sains Data
 
-|Nama|Rifqi Fairurrafi|
-|NIM|240411100201|
-|Kelas|PSD IF5A|
+| Nama | NIM | Kelas |
+| :--- | :--- | :--- |
+| Rifqi Fairurrafi | 240411100201 | PSD IF5A |
 
 ## Pengantar Mata Kuliah Proyek Sains Data
 

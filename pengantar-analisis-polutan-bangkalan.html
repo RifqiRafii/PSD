@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'pengantar-analisis-polutan-bangkalan';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Ekstraksi Data Kualitas Udara Kabupaten Bangkalan" href="1-ekstraksi-data.html" />
+    <link rel="next" title="Business Understanding - Kabupaten Bangkalan" href="1-business-understanding-bangkalan.html" />
     <link rel="prev" title="Analisis Kualitas Udara dan Sumber Polutan di Bangkalan" href="tugas01_kualitas_udara_bangkalan.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -182,9 +182,11 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="tugas01_kualitas_udara_bangkalan.html">Analisis Kualitas Udara dan Sumber Polutan di Bangkalan</a></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Pengantar Analisis Polutan Kabupaten Bangkalan</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data.html">Ekstraksi Data Kualitas Udara Kabupaten Bangkalan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="2-analisis-bangkalan.html">Analisis Kualitas Udara Kabupaten Bangkalan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="1-business-data-understanding-bangkalan.html">Business Understanding &amp; Data Understanding Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-eksplorasi-data-bangkalan.html">Eksplorasi Data - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-ekstraksi-data.html">Ekstraksi Data Kualitas Udara Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5-analisis-bangkalan.html">Analisis Kualitas Udara Kabupaten Bangkalan</a></li>
 </ul>
 </details></li>
 </ul>
@@ -384,9 +386,11 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tentang-proyek">Tentang Proyek</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#susunan-bab">Susunan Bab</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#business-data-understanding-bangkalan">1. <span class="xref myst">Business &amp; Data Understanding Bangkalan</span></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-data">2. <span class="xref myst">Ekstraksi Data</span></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bangkalan">3. <span class="xref myst">Analisis Bangkalan</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#business-understanding">1. <span class="xref myst">Business Understanding</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">2. <span class="xref myst">Data Understanding</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">3. <span class="xref myst">Eksplorasi Data</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-data">4. <span class="xref myst">Ekstraksi Data</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bangkalan">5. <span class="xref myst">Analisis Bangkalan</span></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alur-kerja-singkat">Alur Kerja Singkat</a></li>
@@ -410,33 +414,45 @@ document.write(`
 dengan fokus pada empat polutan udara utama: <strong>NO2, CO, SO2, dan CH4</strong>.
 Data diperoleh dari citra satelit <strong>Sentinel-5P (TROPOMI)</strong> melalui layanan
 <strong>openEO</strong> pada <strong>Copernicus Data Space Ecosystem</strong>, mencakup rentang waktu
-<strong>24 Agustus 2025 – 24 Agustus 2026</strong>.</p>
+<strong>24 Agustus 2025 sampai dengan 24 Agustus 2026</strong>.</p>
 <p>Proyek ini disusun sebagai bagian dari mata kuliah <strong>Proyek Sains Data</strong>,
 mengikuti kerangka kerja <strong>CRISP-DM</strong>, mulai dari pemahaman bisnis dan data,
-ekstraksi data satelit, hingga eksplorasi dan analisis deret waktu.</p>
+eksplorasi awal, ekstraksi data satelit, hingga analisis deret waktu.</p>
 </section>
 <section id="susunan-bab">
 <h2>Susunan Bab<a class="headerlink" href="#susunan-bab" title="Link to this heading">#</a></h2>
-<p>Berikut adalah urutan bab pada portofolio ini:</p>
-<section id="business-data-understanding-bangkalan">
-<h3>1. <a class="reference internal" href="1-business-data-understanding-bangkalan.html"><span class="std std-doc">Business &amp; Data Understanding Bangkalan</span></a><a class="headerlink" href="#business-data-understanding-bangkalan" title="Link to this heading">#</a></h3>
-<p>Pembahasan latar belakang, tujuan analisis, penjelasan tiap polutan, sumber
-data, area of interest (AOI), peta interaktif wilayah Bangkalan, serta
-identifikasi awal kualitas data (missing values &amp; outlier).</p>
+<p>Berikut adalah urutan bab pada portofolio ini.</p>
+<section id="business-understanding">
+<h3>1. <a class="reference internal" href="1-business-understanding-bangkalan.html"><span class="std std-doc">Business Understanding</span></a><a class="headerlink" href="#business-understanding" title="Link to this heading">#</a></h3>
+<p>Pembahasan latar belakang wilayah Bangkalan, tujuan analisis, manfaat dan
+pemangku kepentingan, penjelasan Indeks Kualitas Udara (AQI), penjelasan
+detail tiap polutan (NO2, CO, SO2, CH4), serta ruang lingkup analisis.</p>
+</section>
+<section id="data-understanding">
+<h3>2. <a class="reference internal" href="2-data-understanding-bangkalan.html"><span class="std std-doc">Data Understanding</span></a><a class="headerlink" href="#data-understanding" title="Link to this heading">#</a></h3>
+<p>Pembahasan sumber data, resolusi spasial Sentinel-5P, cara koneksi dan
+otentikasi ke openEO, definisi Area of Interest (AOI) Kabupaten Bangkalan,
+gambaran proses ekstraksi, struktur data hasil, serta keterbatasan data.</p>
+</section>
+<section id="eksplorasi-data">
+<h3>3. <a class="reference internal" href="3-eksplorasi-data-bangkalan.html"><span class="std std-doc">Eksplorasi Data</span></a><a class="headerlink" href="#eksplorasi-data" title="Link to this heading">#</a></h3>
+<p>Peta interaktif wilayah Bangkalan, statistik deskriptif tiap polutan,
+pemeriksaan missing values, deteksi outlier awal dengan Isolation Forest,
+dan korelasi antar polutan.</p>
 </section>
 <section id="ekstraksi-data">
-<h3>2. <a class="reference internal" href="1-ekstraksi-data.html"><span class="std std-doc">Ekstraksi Data</span></a><a class="headerlink" href="#ekstraksi-data" title="Link to this heading">#</a></h3>
+<h3>4. <a class="reference internal" href="#./1-ekstraksi-data.ipynb"><span class="xref myst">Ekstraksi Data</span></a><a class="headerlink" href="#ekstraksi-data" title="Link to this heading">#</a></h3>
 <p>Notebook yang menghubungkan ke server openEO Copernicus Data Space,
 menarik data Sentinel-5P L2 untuk wilayah Bangkalan per polutan, melakukan
-agregasi temporal (harian) dan spasial (rata-rata dalam polygon AOI), lalu
+agregasi temporal (harian) dan spasial (rata rata dalam polygon AOI), lalu
 menyimpan hasilnya sebagai file NetCDF dan mengonversinya menjadi CSV.</p>
 </section>
 <section id="analisis-bangkalan">
-<h3>3. <a class="reference internal" href="2-analisis-bangkalan.html"><span class="std std-doc">Analisis Bangkalan</span></a><a class="headerlink" href="#analisis-bangkalan" title="Link to this heading">#</a></h3>
+<h3>5. <a class="reference internal" href="#./2-analisis-bangkalan.ipynb"><span class="xref myst">Analisis Bangkalan</span></a><a class="headerlink" href="#analisis-bangkalan" title="Link to this heading">#</a></h3>
 <p>Notebook yang memuat data CSV hasil ekstraksi, menampilkan peta interaktif
-area Bangkalan, menangani <em>missing values</em> pada data deret waktu,
-mendeteksi anomali/outlier menggunakan <strong>Isolation Forest</strong>, serta
-memvisualisasikan hasilnya dalam bentuk grafik deret waktu.</p>
+area Bangkalan, menangani missing values pada data deret waktu, mendeteksi
+anomali atau outlier menggunakan Isolation Forest, serta memvisualisasikan
+hasilnya dalam bentuk grafik deret waktu.</p>
 </section>
 </section>
 <section id="alur-kerja-singkat">
@@ -445,13 +461,14 @@ memvisualisasikan hasilnya dalam bentuk grafik deret waktu.</p>
 <section id="cara-menjalankan">
 <h2>Cara Menjalankan<a class="headerlink" href="#cara-menjalankan" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>Install dependensi: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code>.</p></li>
-<li><p>Jalankan <code class="docutils literal notranslate"><span class="pre">1-ekstraksi-data.ipynb</span></code> untuk mengambil dan menyiapkan data
-(memerlukan login Copernicus Data Space Ecosystem).</p></li>
-<li><p>Jalankan <code class="docutils literal notranslate"><span class="pre">2-analisis-bangkalan.ipynb</span></code> untuk eksplorasi dan deteksi
-outlier.</p></li>
-<li><p>Baca bab <strong>Business &amp; Data Understanding</strong> untuk konteks lengkap
-sebelum menelusuri hasil analisis.</p></li>
+<li><p>Install dependensi dengan perintah <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code>.</p></li>
+<li><p>Jalankan <code class="docutils literal notranslate"><span class="pre">1-ekstraksi-data.ipynb</span></code> untuk mengambil dan menyiapkan data,
+memerlukan login Copernicus Data Space Ecosystem.</p></li>
+<li><p>Jalankan <code class="docutils literal notranslate"><span class="pre">2-analisis-bangkalan.ipynb</span></code> untuk eksplorasi lanjutan dan
+deteksi outlier.</p></li>
+<li><p>Baca bab <strong>Business Understanding</strong>, <strong>Data Understanding</strong>, dan
+<strong>Eksplorasi Data</strong> untuk konteks lengkap sebelum menelusuri hasil
+analisis pada notebook.</p></li>
 </ol>
 </section>
 <div class="toctree-wrapper compound">
@@ -498,11 +515,11 @@ sebelum menelusuri hasil analisis.</p></li>
       </div>
     </a>
     <a class="right-next"
-       href="1-ekstraksi-data.html"
+       href="1-business-understanding-bangkalan.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Ekstraksi Data Kualitas Udara Kabupaten Bangkalan</p>
+        <p class="prev-next-title">Business Understanding - Kabupaten Bangkalan</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -524,9 +541,11 @@ sebelum menelusuri hasil analisis.</p></li>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tentang-proyek">Tentang Proyek</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#susunan-bab">Susunan Bab</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#business-data-understanding-bangkalan">1. <span class="xref myst">Business &amp; Data Understanding Bangkalan</span></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-data">2. <span class="xref myst">Ekstraksi Data</span></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bangkalan">3. <span class="xref myst">Analisis Bangkalan</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#business-understanding">1. <span class="xref myst">Business Understanding</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">2. <span class="xref myst">Data Understanding</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">3. <span class="xref myst">Eksplorasi Data</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-data">4. <span class="xref myst">Ekstraksi Data</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bangkalan">5. <span class="xref myst">Analisis Bangkalan</span></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alur-kerja-singkat">Alur Kerja Singkat</a></li>
