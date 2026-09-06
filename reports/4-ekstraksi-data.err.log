@@ -26,8 +26,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['nc_paths = {}', '', 'for pollutant_name, band_name in POLLUTANTS.items():', '    try:', '        nc_path = extract_pollutant(']
+['# Uji coba: ekstraksi NO2 untuk satu minggu pertama saja', 'test_nc_path = extract_pollutant(', '    connection=connection,', '    pollutant_name="NO2_TEST",', '    band_name=POLLUTANTS["NO2"],']
 ...
-['', 'print()', 'print("Ringkasan file NetCDF yang berhasil dibuat:")', 'for pollutant_name, path in nc_paths.items():', '    print(f"  - {pollutant_name}: {path}")']
+['    print("  nilai rata rata   : {:.3e}".format(pd.Series(values.flatten()).mean(skipna=True)))', '', '# Jika seluruh nilai memang 0 (bukan NaN dan bukan angka sangat kecil),', '# periksa kembali nama band lewat baris berikut sebelum melanjutkan.', '# print(connection.describe_collection("SENTINEL_5P_L2"))']
 -------------------
 

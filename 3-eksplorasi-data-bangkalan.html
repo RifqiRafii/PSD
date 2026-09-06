@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '3-eksplorasi-data-bangkalan';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Ekstraksi Data Kualitas Udara Kabupaten Bangkalan" href="4-ekstraksi-data.html" />
+    <link rel="next" title="Ekstraksi Data Kualitas Udara - Kabupaten Bangkalan" href="4-ekstraksi-data.html" />
     <link rel="prev" title="Data Understanding - Kabupaten Bangkalan" href="2-data-understanding-bangkalan.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -185,8 +185,8 @@
 <li class="toctree-l2"><a class="reference internal" href="1-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="2-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Eksplorasi Data - Kabupaten Bangkalan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="4-ekstraksi-data.html">Ekstraksi Data Kualitas Udara Kabupaten Bangkalan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="5-analisis-bangkalan.html">Analisis Kualitas Udara Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-ekstraksi-data.html">Ekstraksi Data Kualitas Udara - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5-analisis-bangkalan.html">Analisis Kualitas Udara - Kabupaten Bangkalan</a></li>
 </ul>
 </details></li>
 </ul>
@@ -385,7 +385,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#peta-interaktif-wilayah-bangkalan">1. Peta Interaktif Wilayah Bangkalan</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memuat-data-hasil-ekstraksi">2. Memuat Data Hasil Ekstraksi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memuat-tabel-gabungan-hasil-ekstraksi">2. Memuat Tabel Gabungan Hasil Ekstraksi</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-deskriptif">3. Statistik Deskriptif</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-missing-values">4. Pemeriksaan Missing Values</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier-awal">5. Deteksi Outlier Awal</a></li>
@@ -409,14 +409,20 @@ document.write(`
 memeriksa kualitas data yang telah diperoleh pada tahap Data
 Understanding, sebelum data diolah lebih lanjut pada tahap analisis
 utama. Bagian ini mencakup peta interaktif wilayah, statistik deskriptif,
-pemeriksaan missing values, dan deteksi outlier awal.</p>
+pemeriksaan missing values, dan deteksi outlier awal, menggunakan satu
+tabel gabungan hasil ekstraksi.</p>
 <section id="peta-interaktif-wilayah-bangkalan">
 <h2>1. Peta Interaktif Wilayah Bangkalan<a class="headerlink" href="#peta-interaktif-wilayah-bangkalan" title="Link to this heading">#</a></h2>
-<p>Peta berikut menampilkan bounding box AOI, titik pusat, serta beberapa
-titik acuan kontekstual, yaitu akses Suramadu dan area pesisir Klampis,
-yang relevan sebagai potensi sumber emisi. Peta mendukung dua basemap,
-yaitu peta jalan dan citra satelit, yang dapat dipilih melalui kontrol
-layer di kanan atas peta.</p>
+<p>Peta berikut menampilkan <strong>batas administratif asli Kabupaten Bangkalan</strong>
+menggunakan <code class="docutils literal notranslate"><span class="pre">folium.GeoJson</span></code>, bukan kotak bounding box, beserta titik
+pusat wilayah dan beberapa titik acuan kontekstual, yaitu akses Suramadu
+dan area pesisir Klampis, yang relevan sebagai potensi sumber emisi. Peta
+mendukung dua basemap, yaitu peta jalan dan citra satelit, yang dapat
+dipilih melalui kontrol layer di kanan atas peta.</p>
+<p>Bentuk polygon yang ditampilkan sama persis dengan polygon yang dipakai
+pada <code class="docutils literal notranslate"><span class="pre">aggregate_spatial</span></code> di notebook ekstraksi, sehingga peta ini juga
+berfungsi memverifikasi area yang sesungguhnya diagregasi, bukan sekadar
+ilustrasi.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -424,11 +430,17 @@ layer di kanan atas peta.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">folium</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">folium</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">folium.plugins</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fullscreen</span><span class="p">,</span> <span class="n">MeasureControl</span><span class="p">,</span> <span class="n">MiniMap</span>
 
-<span class="n">bbox</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;west&quot;</span><span class="p">:</span> <span class="mf">112.671</span><span class="p">,</span> <span class="s2">&quot;east&quot;</span><span class="p">:</span> <span class="mf">113.116</span><span class="p">,</span> <span class="s2">&quot;south&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">7.227</span><span class="p">,</span> <span class="s2">&quot;north&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">6.848</span><span class="p">}</span>
-<span class="n">center</span> <span class="o">=</span> <span class="p">((</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;south&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;north&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;west&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;east&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data/bangkalan-boundary.geojson&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">bangkalan_geojson</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">coords</span> <span class="o">=</span> <span class="n">bangkalan_geojson</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">][</span><span class="s2">&quot;coordinates&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">centroid_lon</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+<span class="n">centroid_lat</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
 
 <span class="n">landmarks</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Pusat Kota Bangkalan&quot;</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">7.0392</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="mf">112.7487</span><span class="p">,</span>
@@ -439,7 +451,7 @@ layer di kanan atas peta.</p>
      <span class="s2">&quot;desc&quot;</span><span class="p">:</span> <span class="s2">&quot;Area pesisir dengan rencana fasilitas stockpile batu bara.&quot;</span><span class="p">},</span>
 <span class="p">]</span>
 
-<span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tiles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">control_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="n">centroid_lat</span><span class="p">,</span> <span class="n">centroid_lon</span><span class="p">),</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tiles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">control_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">folium</span><span class="o">.</span><span class="n">TileLayer</span><span class="p">(</span><span class="s2">&quot;OpenStreetMap&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Peta Jalan&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 <span class="n">folium</span><span class="o">.</span><span class="n">TileLayer</span><span class="p">(</span>
     <span class="n">tiles</span><span class="o">=</span><span class="s2">&quot;https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/</span><span class="si">{z}</span><span class="s2">/</span><span class="si">{y}</span><span class="s2">/</span><span class="si">{x}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -447,14 +459,17 @@ layer di kanan atas peta.</p>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Citra Satelit&quot;</span><span class="p">,</span>
 <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 
-<span class="n">folium</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span>
-    <span class="n">bounds</span><span class="o">=</span><span class="p">[(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;south&quot;</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;west&quot;</span><span class="p">]),</span> <span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;north&quot;</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;east&quot;</span><span class="p">])],</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#d62728&quot;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;#d62728&quot;</span><span class="p">,</span> <span class="n">fill_opacity</span><span class="o">=</span><span class="mf">0.08</span><span class="p">,</span>
-    <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;Bounding box AOI Kabupaten Bangkalan&quot;</span><span class="p">,</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">GeoJson</span><span class="p">(</span>
+    <span class="n">bangkalan_geojson</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Batas Kabupaten Bangkalan&quot;</span><span class="p">,</span>
+    <span class="n">style_function</span><span class="o">=</span><span class="k">lambda</span> <span class="n">feature</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;fillColor&quot;</span><span class="p">:</span> <span class="s2">&quot;#d62728&quot;</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#d62728&quot;</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">,</span> <span class="s2">&quot;fillOpacity&quot;</span><span class="p">:</span> <span class="mf">0.08</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;Batas administratif Kabupaten Bangkalan&quot;</span><span class="p">,</span>
 <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 
 <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
-    <span class="n">location</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;Titik pusat AOI&quot;</span><span class="p">,</span>
+    <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="n">centroid_lat</span><span class="p">,</span> <span class="n">centroid_lon</span><span class="p">),</span> <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;Titik pusat (centroid) Kabupaten Bangkalan&quot;</span><span class="p">,</span>
     <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;cloud&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;fa&quot;</span><span class="p">),</span>
 <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 
@@ -495,7 +510,7 @@ layer di kanan atas peta.</p>
             &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
             &lt;style&gt;
-                #map_7be698fcec355d26476b676e575389a8 {
+                #map_c1837176e14e883cece8b19bb1c34b17 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -538,16 +553,16 @@ layer di kanan atas peta.</p>
 &lt;body&gt;
     
     
-            &lt;div class=&quot;folium-map&quot; id=&quot;map_7be698fcec355d26476b676e575389a8&quot; &gt;&lt;/div&gt;
+            &lt;div class=&quot;folium-map&quot; id=&quot;map_c1837176e14e883cece8b19bb1c34b17&quot; &gt;&lt;/div&gt;
         
 &lt;/body&gt;
 &lt;script&gt;
     
     
-            var map_7be698fcec355d26476b676e575389a8 = L.map(
-                &quot;map_7be698fcec355d26476b676e575389a8&quot;,
+            var map_c1837176e14e883cece8b19bb1c34b17 = L.map(
+                &quot;map_c1837176e14e883cece8b19bb1c34b17&quot;,
                 {
-                    center: [-7.0375, 112.8935],
+                    center: [-7.029995979721012, 112.96369295889129],
                     crs: L.CRS.EPSG3857,
                     ...{
   &quot;zoom&quot;: 10,
@@ -557,13 +572,13 @@ layer di kanan atas peta.</p>
 
                 }
             );
-            L.control.scale().addTo(map_7be698fcec355d26476b676e575389a8);
+            L.control.scale().addTo(map_c1837176e14e883cece8b19bb1c34b17);
 
             
 
         
     
-            var tile_layer_f7186837906b5b9447121be0a4c94f0d = L.tileLayer(
+            var tile_layer_ca602412ce394edaff26f97ebab64a85 = L.tileLayer(
                 &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
                 {
   &quot;minZoom&quot;: 0,
@@ -580,10 +595,10 @@ layer di kanan atas peta.</p>
             );
         
     
-            tile_layer_f7186837906b5b9447121be0a4c94f0d.addTo(map_7be698fcec355d26476b676e575389a8);
+            tile_layer_ca602412ce394edaff26f97ebab64a85.addTo(map_c1837176e14e883cece8b19bb1c34b17);
         
     
-            var tile_layer_468625cda01cb2ece4f650e4c6aa1c0b = L.tileLayer(
+            var tile_layer_27c730c06c907036781269701c1e92bc = L.tileLayer(
                 &quot;https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}&quot;,
                 {
   &quot;minZoom&quot;: 0,
@@ -600,18 +615,40 @@ layer di kanan atas peta.</p>
             );
         
     
-            tile_layer_468625cda01cb2ece4f650e4c6aa1c0b.addTo(map_7be698fcec355d26476b676e575389a8);
+            tile_layer_27c730c06c907036781269701c1e92bc.addTo(map_c1837176e14e883cece8b19bb1c34b17);
         
     
-            var rectangle_fb28815dd3eff253ed468dea0415a054 = L.rectangle(
-                [[-7.227, 112.671], [-6.848, 113.116]],
-                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;#d62728&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;#d62728&quot;, &quot;fillOpacity&quot;: 0.08, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;noClip&quot;: false, &quot;opacity&quot;: 1.0, &quot;smoothFactor&quot;: 1.0, &quot;stroke&quot;: true, &quot;weight&quot;: 2.5}
-            ).addTo(map_7be698fcec355d26476b676e575389a8);
+        function geo_json_45c57d3b22181471b6834bf002a9bc92_styler(feature) {
+            switch(feature.properties.name) {
+                default:
+                    return {&quot;color&quot;: &quot;#d62728&quot;, &quot;fillColor&quot;: &quot;#d62728&quot;, &quot;fillOpacity&quot;: 0.08, &quot;weight&quot;: 2.5};
+            }
+        }
+
+        function geo_json_45c57d3b22181471b6834bf002a9bc92_onEachFeature(feature, layer) {
+
+            layer.on({
+            });
+        };
+        var geo_json_45c57d3b22181471b6834bf002a9bc92 = L.geoJson(null, {
+                onEachFeature: geo_json_45c57d3b22181471b6834bf002a9bc92_onEachFeature,
+            
+                style: geo_json_45c57d3b22181471b6834bf002a9bc92_styler,
+            ...{
+}
+        });
+
+        function geo_json_45c57d3b22181471b6834bf002a9bc92_add (data) {
+            geo_json_45c57d3b22181471b6834bf002a9bc92
+                .addData(data);
+        }
+            geo_json_45c57d3b22181471b6834bf002a9bc92_add({&quot;features&quot;: [{&quot;geometry&quot;: {&quot;coordinates&quot;: [[[112.99257659900013, -7.20243835499997], [112.96482086300011, -7.199743270999932], [112.95294952400002, -7.192855833999943], [112.8911590580002, -7.178034304999869], [112.86486053400029, -7.162668226999926], [112.84511566100002, -7.165686130999973], [112.80070495500001, -7.157524585999965], [112.79096984900002, -7.161581038999941], [112.77693176300022, -7.159422396999958], [112.76923370300005, -7.162903784999969], [112.76522064200014, -7.15215158399991], [112.74948120200008, -7.15052318499994], [112.75153350800008, -7.153604984999902], [112.74038696300022, -7.165307044999963], [112.744506999, -7.16897199899995], [112.7469559990003, -7.16772999899996], [112.7459030010001, -7.170421000999966], [112.72952270500014, -7.170128821999924], [112.72235107400013, -7.175711154999874], [112.7059249880001, -7.167363166999962], [112.6911468510001, -7.153986929999974], [112.70383453300008, -7.113264559999891], [112.70586395300029, -7.096296786999915], [112.70163726800024, -7.092801569999949], [112.69166565, -7.09699153899993], [112.68576812700007, -7.09552812599992], [112.68651580900007, -7.089310646999934], [112.67342376800002, -7.073466301999929], [112.6735916140002, -7.059717177999971], [112.67651367300016, -7.056868553999891], [112.6806869510001, -7.034704207999937], [112.68846130300017, -7.029723166999929], [112.71106720000012, -7.040588378999871], [112.7235260010001, -7.038418291999903], [112.74055480900006, -7.018153666999922], [112.77044677700007, -7.000629423999897], [112.78867340100021, -6.984257220999837], [112.79282379100005, -6.978433608999978], [112.79084777800006, -6.973830222999879], [112.8040161130001, -6.96390056499996], [112.82833099400011, -6.930719852999914], [112.82648468000014, -6.9274306289999], [112.82979583800022, -6.92121505699987], [112.82234954900002, -6.912736414999927], [112.82356262100006, -6.910022735999917], [112.83224487300004, -6.906312463999882], [112.83545684800015, -6.915973661999885], [112.84104156500007, -6.916435240999931], [112.84838104200014, -6.908895014999871], [112.84735870400027, -6.898938655999871], [112.85921478200021, -6.893069265999884], [112.87125396800013, -6.891851423999924], [112.86989593500027, -6.893897532999972], [112.87525939900002, -6.897952556999883], [112.87901306200013, -6.896545886999945], [112.87751770000023, -6.891464232999965], [112.88204193100023, -6.890491007999913], [112.92079925500013, -6.893889426999976], [112.92545318600003, -6.889860630999976], [112.933082581, -6.891401290999909], [112.95190429700017, -6.886978147999969], [112.96158599900014, -6.889063835999934], [112.96366119400011, -6.886700629999893], [112.9705429080002, -6.8887982359999], [112.97848510800009, -6.885590552999872], [112.98734283500016, -6.886864662999869], [112.99288177500011, -6.883407592999959], [112.995811462, -6.885633944999938], [112.99980926500007, -6.881588935999901], [113.00219726700016, -6.887470720999943], [113.00614929200003, -6.881137846999877], [113.02563476500029, -6.881005762999962], [113.02365875200019, -6.882413863999943], [113.02735138000014, -6.883591174999935], [113.03388977000009, -6.879476068999963], [113.05265808100012, -6.884908675999952], [113.06359100400016, -6.88200044499996], [113.07737732000021, -6.883579253999926], [113.0874481190001, -6.888769149999973], [113.10797882100007, -6.888527870999951], [113.11061859200026, -6.894425391999903], [113.11724090500013, -6.894449232999932], [113.12117004400022, -6.889986991999933], [113.12718200600011, -6.898141383999814], [113.12753296000005, -6.904701708999937], [113.11876678400017, -6.905104159999951], [113.1159973140002, -6.935714243999882], [113.11121368500005, -6.93735933399995], [113.10164642400025, -6.931810378999899], [113.09510040300017, -6.9457974419999], [113.09918975900007, -6.951011656999924], [113.10816955500002, -6.953402995999909], [113.10247039800004, -6.959991454999965], [113.10615539600008, -6.97214078899998], [113.10939788800022, -6.974139689999902], [113.10392761100013, -6.985950945999889], [113.11256408600013, -6.988915919999897], [113.13384246800001, -6.976145266999936], [113.1478118900003, -6.984626293999895], [113.14475250200007, -6.989298342999916], [113.14627075300007, -6.997766971999965], [113.140907287, -6.999999998999954], [113.13875579800026, -7.005352972999958], [113.14228057800005, -7.014079093999953], [113.13359069900002, -7.023640631999967], [113.13347625800009, -7.035539626999935], [113.127853393, -7.03657340999996], [113.11522674600019, -7.031735418999972], [113.11608886600027, -7.04952478499996], [113.11064910900006, -7.047163008999973], [113.11345672500022, -7.05305528599996], [113.111968993, -7.059689998999943], [113.11984252900004, -7.066992758999959], [113.12020873900019, -7.07993221199996], [113.1167755130001, -7.082043646999921], [113.11452484100005, -7.078620910999973], [113.10812378000026, -7.077841281999952], [113.11194610700011, -7.095150947999969], [113.1161270130001, -7.098412512999914], [113.11592102100019, -7.104572296999947], [113.11267089800026, -7.105822562999947], [113.11553955000011, -7.116165159999923], [113.10727691600005, -7.107961177999869], [113.10756683400018, -7.117203711999878], [113.10382842900003, -7.125472545999969], [113.09615325900006, -7.127437113999974], [113.09216308500015, -7.133172034999916], [113.0950317390002, -7.14169597599988], [113.09358215400005, -7.151215552999929], [113.09739685000022, -7.156816004999939], [113.09185791100015, -7.157668112999943], [113.08826446500018, -7.156388759999857], [113.08808135900006, -7.152215003999913], [113.07701110800008, -7.151008605999948], [113.07019043000014, -7.162508011999876], [113.05759430000012, -7.163670063999973], [113.05480957000009, -7.169857978999971], [113.05646515000012, -7.174945831999878], [113.04983520400003, -7.178644179999878], [113.048210143, -7.184324741999887], [113.06123352100019, -7.190078735999919], [113.06095123300008, -7.196104525999942], [113.05030822800018, -7.195767879999892], [113.04036712600009, -7.212881564999975], [113.01383209200014, -7.20546007199988], [113.00064849900025, -7.209431170999949], [112.99257659900013, -7.20243835499997]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;properties&quot;: {&quot;name&quot;: &quot;Kabupaten Bangkalan&quot;, &quot;source&quot;: &quot;GADM level-2 (via mahendrayudha/indonesia-geojson), disederhanakan&quot;}, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
+
         
     
-            rectangle_fb28815dd3eff253ed468dea0415a054.bindTooltip(
+            geo_json_45c57d3b22181471b6834bf002a9bc92.bindTooltip(
                 `&lt;div&gt;
-                     Bounding box AOI Kabupaten Bangkalan
+                     Batas administratif Kabupaten Bangkalan
                  &lt;/div&gt;`,
                 {
   &quot;sticky&quot;: true,
@@ -619,14 +656,17 @@ layer di kanan atas peta.</p>
             );
         
     
-            var marker_dded90d127e7b736320a1f89567c58d0 = L.marker(
-                [-7.0375, 112.8935],
-                {
-}
-            ).addTo(map_7be698fcec355d26476b676e575389a8);
+            geo_json_45c57d3b22181471b6834bf002a9bc92.addTo(map_c1837176e14e883cece8b19bb1c34b17);
         
     
-            var icon_fe0ad501ae837f62bee309bd3ad3291f = L.AwesomeMarkers.icon(
+            var marker_df42653e0d5ad653dea21a6eb2fffd54 = L.marker(
+                [-7.029995979721012, 112.96369295889129],
+                {
+}
+            ).addTo(map_c1837176e14e883cece8b19bb1c34b17);
+        
+    
+            var icon_13f4914deff5ba76969f9e663e5b5353 = L.AwesomeMarkers.icon(
                 {
   &quot;markerColor&quot;: &quot;red&quot;,
   &quot;iconColor&quot;: &quot;white&quot;,
@@ -637,9 +677,9 @@ layer di kanan atas peta.</p>
             );
         
     
-            marker_dded90d127e7b736320a1f89567c58d0.bindTooltip(
+            marker_df42653e0d5ad653dea21a6eb2fffd54.bindTooltip(
                 `&lt;div&gt;
-                     Titik pusat AOI
+                     Titik pusat (centroid) Kabupaten Bangkalan
                  &lt;/div&gt;`,
                 {
   &quot;sticky&quot;: true,
@@ -647,17 +687,17 @@ layer di kanan atas peta.</p>
             );
         
     
-                marker_dded90d127e7b736320a1f89567c58d0.setIcon(icon_fe0ad501ae837f62bee309bd3ad3291f);
+                marker_df42653e0d5ad653dea21a6eb2fffd54.setIcon(icon_13f4914deff5ba76969f9e663e5b5353);
             
     
-            var marker_b75273d255f2b0ba6435bf56a5d4b56d = L.marker(
+            var marker_404afda868f287373e24141b6f930303 = L.marker(
                 [-7.0392, 112.7487],
                 {
 }
-            ).addTo(map_7be698fcec355d26476b676e575389a8);
+            ).addTo(map_c1837176e14e883cece8b19bb1c34b17);
         
     
-            var icon_7e55db5a8a5a3e90e63cdc738824da1b = L.AwesomeMarkers.icon(
+            var icon_c67a84586ee5b886523837fdd08afb6f = L.AwesomeMarkers.icon(
                 {
   &quot;markerColor&quot;: &quot;blue&quot;,
   &quot;iconColor&quot;: &quot;white&quot;,
@@ -668,24 +708,24 @@ layer di kanan atas peta.</p>
             );
         
     
-        var popup_06d56b780e0f7072dd0436ab55cad702 = L.popup({
+        var popup_736bc0ff1b87e74ad186a3469dc543af = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_4e54358e963789c6dbb2b37d29578bdd = $(`&lt;div id=&quot;html_4e54358e963789c6dbb2b37d29578bdd&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Pusat Kota Bangkalan&lt;/b&gt;&lt;br&gt;Pusat pemerintahan Kabupaten Bangkalan.&lt;/div&gt;`)[0];
-                popup_06d56b780e0f7072dd0436ab55cad702.setContent(html_4e54358e963789c6dbb2b37d29578bdd);
+                var html_7e91547152dea6ac6cbc6347c4e5c560 = $(`&lt;div id=&quot;html_7e91547152dea6ac6cbc6347c4e5c560&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Pusat Kota Bangkalan&lt;/b&gt;&lt;br&gt;Pusat pemerintahan Kabupaten Bangkalan.&lt;/div&gt;`)[0];
+                popup_736bc0ff1b87e74ad186a3469dc543af.setContent(html_7e91547152dea6ac6cbc6347c4e5c560);
             
         
 
-        marker_b75273d255f2b0ba6435bf56a5d4b56d.bindPopup(popup_06d56b780e0f7072dd0436ab55cad702)
+        marker_404afda868f287373e24141b6f930303.bindPopup(popup_736bc0ff1b87e74ad186a3469dc543af)
         ;
 
         
     
     
-            marker_b75273d255f2b0ba6435bf56a5d4b56d.bindTooltip(
+            marker_404afda868f287373e24141b6f930303.bindTooltip(
                 `&lt;div&gt;
                      Pusat Kota Bangkalan
                  &lt;/div&gt;`,
@@ -695,17 +735,17 @@ layer di kanan atas peta.</p>
             );
         
     
-                marker_b75273d255f2b0ba6435bf56a5d4b56d.setIcon(icon_7e55db5a8a5a3e90e63cdc738824da1b);
+                marker_404afda868f287373e24141b6f930303.setIcon(icon_c67a84586ee5b886523837fdd08afb6f);
             
     
-            var marker_6cc7d1e72bc8c43f7d7173ce4bac5aa6 = L.marker(
+            var marker_bad8d56d5e1c49d8200123d47ac65231 = L.marker(
                 [-7.1743, 112.7614],
                 {
 }
-            ).addTo(map_7be698fcec355d26476b676e575389a8);
+            ).addTo(map_c1837176e14e883cece8b19bb1c34b17);
         
     
-            var icon_b7872d3c14d7876efa1e6da37a601b53 = L.AwesomeMarkers.icon(
+            var icon_8f09dd2307a0d6d1d636fe718f892c7d = L.AwesomeMarkers.icon(
                 {
   &quot;markerColor&quot;: &quot;blue&quot;,
   &quot;iconColor&quot;: &quot;white&quot;,
@@ -716,24 +756,24 @@ layer di kanan atas peta.</p>
             );
         
     
-        var popup_a9bbb8e482ab2bf7f34e09edbb698a7d = L.popup({
+        var popup_f01dba8deb997cde4f2548bad9a9606c = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_66e49377937495c276e987bf48fc3429 = $(`&lt;div id=&quot;html_66e49377937495c276e987bf48fc3429&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Jembatan Suramadu (sisi Madura)&lt;/b&gt;&lt;br&gt;Titik masuk arus kendaraan dari Surabaya, sumber emisi transportasi.&lt;/div&gt;`)[0];
-                popup_a9bbb8e482ab2bf7f34e09edbb698a7d.setContent(html_66e49377937495c276e987bf48fc3429);
+                var html_a84e19b2036d445eba51ff9dff13d298 = $(`&lt;div id=&quot;html_a84e19b2036d445eba51ff9dff13d298&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Jembatan Suramadu (sisi Madura)&lt;/b&gt;&lt;br&gt;Titik masuk arus kendaraan dari Surabaya, sumber emisi transportasi.&lt;/div&gt;`)[0];
+                popup_f01dba8deb997cde4f2548bad9a9606c.setContent(html_a84e19b2036d445eba51ff9dff13d298);
             
         
 
-        marker_6cc7d1e72bc8c43f7d7173ce4bac5aa6.bindPopup(popup_a9bbb8e482ab2bf7f34e09edbb698a7d)
+        marker_bad8d56d5e1c49d8200123d47ac65231.bindPopup(popup_f01dba8deb997cde4f2548bad9a9606c)
         ;
 
         
     
     
-            marker_6cc7d1e72bc8c43f7d7173ce4bac5aa6.bindTooltip(
+            marker_bad8d56d5e1c49d8200123d47ac65231.bindTooltip(
                 `&lt;div&gt;
                      Jembatan Suramadu (sisi Madura)
                  &lt;/div&gt;`,
@@ -743,17 +783,17 @@ layer di kanan atas peta.</p>
             );
         
     
-                marker_6cc7d1e72bc8c43f7d7173ce4bac5aa6.setIcon(icon_b7872d3c14d7876efa1e6da37a601b53);
+                marker_bad8d56d5e1c49d8200123d47ac65231.setIcon(icon_8f09dd2307a0d6d1d636fe718f892c7d);
             
     
-            var marker_20716c67e4e70cd469d30fc84bae0f71 = L.marker(
+            var marker_10db73c161125450a50fccf6dd94c108 = L.marker(
                 [-6.9028, 112.9764],
                 {
 }
-            ).addTo(map_7be698fcec355d26476b676e575389a8);
+            ).addTo(map_c1837176e14e883cece8b19bb1c34b17);
         
     
-            var icon_cdb95cf163c7e0f32a4fcdc6dc376ac4 = L.AwesomeMarkers.icon(
+            var icon_63f89fd6e702665bf0a23da0faae56d4 = L.AwesomeMarkers.icon(
                 {
   &quot;markerColor&quot;: &quot;blue&quot;,
   &quot;iconColor&quot;: &quot;white&quot;,
@@ -764,24 +804,24 @@ layer di kanan atas peta.</p>
             );
         
     
-        var popup_4aee4a54d1b4c2a07d89df8c7e83a762 = L.popup({
+        var popup_8145a7d735e0282d885368f30a723adf = L.popup({
   &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_90bbeb3808563dc1bc7aaafd3c0d6164 = $(`&lt;div id=&quot;html_90bbeb3808563dc1bc7aaafd3c0d6164&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Kecamatan Klampis (pesisir utara)&lt;/b&gt;&lt;br&gt;Area pesisir dengan rencana fasilitas stockpile batu bara.&lt;/div&gt;`)[0];
-                popup_4aee4a54d1b4c2a07d89df8c7e83a762.setContent(html_90bbeb3808563dc1bc7aaafd3c0d6164);
+                var html_e351905775f8f1a05ef4a026558aa779 = $(`&lt;div id=&quot;html_e351905775f8f1a05ef4a026558aa779&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Kecamatan Klampis (pesisir utara)&lt;/b&gt;&lt;br&gt;Area pesisir dengan rencana fasilitas stockpile batu bara.&lt;/div&gt;`)[0];
+                popup_8145a7d735e0282d885368f30a723adf.setContent(html_e351905775f8f1a05ef4a026558aa779);
             
         
 
-        marker_20716c67e4e70cd469d30fc84bae0f71.bindPopup(popup_4aee4a54d1b4c2a07d89df8c7e83a762)
+        marker_10db73c161125450a50fccf6dd94c108.bindPopup(popup_8145a7d735e0282d885368f30a723adf)
         ;
 
         
     
     
-            marker_20716c67e4e70cd469d30fc84bae0f71.bindTooltip(
+            marker_10db73c161125450a50fccf6dd94c108.bindTooltip(
                 `&lt;div&gt;
                      Kecamatan Klampis (pesisir utara)
                  &lt;/div&gt;`,
@@ -791,35 +831,36 @@ layer di kanan atas peta.</p>
             );
         
     
-                marker_20716c67e4e70cd469d30fc84bae0f71.setIcon(icon_cdb95cf163c7e0f32a4fcdc6dc376ac4);
+                marker_10db73c161125450a50fccf6dd94c108.setIcon(icon_63f89fd6e702665bf0a23da0faae56d4);
             
     
-            var layer_control_8cda76207d1a030748b3e50241799618_layers = {
+            var layer_control_e51b71ef9ea549601372a5261b547432_layers = {
                 base_layers : {
-                    &quot;Peta Jalan&quot; : tile_layer_f7186837906b5b9447121be0a4c94f0d,
-                    &quot;Citra Satelit&quot; : tile_layer_468625cda01cb2ece4f650e4c6aa1c0b,
+                    &quot;Peta Jalan&quot; : tile_layer_ca602412ce394edaff26f97ebab64a85,
+                    &quot;Citra Satelit&quot; : tile_layer_27c730c06c907036781269701c1e92bc,
                 },
                 overlays :  {
+                    &quot;Batas Kabupaten Bangkalan&quot; : geo_json_45c57d3b22181471b6834bf002a9bc92,
                 },
             };
-            let layer_control_8cda76207d1a030748b3e50241799618 = L.control.layers(
-                layer_control_8cda76207d1a030748b3e50241799618_layers.base_layers,
-                layer_control_8cda76207d1a030748b3e50241799618_layers.overlays,
+            let layer_control_e51b71ef9ea549601372a5261b547432 = L.control.layers(
+                layer_control_e51b71ef9ea549601372a5261b547432_layers.base_layers,
+                layer_control_e51b71ef9ea549601372a5261b547432_layers.overlays,
                 {
   &quot;position&quot;: &quot;topright&quot;,
   &quot;collapsed&quot;: false,
   &quot;autoZIndex&quot;: true,
 }
-            ).addTo(map_7be698fcec355d26476b676e575389a8);
+            ).addTo(map_c1837176e14e883cece8b19bb1c34b17);
 
         
     
-            var tile_layer_57824abc52f832b7d87e5c6d11e8c8de = L.tileLayer(
+            var tile_layer_af2cd0552d7b05790c714d351cb53d8d = L.tileLayer(
                 &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
                 {&quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors&quot;, &quot;detect_retina&quot;: false, &quot;max_native_zoom&quot;: 19, &quot;max_zoom&quot;: 19, &quot;min_zoom&quot;: 0, &quot;no_wrap&quot;: false, &quot;opacity&quot;: 1, &quot;subdomains&quot;: &quot;abc&quot;, &quot;tms&quot;: false}
             );
-            var mini_map_2b8270ad876eb865a59a3d057fd02db8 = new L.Control.MiniMap(
-                tile_layer_57824abc52f832b7d87e5c6d11e8c8de,
+            var mini_map_4fbd4d7d59323909f1d0bc1e1b899588 = new L.Control.MiniMap(
+                tile_layer_af2cd0552d7b05790c714d351cb53d8d,
                 {
   &quot;position&quot;: &quot;bottomleft&quot;,
   &quot;width&quot;: 150,
@@ -834,7 +875,7 @@ layer di kanan atas peta.</p>
   &quot;minimized&quot;: false,
 }
             );
-            map_7be698fcec355d26476b676e575389a8.addControl(mini_map_2b8270ad876eb865a59a3d057fd02db8);
+            map_c1837176e14e883cece8b19bb1c34b17.addControl(mini_map_4fbd4d7d59323909f1d0bc1e1b899588);
         
     
             L.control.fullscreen(
@@ -844,10 +885,10 @@ layer di kanan atas peta.</p>
   &quot;titleCancel&quot;: &quot;Exit Full Screen&quot;,
   &quot;forceSeparateButton&quot;: false,
 }
-            ).addTo(map_7be698fcec355d26476b676e575389a8);
+            ).addTo(map_c1837176e14e883cece8b19bb1c34b17);
         
     
-            var measure_control_bc286c8f9978be23bcec2fa5c2cf98bd = new L.Control.Measure(
+            var measure_control_0bf148d48a92cbef2ba2b849987f6b94 = new L.Control.Measure(
                 {
   &quot;position&quot;: &quot;topright&quot;,
   &quot;primaryLengthUnit&quot;: &quot;kilometers&quot;,
@@ -855,7 +896,7 @@ layer di kanan atas peta.</p>
   &quot;primaryAreaUnit&quot;: &quot;sqmeters&quot;,
   &quot;secondaryAreaUnit&quot;: &quot;acres&quot;,
 });
-            map_7be698fcec355d26476b676e575389a8.addControl(measure_control_bc286c8f9978be23bcec2fa5c2cf98bd);
+            map_c1837176e14e883cece8b19bb1c34b17.addControl(measure_control_0bf148d48a92cbef2ba2b849987f6b94);
 
             // Workaround for using this plugin with Leaflet&gt;=1.8.0
             // https://github.com/ljagis/leaflet-measure/issues/171
@@ -877,8 +918,11 @@ layer di kanan atas peta.</p>
 &lt;/html&gt;" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div></div></div>
 </div>
 </section>
-<section id="memuat-data-hasil-ekstraksi">
-<h2>2. Memuat Data Hasil Ekstraksi<a class="headerlink" href="#memuat-data-hasil-ekstraksi" title="Link to this heading">#</a></h2>
+<section id="memuat-tabel-gabungan-hasil-ekstraksi">
+<h2>2. Memuat Tabel Gabungan Hasil Ekstraksi<a class="headerlink" href="#memuat-tabel-gabungan-hasil-ekstraksi" title="Link to this heading">#</a></h2>
+<p>Data yang dimuat adalah satu tabel tunggal <code class="docutils literal notranslate"><span class="pre">bangkalan_polutan.csv</span></code>, dengan
+kolom <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">NO2</span></code>, <code class="docutils literal notranslate"><span class="pre">CO</span></code>, <code class="docutils literal notranslate"><span class="pre">SO2</span></code>, dan <code class="docutils literal notranslate"><span class="pre">CH4</span></code>, mirip struktur tabel pada
+basis data, bukan empat file terpisah.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -889,32 +933,98 @@ layer di kanan atas peta.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">pollutants</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">,</span> <span class="s2">&quot;CO&quot;</span><span class="p">,</span> <span class="s2">&quot;SO2&quot;</span><span class="p">,</span> <span class="s2">&quot;CH4&quot;</span><span class="p">]</span>
-<span class="n">dataframes</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="k">for</span> <span class="n">pollutant</span> <span class="ow">in</span> <span class="n">pollutants</span><span class="p">:</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../data/csv/bangkalan_</span><span class="si">{</span><span class="n">pollutant</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">])</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">dataframes</span><span class="p">[</span><span class="n">pollutant</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pollutant</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> baris, dari </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="si">}</span><span class="s2"> sampai </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/csv/bangkalan_polutan.csv&quot;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimuat: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> baris, dari </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="si">}</span><span class="s2"> sampai </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NO2: 292 baris, dari 2025-08-24 sampai 2026-08-23
-CO: 275 baris, dari 2025-08-24 sampai 2026-08-23
-SO2: 322 baris, dari 2025-08-24 sampai 2026-08-23
-CH4: 82 baris, dari 2025-08-24 sampai 2026-08-22
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dimuat: 314 baris, dari 2025-08-24 sampai 2026-08-23
 </pre></div>
 </div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>NO2</th>
+      <th>CO</th>
+      <th>SO2</th>
+      <th>CH4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-08-24</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-08-25</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-08-26</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-08-27</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-08-28</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 <section id="statistik-deskriptif">
 <h2>3. Statistik Deskriptif<a class="headerlink" href="#statistik-deskriptif" title="Link to this heading">#</a></h2>
 <p>Statistik deskriptif memberikan gambaran umum sebaran nilai tiap polutan,
 seperti nilai rata rata, nilai minimum, nilai maksimum, dan sebaran
-kuartil.</p>
+kuartil. Nilai ditampilkan dalam notasi ilmiah karena konsentrasi trace
+gas pada data Sentinel-5P umumnya sangat kecil, sehingga pembulatan
+desimal biasa dapat menyembunyikan nilai yang sebenarnya bukan nol.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -923,15 +1033,15 @@ kuartil.</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary_rows</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">pollutant</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dataframes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="k">for</span> <span class="n">pollutant</span> <span class="ow">in</span> <span class="n">pollutants</span><span class="p">:</span>
     <span class="n">desc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">pollutant</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
     <span class="n">summary_rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
         <span class="s2">&quot;polutan&quot;</span><span class="p">:</span> <span class="n">pollutant</span><span class="p">,</span>
         <span class="s2">&quot;jumlah_data&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]),</span>
-        <span class="s2">&quot;rata_rata&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">],</span> <span class="mi">6</span><span class="p">),</span>
-        <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">],</span> <span class="mi">6</span><span class="p">),</span>
-        <span class="s2">&quot;minimum&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="s2">&quot;min&quot;</span><span class="p">],</span> <span class="mi">6</span><span class="p">),</span>
-        <span class="s2">&quot;maksimum&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="s2">&quot;max&quot;</span><span class="p">],</span> <span class="mi">6</span><span class="p">),</span>
+        <span class="s2">&quot;rata_rata&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">desc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">desc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;minimum&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">desc</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;maksimum&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">desc</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
     <span class="p">})</span>
 
 <span class="n">summary_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">summary_rows</span><span class="p">)</span>
@@ -971,38 +1081,38 @@ kuartil.</p>
     <tr>
       <th>0</th>
       <td>NO2</td>
-      <td>292</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>278</td>
+      <td>0.000e+00</td>
+      <td>0.000e+00</td>
+      <td>0.000e+00</td>
+      <td>0.000e+00</td>
     </tr>
     <tr>
       <th>1</th>
       <td>CO</td>
-      <td>275</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>270</td>
+      <td>0.000e+00</td>
+      <td>0.000e+00</td>
+      <td>0.000e+00</td>
+      <td>0.000e+00</td>
     </tr>
     <tr>
       <th>2</th>
       <td>SO2</td>
-      <td>322</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>298</td>
+      <td>0.000e+00</td>
+      <td>0.000e+00</td>
+      <td>0.000e+00</td>
+      <td>0.000e+00</td>
     </tr>
     <tr>
       <th>3</th>
       <td>CH4</td>
-      <td>82</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>71</td>
+      <td>0.000e+00</td>
+      <td>0.000e+00</td>
+      <td>0.000e+00</td>
+      <td>0.000e+00</td>
     </tr>
   </tbody>
 </table>
@@ -1022,8 +1132,8 @@ adanya lintasan satelit pada hari tersebut.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">pollutant</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dataframes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">df_full</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_full</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">pollutant</span> <span class="ow">in</span> <span class="n">pollutants</span><span class="p">:</span>
     <span class="n">n_missing</span> <span class="o">=</span> <span class="n">df_full</span><span class="p">[</span><span class="n">pollutant</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
     <span class="n">pct_missing</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">n_missing</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_full</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pollutant</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">n_missing</span><span class="si">}</span><span class="s2"> dari </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_full</span><span class="p">)</span><span class="si">}</span><span class="s2"> hari kosong (</span><span class="si">{</span><span class="n">pct_missing</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> persen)&quot;</span><span class="p">)</span>
@@ -1032,12 +1142,10 @@ adanya lintasan satelit pada hari tersebut.</p>
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NO2: 73 dari 365 hari kosong (20.0 persen)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CO: 90 dari 365 hari kosong (24.7 persen)
-SO2: 43 dari 365 hari kosong (11.8 persen)
-CH4: 282 dari 364 hari kosong (77.5 persen)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NO2: 87 dari 365 hari kosong (23.8 persen)
+CO: 95 dari 365 hari kosong (26.0 persen)
+SO2: 67 dari 365 hari kosong (18.4 persen)
+CH4: 294 dari 365 hari kosong (80.5 persen)
 </pre></div>
 </div>
 </div>
@@ -1065,7 +1173,7 @@ data adalah outlier. Baris dengan nilai kosong dibuang terlebih dahulu
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pollutants</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">pollutants</span><span class="p">)),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">pollutant</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">pollutants</span><span class="p">):</span>
-    <span class="n">df_clean</span> <span class="o">=</span> <span class="n">dataframes</span><span class="p">[</span><span class="n">pollutant</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">pollutant</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df_clean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">pollutant</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="n">model</span> <span class="o">=</span> <span class="n">IsolationForest</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
     <span class="n">df_clean</span><span class="p">[</span><span class="s2">&quot;outlier&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">df_clean</span><span class="p">[[</span><span class="n">pollutant</span><span class="p">]])</span>
@@ -1089,19 +1197,19 @@ data adalah outlier. Baris dengan nilai kosong dibuang terlebih dahulu
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NO2: 0 outlier dari 292 data valid
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NO2: 0 outlier dari 278 data valid
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CO: 0 outlier dari 275 data valid
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CO: 0 outlier dari 270 data valid
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SO2: 0 outlier dari 322 data valid
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SO2: 0 outlier dari 298 data valid
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CH4: 0 outlier dari 82 data valid
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CH4: 0 outlier dari 71 data valid
 </pre></div>
 </div>
-<img alt="_images/4cfc3ee1052d9b74b1ceb22925f7732e6ea93592b2433436d724d02d4a19a1e9.png" src="_images/4cfc3ee1052d9b74b1ceb22925f7732e6ea93592b2433436d724d02d4a19a1e9.png" />
+<img alt="_images/402d66caca0d893f38b32cad520c7b7e48e2c2832d08a55c116410368d29cc06.png" src="_images/402d66caca0d893f38b32cad520c7b7e48e2c2832d08a55c116410368d29cc06.png" />
 </div>
 </div>
 </section>
@@ -1109,7 +1217,9 @@ data adalah outlier. Baris dengan nilai kosong dibuang terlebih dahulu
 <h2>6. Korelasi Antar Polutan<a class="headerlink" href="#korelasi-antar-polutan" title="Link to this heading">#</a></h2>
 <p>Sebagai eksplorasi tambahan, korelasi antar polutan dapat memberi
 gambaran apakah polutan tertentu cenderung naik atau turun bersamaan,
-yang dapat mengindikasikan sumber emisi yang berkaitan.</p>
+yang dapat mengindikasikan sumber emisi yang berkaitan. Karena data
+sudah berada dalam satu tabel gabungan, perhitungan korelasi tidak lagi
+memerlukan penggabungan manual antar file.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1119,11 +1229,7 @@ yang dapat mengindikasikan sumber emisi yang berkaitan.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 
-<span class="n">merged</span> <span class="o">=</span> <span class="n">dataframes</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">][[</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;NO2&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">pollutant</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;CO&quot;</span><span class="p">,</span> <span class="s2">&quot;SO2&quot;</span><span class="p">,</span> <span class="s2">&quot;CH4&quot;</span><span class="p">]:</span>
-    <span class="n">merged</span> <span class="o">=</span> <span class="n">merged</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dataframes</span><span class="p">[</span><span class="n">pollutant</span><span class="p">][[</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="n">pollutant</span><span class="p">]],</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span><span class="p">)</span>
-
-<span class="n">corr</span> <span class="o">=</span> <span class="n">merged</span><span class="p">[</span><span class="n">pollutants</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">corr</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">pollutants</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -1141,9 +1247,9 @@ yang dapat mengindikasikan sumber emisi yang berkaitan.</p>
 </section>
 <section id="temuan-sementara">
 <h2>7. Temuan Sementara<a class="headerlink" href="#temuan-sementara" title="Link to this heading">#</a></h2>
-<p>Beberapa hal yang perlu diperhatikan berdasarkan eksplorasi di atas,
-akan terisi secara otomatis dengan angka sebenarnya begitu data hasil
-ekstraksi tersedia:</p>
+<p>Beberapa hal yang perlu diperhatikan berdasarkan eksplorasi di atas, akan
+terisi secara otomatis dengan angka sebenarnya begitu data hasil ekstraksi
+tersedia.</p>
 <ol class="arabic simple">
 <li><p>Proporsi missing values pada tiap polutan, sebagai dasar penentuan
 metode penanganan yang tepat pada tahap berikutnya.</p></li>
@@ -1153,20 +1259,25 @@ kejadian nyata atau gangguan data.</p></li>
 <li><p>Pola korelasi antar polutan, sebagai dasar dugaan awal mengenai
 keterkaitan sumber emisi, misalnya NO2 dan CO yang sama sama berasal
 dari transportasi.</p></li>
+<li><p>Jika nilai pada statistik deskriptif (Bagian 3) menunjukkan seluruh
+angka bernilai nol, bukan angka kecil dalam notasi ilmiah, kemungkinan
+besar ada masalah pada tahap ekstraksi yang perlu ditelusuri kembali di
+notebook <code class="docutils literal notranslate"><span class="pre">4-ekstraksi-data.ipynb</span></code>, misalnya nama band yang salah atau
+nilai kosong yang tidak sengaja terisi nol.</p></li>
 </ol>
 </section>
 <section id="kesimpulan">
 <h2>8. Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h2>
 <p>Eksplorasi data menunjukkan bahwa data hasil ekstraksi Sentinel-5P untuk
-Kabupaten Bangkalan sudah berada dalam struktur yang siap diolah, yaitu
-deret waktu harian per polutan dengan rentang tanggal yang jelas. Peta
-interaktif memastikan bahwa cakupan wilayah AOI sudah sesuai dengan
-konteks yang ingin dipantau, termasuk titik titik dengan potensi sumber
-emisi seperti akses Suramadu dan pesisir Klampis. Pemeriksaan missing
-values dan deteksi outlier awal pada bagian ini menjadi dasar bagi
-penanganan data yang lebih menyeluruh, seperti interpolasi nilai kosong
-dan investigasi outlier, yang akan dilakukan pada notebook
-<code class="docutils literal notranslate"><span class="pre">2-analisis-bangkalan.ipynb</span></code>.</p>
+Kabupaten Bangkalan sudah berada dalam struktur satu tabel gabungan yang
+siap diolah, dengan rentang tanggal yang jelas untuk keempat polutan
+sekaligus. Peta interaktif memastikan bahwa cakupan wilayah yang
+diagregasi mengikuti bentuk administratif asli Kabupaten Bangkalan, bukan
+kotak bounding box, termasuk titik titik dengan potensi sumber emisi
+seperti akses Suramadu dan pesisir Klampis. Pemeriksaan missing values dan
+deteksi outlier awal pada bagian ini menjadi dasar bagi penanganan data
+yang lebih menyeluruh, seperti interpolasi nilai kosong dan investigasi
+outlier, yang akan dilakukan pada notebook <code class="docutils literal notranslate"><span class="pre">5-analisis-bangkalan.ipynb</span></code>.</p>
 </section>
 </section>
 
@@ -1214,7 +1325,7 @@ dan investigasi outlier, yang akan dilakukan pada notebook
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Ekstraksi Data Kualitas Udara Kabupaten Bangkalan</p>
+        <p class="prev-next-title">Ekstraksi Data Kualitas Udara - Kabupaten Bangkalan</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1235,7 +1346,7 @@ dan investigasi outlier, yang akan dilakukan pada notebook
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#peta-interaktif-wilayah-bangkalan">1. Peta Interaktif Wilayah Bangkalan</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memuat-data-hasil-ekstraksi">2. Memuat Data Hasil Ekstraksi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memuat-tabel-gabungan-hasil-ekstraksi">2. Memuat Tabel Gabungan Hasil Ekstraksi</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-deskriptif">3. Statistik Deskriptif</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-missing-values">4. Pemeriksaan Missing Values</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier-awal">5. Deteksi Outlier Awal</a></li>
