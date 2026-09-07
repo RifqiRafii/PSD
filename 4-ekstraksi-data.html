@@ -181,6 +181,8 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="tugas01_kualitas_udara_bangkalan.html">Analisis Kualitas Udara dan Sumber Polutan di Bangkalan</a></li>
+
+
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="pengantar-analisis-polutan-bangkalan.html">Pengantar Analisis Polutan Kabupaten Bangkalan</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="1-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="2-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
@@ -552,10 +554,12 @@ persegi.</p>
 
 <span class="c1"># --- Folder output ---</span>
 <span class="n">NC_DIR</span> <span class="o">=</span> <span class="s2">&quot;../data/nc/&quot;</span>
-<span class="n">CSV_DIR</span> <span class="o">=</span> <span class="s2">&quot;../data/csv/&quot;</span>
+
+<span class="c1"># Tabel gabungan hasil ekstraksi disimpan satu folder dengan notebook ini</span>
+<span class="c1"># (folder &quot;materi/&quot;), mengikuti struktur proyek yang sudah dipakai.</span>
+<span class="n">COMBINED_CSV_PATH</span> <span class="o">=</span> <span class="s2">&quot;data_polutan_bangkalan.csv&quot;</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">NC_DIR</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">CSV_DIR</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Konfigurasi siap.&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bounding box (kasar, dari polygon):&quot;</span><span class="p">,</span> <span class="n">bangkalan_bbox</span><span class="p">)</span>
@@ -609,6 +613,12 @@ Berhasil terhubung dan terautentikasi ke: openeo.dataspace.copernicus.eu
 </section>
 <section id="fungsi-ekstraksi-untuk-satu-polutan">
 <h2>4. Fungsi Ekstraksi untuk Satu Polutan<a class="headerlink" href="#fungsi-ekstraksi-untuk-satu-polutan" title="Link to this heading">#</a></h2>
+<p>Sebelum itu, fungsi kecil <code class="docutils literal notranslate"><span class="pre">safe_download()</span></code> disiapkan untuk menghindari
+<code class="docutils literal notranslate"><span class="pre">PermissionError</span></code> di Windows. Masalah ini terjadi jika file <code class="docutils literal notranslate"><span class="pre">.nc</span></code> dari
+percobaan sebelumnya masih “terkunci” karena sempat dibuka dengan
+<code class="docutils literal notranslate"><span class="pre">xr.open_dataset()</span></code> tanpa ditutup. <code class="docutils literal notranslate"><span class="pre">safe_download()</span></code> mencoba menghapus file
+lama terlebih dahulu sebelum menulis yang baru, dan memberi pesan yang jelas
+jika file tersebut masih terkunci oleh proses lain.</p>
 <p>Fungsi <code class="docutils literal notranslate"><span class="pre">extract_pollutant()</span></code> melakukan seluruh proses openEO untuk satu
 polutan:</p>
 <ol class="arabic simple">
@@ -628,6 +638,30 @@ lama daripada proses sinkron.</p></li>
 <li><p>Hasil job diunduh ke folder <code class="docutils literal notranslate"><span class="pre">NC_DIR</span></code> dengan nama file
 <code class="docutils literal notranslate"><span class="pre">bangkalan_&lt;nama_polutan&gt;.nc</span></code>.</p></li>
 </ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">safe_download</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">target_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mengunduh hasil job, menghindari PermissionError akibat file lama</span>
+<span class="sd">    yang masih terkunci (umum terjadi di Windows).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">target_path</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">target_path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;PERINGATAN: </span><span class="si">{</span><span class="n">target_path</span><span class="si">}</span><span class="s2"> masih terkunci oleh proses lain &quot;</span>
+                <span class="s2">&quot;(misalnya dataset yang belum ditutup dengan .close(), atau &quot;</span>
+                <span class="s2">&quot;sedang dibuka aplikasi lain). Coba restart kernel notebook &quot;</span>
+                <span class="s2">&quot;lalu jalankan ulang sel ini.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span>
+
+    <span class="n">job</span><span class="o">.</span><span class="n">get_results</span><span class="p">()</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">target_path</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">extract_pollutant</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">pollutant_name</span><span class="p">,</span> <span class="n">band_name</span><span class="p">,</span>
@@ -677,7 +711,7 @@ lama daripada proses sinkron.</p></li>
     <span class="n">job</span><span class="o">.</span><span class="n">start_and_wait</span><span class="p">()</span>
 
     <span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;bangkalan_</span><span class="si">{</span><span class="n">pollutant_name</span><span class="si">}</span><span class="s2">.nc&quot;</span><span class="p">)</span>
-    <span class="n">job</span><span class="o">.</span><span class="n">get_results</span><span class="p">()</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">output_path</span><span class="p">)</span>
+    <span class="n">safe_download</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">pollutant_name</span><span class="si">}</span><span class="s2">] Selesai -&gt; </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">output_path</span>
@@ -714,10 +748,85 @@ agregasi bisa didominasi oleh piksel kosong.</p></li>
 <li><p><strong>Ada error atau warning pada job yang tidak terlihat.</strong> Job batch bisa
 saja selesai tanpa error fatal namun tetap menghasilkan data kosong.
 Periksa <code class="docutils literal notranslate"><span class="pre">job.logs()</span></code> untuk melihat pesan yang mungkin terlewat.</p></li>
+<li><p><strong>Penyaringan kualitas (QA) internal pada backend.</strong> Backend openEO
+Copernicus Data Space saat ini menyaring piksel dengan <code class="docutils literal notranslate"><span class="pre">qa_value</span></code> di
+bawah 0.5 menjadi NaN sebelum data sampai ke pengguna (dikonfirmasi pada
+forum resmi Copernicus Data Space, topik “Quality factor for
+Sentinel-5P L2 SO2 products”). Untuk wilayah kecil dan berawan, ini bisa
+membuat sebagian atau seluruh piksel pada suatu hari tersaring habis.</p></li>
 </ol>
-<p>Sel berikut menjalankan ekstraksi NO2 hanya untuk satu minggu pertama sebagai
-uji coba, lalu langsung memeriksa nilai mentahnya sebelum dipakai lebih
-lanjut.</p>
+<p><strong>Sel pertama</strong> di bawah menguji data paling mentah, yaitu grid piksel NO2
+tanpa agregasi spasial maupun temporal, hanya untuk satu hari. Ini
+mengisolasi apakah masalah sudah muncul sejak <code class="docutils literal notranslate"><span class="pre">load_collection</span></code>, sebelum
+proses agregasi apa pun dilakukan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uji coba paling mendasar: unduh grid piksel mentah NO2 untuk satu hari saja,</span>
+<span class="c1"># TANPA aggregate_temporal_period maupun aggregate_spatial. Ini mengisolasi</span>
+<span class="c1"># apakah data pada sumbernya memang sudah nol/tidak ada, atau justru berubah</span>
+<span class="c1"># menjadi 0 pada tahap agregasi selanjutnya.</span>
+<span class="n">raw_cube</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">load_collection</span><span class="p">(</span>
+    <span class="s2">&quot;SENTINEL_5P_L2&quot;</span><span class="p">,</span>
+    <span class="n">spatial_extent</span><span class="o">=</span><span class="n">bangkalan_bbox</span><span class="p">,</span>
+    <span class="n">temporal_extent</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2025-08-24&quot;</span><span class="p">,</span> <span class="s2">&quot;2025-08-25&quot;</span><span class="p">],</span>
+    <span class="n">bands</span><span class="o">=</span><span class="p">[</span><span class="n">POLLUTANTS</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">]],</span>
+<span class="p">)</span>
+<span class="n">raw_job</span> <span class="o">=</span> <span class="n">raw_cube</span><span class="o">.</span><span class="n">save_result</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;netCDF&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;raw_grid_test_NO2&quot;</span><span class="p">)</span>
+<span class="n">raw_job</span><span class="o">.</span><span class="n">start_and_wait</span><span class="p">()</span>
+
+<span class="n">raw_test_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">NC_DIR</span><span class="p">,</span> <span class="s2">&quot;raw_grid_test_NO2.nc&quot;</span><span class="p">)</span>
+<span class="n">safe_download</span><span class="p">(</span><span class="n">raw_job</span><span class="p">,</span> <span class="n">raw_test_path</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">raw_test_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">ds_raw</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ds_raw</span><span class="p">)</span>
+
+    <span class="n">raw_values</span> <span class="o">=</span> <span class="n">ds_raw</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">ds_raw</span><span class="o">.</span><span class="n">data_vars</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah piksel total   :&quot;</span><span class="p">,</span> <span class="n">raw_values</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah piksel NaN     :&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">raw_values</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah piksel 0.0     :&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">raw_values</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah piksel valid   :&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">raw_values</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">raw_values</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nilai minimum (valid) : </span><span class="si">{:.3e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">raw_values</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">NA</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nilai maksimum (valid): </span><span class="si">{:.3e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">raw_values</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">NA</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">))</span>
+
+<span class="c1"># Dataset ditutup otomatis oleh blok &quot;with&quot; di atas, sehingga file .nc tidak</span>
+<span class="c1"># akan terkunci saat sel ini dijalankan ulang (menghindari PermissionError</span>
+<span class="c1"># yang umum terjadi di Windows).</span>
+<span class="c1">#</span>
+<span class="c1"># Jika &quot;Jumlah piksel valid&quot; di atas menunjukkan 0 (tidak ada satu pun piksel</span>
+<span class="c1"># bernilai selain NaN atau 0.0) untuk grid mentah satu hari ini, kemungkinan</span>
+<span class="c1"># besar masalah ada pada request itu sendiri (bbox/polygon, nama band, atau</span>
+<span class="c1"># koleksi), bukan pada langkah agregasi. Jika grid mentah ini justru</span>
+<span class="c1"># menunjukkan banyak piksel valid dan bervariasi, artinya masalah baru muncul</span>
+<span class="c1"># pada langkah aggregate_temporal_period atau aggregate_spatial berikutnya.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00 Job &#39;j-260907010528492aab8fe0a8cb55b0a6&#39;: send &#39;start&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:03 Job &#39;j-260907010528492aab8fe0a8cb55b0a6&#39;: created (progress 0%)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:09 Job &#39;j-260907010528492aab8fe0a8cb55b0a6&#39;: queued (progress 0%)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:16 Job &#39;j-260907010528492aab8fe0a8cb55b0a6&#39;: queued (progress 0%)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:24 Job &#39;j-260907010528492aab8fe0a8cb55b0a6&#39;: queued (progress 0%)
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Sel kedua</strong> di bawah menguji pipeline lengkap (agregasi temporal dan
+spasial) untuk NO2, tetapi hanya satu minggu pertama sebagai uji coba,
+sebelum menjalankan ekstraksi penuh setahun untuk keempat polutan.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uji coba: ekstraksi NO2 untuk satu minggu pertama saja</span>
@@ -733,51 +842,29 @@ lanjut.</p>
 <span class="p">)</span>
 
 <span class="c1"># Diagnostik: periksa nilai mentah sebelum dipakai lebih lanjut</span>
-<span class="n">ds_test</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">test_nc_path</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ds_test</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">test_nc_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">ds_test</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ds_test</span><span class="p">)</span>
 
-<span class="n">value_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ds_test</span><span class="o">.</span><span class="n">data_vars</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variabel yang tersedia pada NetCDF:&quot;</span><span class="p">,</span> <span class="n">value_vars</span><span class="p">)</span>
+    <span class="n">value_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ds_test</span><span class="o">.</span><span class="n">data_vars</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variabel yang tersedia pada NetCDF:&quot;</span><span class="p">,</span> <span class="n">value_vars</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">value_vars</span><span class="p">:</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="n">ds_test</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Variabel &#39;</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&#39;:&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  jumlah data       :&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  jumlah NaN        :&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  jumlah bernilai 0 :&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">values</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  nilai minimum     : </span><span class="si">{:.3e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  nilai maksimum    : </span><span class="si">{:.3e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  nilai rata rata   : </span><span class="si">{:.3e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">value_vars</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">ds_test</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Variabel &#39;</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&#39;:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  jumlah data       :&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  jumlah NaN        :&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  jumlah bernilai 0 :&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">values</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  nilai minimum     : </span><span class="si">{:.3e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  nilai maksimum    : </span><span class="si">{:.3e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  nilai rata rata   : </span><span class="si">{:.3e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
 
+<span class="c1"># Dataset ditutup otomatis oleh blok &quot;with&quot; di atas (menghindari</span>
+<span class="c1"># PermissionError di Windows saat file ini ditulis ulang nanti).</span>
+<span class="c1">#</span>
 <span class="c1"># Jika seluruh nilai memang 0 (bukan NaN dan bukan angka sangat kecil),</span>
 <span class="c1"># periksa kembali nama band lewat baris berikut sebelum melanjutkan.</span>
 <span class="c1"># print(connection.describe_collection(&quot;SENTINEL_5P_L2&quot;))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[NO2_TEST] Membuat data cube ...
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[NO2_TEST] Agregasi temporal harian (mean) ...
-[NO2_TEST] Agregasi spasial berdasarkan polygon asli Bangkalan (mean) ...
-[NO2_TEST] Mengirim batch job ke backend openEO ...
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00 Job &#39;j-2609061549064604988df1e069cd4230&#39;: send &#39;start&#39;
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:03 Job &#39;j-2609061549064604988df1e069cd4230&#39;: created (progress 0%)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:08 Job &#39;j-2609061549064604988df1e069cd4230&#39;: queued (progress 0%)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:15 Job &#39;j-2609061549064604988df1e069cd4230&#39;: queued (progress 0%)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:23 Job &#39;j-2609061549064604988df1e069cd4230&#39;: queued (progress 0%)
 </pre></div>
 </div>
 </div>
@@ -823,91 +910,6 @@ lainnya.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[NO2] Membuat data cube ...
-[NO2] Agregasi temporal harian (mean) ...
-[NO2] Agregasi spasial berdasarkan polygon asli Bangkalan (mean) ...
-[NO2] Mengirim batch job ke backend openEO ...
-0:00:00 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: send &#39;start&#39;
-0:00:02 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: created (progress 0%)
-0:00:08 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: queued (progress 0%)
-0:00:14 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: queued (progress 0%)
-0:00:22 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: queued (progress 0%)
-0:00:32 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: queued (progress 0%)
-0:00:45 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: running (progress N/A)
-0:01:01 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: running (progress N/A)
-0:01:20 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: running (progress N/A)
-0:01:44 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: running (progress N/A)
-0:02:14 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: running (progress N/A)
-0:02:52 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: running (progress N/A)
-0:03:39 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: running (progress N/A)
-0:04:38 Job &#39;j-2609061452364a06b384d6da50e9b897&#39;: finished (progress 100%)
-[NO2] Selesai -&gt; ../data/nc/bangkalan_NO2.nc
-[CO] Membuat data cube ...
-[CO] Agregasi temporal harian (mean) ...
-[CO] Agregasi spasial berdasarkan polygon asli Bangkalan (mean) ...
-[CO] Mengirim batch job ke backend openEO ...
-0:00:00 Job &#39;j-260906145723429db387c53e6f969d58&#39;: send &#39;start&#39;
-0:00:03 Job &#39;j-260906145723429db387c53e6f969d58&#39;: created (progress 0%)
-0:00:08 Job &#39;j-260906145723429db387c53e6f969d58&#39;: queued (progress 0%)
-0:00:15 Job &#39;j-260906145723429db387c53e6f969d58&#39;: queued (progress 0%)
-0:00:23 Job &#39;j-260906145723429db387c53e6f969d58&#39;: queued (progress 0%)
-0:00:33 Job &#39;j-260906145723429db387c53e6f969d58&#39;: queued (progress 0%)
-0:00:46 Job &#39;j-260906145723429db387c53e6f969d58&#39;: queued (progress 0%)
-0:01:01 Job &#39;j-260906145723429db387c53e6f969d58&#39;: running (progress N/A)
-0:01:20 Job &#39;j-260906145723429db387c53e6f969d58&#39;: running (progress N/A)
-0:01:45 Job &#39;j-260906145723429db387c53e6f969d58&#39;: running (progress N/A)
-0:02:15 Job &#39;j-260906145723429db387c53e6f969d58&#39;: running (progress N/A)
-0:02:52 Job &#39;j-260906145723429db387c53e6f969d58&#39;: running (progress N/A)
-0:03:39 Job &#39;j-260906145723429db387c53e6f969d58&#39;: running (progress N/A)
-0:04:38 Job &#39;j-260906145723429db387c53e6f969d58&#39;: finished (progress 100%)
-[CO] Selesai -&gt; ../data/nc/bangkalan_CO.nc
-[SO2] Membuat data cube ...
-[SO2] Agregasi temporal harian (mean) ...
-[SO2] Agregasi spasial berdasarkan polygon asli Bangkalan (mean) ...
-[SO2] Mengirim batch job ke backend openEO ...
-0:00:00 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: send &#39;start&#39;
-0:00:03 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: queued (progress 0%)
-0:00:08 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: queued (progress 0%)
-0:00:15 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: queued (progress 0%)
-0:00:23 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: queued (progress 0%)
-0:00:33 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: queued (progress 0%)
-0:00:46 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: queued (progress 0%)
-0:01:02 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: queued (progress 0%)
-0:01:22 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: running (progress N/A)
-0:01:46 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: running (progress N/A)
-0:02:16 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: running (progress N/A)
-0:02:54 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: running (progress N/A)
-0:03:41 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: running (progress N/A)
-0:04:40 Job &#39;j-2609061502124b1c9c22a7cbf9561cff&#39;: finished (progress 100%)
-[SO2] Selesai -&gt; ../data/nc/bangkalan_SO2.nc
-[CH4] Membuat data cube ...
-[CH4] Agregasi temporal harian (mean) ...
-[CH4] Agregasi spasial berdasarkan polygon asli Bangkalan (mean) ...
-[CH4] Mengirim batch job ke backend openEO ...
-0:00:00 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: send &#39;start&#39;
-0:00:03 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: queued (progress 0%)
-0:00:08 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: queued (progress 0%)
-0:00:15 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: queued (progress 0%)
-0:00:23 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: queued (progress 0%)
-0:00:33 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: queued (progress 0%)
-0:00:46 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: queued (progress 0%)
-0:01:02 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: queued (progress 0%)
-0:01:21 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: running (progress N/A)
-0:01:46 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: running (progress N/A)
-0:02:17 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: running (progress N/A)
-0:02:54 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: running (progress N/A)
-0:03:41 Job &#39;j-2609061507024ccfbe0fdd1f461c5927&#39;: finished (progress 100%)
-[CH4] Selesai -&gt; ../data/nc/bangkalan_CH4.nc
-
-Ringkasan file NetCDF yang berhasil dibuat:
-  - NO2: ../data/nc/bangkalan_NO2.nc
-  - CO: ../data/nc/bangkalan_CO.nc
-  - SO2: ../data/nc/bangkalan_SO2.nc
-  - CH4: ../data/nc/bangkalan_CH4.nc
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="menggabungkan-semua-polutan-menjadi-satu-tabel">
@@ -919,12 +921,27 @@ data, dengan satu baris per tanggal dan satu kolom per polutan.</p>
 <code class="docutils literal notranslate"><span class="pre">pandas.Series</span></code> bertipe waktu. Seluruh series kemudian digabungkan dengan
 <code class="docutils literal notranslate"><span class="pre">pd.concat(axis=1)</span></code> berdasarkan tanggal yang sama, menghasilkan satu
 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> dengan kolom <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">NO2</span></code>, <code class="docutils literal notranslate"><span class="pre">CO</span></code>, <code class="docutils literal notranslate"><span class="pre">SO2</span></code>, dan <code class="docutils literal notranslate"><span class="pre">CH4</span></code>.</p>
+<blockquote>
+<div><p><strong>Catatan tentang nilai 0.0.</strong> Backend openEO Copernicus Data Space saat
+ini menerapkan penyaringan kualitas (QA) secara internal pada koleksi
+<code class="docutils literal notranslate"><span class="pre">SENTINEL_5P_L2</span></code>: piksel dengan <code class="docutils literal notranslate"><span class="pre">qa_value</span></code> di bawah 0.5 diganti menjadi
+NaN sebelum data sampai ke pengguna (dikonfirmasi pada forum resmi
+Copernicus Data Space, topik “Quality factor for Sentinel-5P L2 SO2
+products”). Untuk wilayah tropis dan berawan seperti Bangkalan,
+penyaringan ini bisa membuang hampir seluruh piksel pada suatu hari.
+Jika <em>seluruh</em> piksel dalam polygon pada suatu hari tersaring habis,
+hasil rata rata yang seharusnya NaN kadang dikembalikan backend sebagai
+<strong>0.0</strong>, bukan NaN. Karena konsentrasi atmosfer NO2, CO, SO2, dan CH4
+secara fisis tidak pernah benar benar nol, nilai 0.0 yang persis pada
+data ini diperlakukan sebagai data hilang, bukan pengukuran valid, dan
+dikonversi menjadi NaN sebelum disimpan.</p>
+</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">nc_to_series</span><span class="p">(</span><span class="n">nc_path</span><span class="p">,</span> <span class="n">pollutant_name</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Membuka NetCDF hasil aggregate_spatial dan mengembalikannya sebagai Series.&quot;&quot;&quot;</span>
-    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">nc_path</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">nc_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">ds</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 
     <span class="n">time_col_candidates</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s2">&quot;time&quot;</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="n">c</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;t&quot;</span><span class="p">]</span>
     <span class="n">time_col</span> <span class="o">=</span> <span class="n">time_col_candidates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">time_col_candidates</span> <span class="k">else</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -945,91 +962,28 @@ data, dengan satu baris per tanggal dan satu kolom per polutan.</p>
 <span class="n">combined_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">series_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="n">combined_df</span> <span class="o">=</span> <span class="n">combined_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">combined_csv_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CSV_DIR</span><span class="p">,</span> <span class="s2">&quot;bangkalan_polutan.csv&quot;</span><span class="p">)</span>
-<span class="n">combined_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">combined_csv_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">pollutant_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">POLLUTANTS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tabel gabungan disimpan -&gt; </span><span class="si">{</span><span class="n">combined_csv_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Nilai persis 0.0 diperlakukan sebagai data hilang (lihat catatan di atas),</span>
+<span class="c1"># karena secara fisis konsentrasi trace gas atmosfer tidak pernah benar</span>
+<span class="c1"># benar nol; nilai 0.0 yang muncul kemungkinan besar adalah artefak dari</span>
+<span class="c1"># penyaringan kualitas (QA) pada backend, bukan pengukuran yang valid.</span>
+<span class="n">n_zero_before</span> <span class="o">=</span> <span class="p">(</span><span class="n">combined_df</span><span class="p">[</span><span class="n">pollutant_cols</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">combined_df</span><span class="p">[</span><span class="n">pollutant_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">combined_df</span><span class="p">[</span><span class="n">pollutant_cols</span><span class="p">]</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">combined_df</span><span class="p">[</span><span class="n">pollutant_cols</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah nilai 0.0 yang dikonversi menjadi data hilang (NaN):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">n_zero_before</span><span class="p">)</span>
+
+<span class="n">combined_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">COMBINED_CSV_PATH</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tabel gabungan disimpan -&gt; </span><span class="si">{</span><span class="n">COMBINED_CSV_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah baris : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">combined_df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kolom        : </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">combined_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">combined_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tabel gabungan disimpan -&gt; ../data/csv/bangkalan_polutan.csv
-Jumlah baris : 314
-Kolom        : [&#39;date&#39;, &#39;NO2&#39;, &#39;CO&#39;, &#39;SO2&#39;, &#39;CH4&#39;]
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>date</th>
-      <th>NO2</th>
-      <th>CO</th>
-      <th>SO2</th>
-      <th>CH4</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2025-08-24</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2025-08-25</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2025-08-26</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2025-08-27</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2025-08-28</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 </section>
 <section id="selesai">
@@ -1037,9 +991,9 @@ Kolom        : [&#39;date&#39;, &#39;NO2&#39;, &#39;CO&#39;, &#39;SO2&#39;, &#39
 <p>Setelah notebook ini dijalankan, kamu akan memiliki:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">../data/nc/bangkalan_&lt;POLUTAN&gt;.nc</span></code>, data mentah hasil openEO per polutan.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">../data/csv/bangkalan_polutan.csv</span></code>, <strong>satu tabel gabungan</strong> berisi kolom
-<code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">NO2</span></code>, <code class="docutils literal notranslate"><span class="pre">CO</span></code>, <code class="docutils literal notranslate"><span class="pre">SO2</span></code>, dan <code class="docutils literal notranslate"><span class="pre">CH4</span></code>, siap dipakai langsung pada notebook
-analisis.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_polutan_bangkalan.csv</span></code>, <strong>satu tabel gabungan</strong> (satu folder dengan
+notebook ini) berisi kolom <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">NO2</span></code>, <code class="docutils literal notranslate"><span class="pre">CO</span></code>, <code class="docutils literal notranslate"><span class="pre">SO2</span></code>, dan <code class="docutils literal notranslate"><span class="pre">CH4</span></code>, siap
+dipakai langsung pada notebook analisis.</p></li>
 </ul>
 <p>Struktur tabel gabungan kurang lebih sebagai berikut.</p>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -1073,7 +1027,7 @@ analisis.</p></li>
 </tbody>
 </table>
 </div>
-<p>Lanjutkan ke notebook <strong><code class="docutils literal notranslate"><span class="pre">2-analisis-bangkalan.ipynb</span></code></strong> untuk melakukan
+<p>Lanjutkan ke notebook <strong><code class="docutils literal notranslate"><span class="pre">5-analisis-bangkalan.ipynb</span></code></strong> untuk melakukan
 eksplorasi, visualisasi peta, penanganan missing values, dan deteksi outlier
 menggunakan Isolation Forest.</p>
 </section>

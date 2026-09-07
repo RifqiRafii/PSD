@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -181,12 +181,14 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Analisis Kualitas Udara dan Sumber Polutan di Bangkalan</a></li>
+
+
 <li class="toctree-l1 has-children"><a class="reference internal" href="pengantar-analisis-polutan-bangkalan.html">Pengantar Analisis Polutan Kabupaten Bangkalan</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="1-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="2-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3-eksplorasi-data-bangkalan.html">Eksplorasi Data - Kabupaten Bangkalan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="4-ekstraksi-data.html">Ekstraksi Data Kualitas Udara Kabupaten Bangkalan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="5-analisis-bangkalan.html">Analisis Kualitas Udara Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-ekstraksi-data.html">Ekstraksi Data Kualitas Udara - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5-analisis-bangkalan.html">Analisis Kualitas Udara - Kabupaten Bangkalan</a></li>
 </ul>
 </details></li>
 </ul>
@@ -384,9 +386,40 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Analisis Kualitas Udara dan Sumber Polutan di Bangkalan</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#business-understanding">1. Business Understanding</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">2. Data Understanding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">2. Data Understanding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variabel-pada-dataset">2.1 Variabel pada Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-polutan">2.2 Pengertian Polutan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi-awal-sumber-polutan">2.3 Interpretasi Awal Sumber Polutan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pertanyaan-analisis">2.4 Pertanyaan Analisis</a></li>
 </ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation-untuk-time-series">3. Data Preparation untuk Time Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-time-series-co">4. Visualisasi Time Series CO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-time-series-no2">5. Visualisasi Time Series NO2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-pola-co-dan-no2">6. Perbandingan Pola CO dan NO2</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-analisis-di-knime">7. Implementasi Analisis di KNIME</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alur-node-knime">7.1 Alur Node KNIME</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-di-knime">7.2 Langkah-Langkah di KNIME</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1-postgresql-connector">Langkah 1 — PostgreSQL Connector</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-db-table-selector">Langkah 2 — DB Table Selector</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3-db-reader">Langkah 3 — DB Reader</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-4-mengecek-statistik">Langkah 4 — Mengecek Statistik</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-5-mengubah-kolom-waktu">Langkah 5 — Mengubah Kolom Waktu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-6-membuat-time-series">Langkah 6 — Membuat Time Series</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-7-jika-grafik-terlalu-padat">Langkah 7 — Jika Grafik Terlalu Padat</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow-knime-yang-direkomendasikan">7.3 Workflow KNIME yang Direkomendasikan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-yang-diharapkan">7.4 Output yang Diharapkan</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-sementara">8. Kesimpulan Sementara</a></li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -413,13 +446,12 @@ Tujuan utama dari analisis ini adalah untuk mengetahui dan memantau tingkat kual
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 
-<span class="c1"># 1. Tentukan Koordinat Bangkalan (Membatasi wilayah)</span>
+<span class="c1"># 1. Tentukan Koordinat Bangkalan</span>
 <span class="n">latitude</span> <span class="o">=</span> <span class="o">-</span><span class="mf">7.03</span>
 <span class="n">longitude</span> <span class="o">=</span> <span class="mf">112.74</span>
 
-<span class="c1"># 2. Setup Parameter API (Rentang 1 tahun hingga 31 Agustus 2026)</span>
+<span class="c1"># 2. Setup Parameter API (1 Tahun)</span>
 <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://air-quality-api.open-meteo.com/v1/air-quality&quot;</span>
 <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;latitude&quot;</span><span class="p">:</span> <span class="n">latitude</span><span class="p">,</span>
@@ -429,31 +461,136 @@ Tujuan utama dari analisis ini adalah untuk mengetahui dan memantau tingkat kual
     <span class="s2">&quot;hourly&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;carbon_monoxide&quot;</span><span class="p">,</span> <span class="s2">&quot;nitrogen_dioxide&quot;</span><span class="p">]</span>
 <span class="p">}</span>
 
-<span class="c1"># 3. Crawling Data</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="c1"># 3. Crawling Data dengan Proteksi Koneksi</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span> <span class="c1"># Memeriksa jika ada error HTTP (misal: 404/500)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
-<span class="c1"># 4. Memasukkan data ke DataFrame</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;tanggal_jam&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;hourly&#39;</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">],</span>
-    <span class="s2">&quot;CO&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;hourly&#39;</span><span class="p">][</span><span class="s1">&#39;carbon_monoxide&#39;</span><span class="p">],</span>
-    <span class="s2">&quot;NO2&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;hourly&#39;</span><span class="p">][</span><span class="s1">&#39;nitrogen_dioxide&#39;</span><span class="p">]</span>
-<span class="p">})</span>
+    <span class="c1"># 4. Memasukkan data ke DataFrame dan langsung konversi waktu</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s2">&quot;tanggal_jam&quot;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;hourly&#39;</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]),</span>
+        <span class="s2">&quot;CO&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;hourly&#39;</span><span class="p">][</span><span class="s1">&#39;carbon_monoxide&#39;</span><span class="p">],</span>
+        <span class="s2">&quot;NO2&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;hourly&#39;</span><span class="p">][</span><span class="s1">&#39;nitrogen_dioxide&#39;</span><span class="p">]</span>
+    <span class="p">})</span>
 
-<span class="c1"># Konversi kolom waktu menjadi tipe datetime</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;tanggal_jam&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;tanggal_jam&#39;</span><span class="p">])</span>
+    <span class="c1"># 5. Ekspor CSV</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data_polutan_bangkalan.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data berhasil ditarik dan disimpan sebagai &#39;data_polutan_bangkalan.csv&#39;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 
-<span class="c1"># 5. SIMPAN DATA KE CSV SESUAI SYARAT TUGAS</span>
-<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data_polutan_bangkalan.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data berhasil ditarik dan disimpan sebagai &#39;data_polutan_bangkalan.csv&#39;&quot;</span><span class="p">)</span>
-
-<span class="c1"># Tampilkan 5 data teratas</span>
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error Koneksi (11001): Pastikan laptop Anda terhubung ke internet yang stabil.&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gagal mengambil data dari API: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data berhasil ditarik dan disimpan sebagai &#39;data_polutan_bangkalan.csv&#39;
+
+          tanggal_jam     CO   NO2
+0 2025-09-01 00:00:00  760.0  29.7
+1 2025-09-01 01:00:00  635.0  23.4
+2 2025-09-01 02:00:00  391.0  14.8
+3 2025-09-01 03:00:00  207.0   8.1
+4 2025-09-01 04:00:00  165.0   5.2
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-understanding">
+<h2>2. Data Understanding<a class="headerlink" href="#data-understanding" title="Link to this heading">#</a></h2>
+<p>Dataset yang digunakan berisi rekaman kualitas udara <strong>per jam</strong> di wilayah Bangkalan, Jawa Timur, selama periode <strong>1 September 2025 sampai 31 Agustus 2026</strong>. Data diperoleh melalui Open-Meteo Air Quality API dan kemudian disimpan dalam format CSV.</p>
+<section id="variabel-pada-dataset">
+<h3>2.1 Variabel pada Dataset<a class="headerlink" href="#variabel-pada-dataset" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variabel</p></th>
+<th class="head"><p>Keterangan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tanggal_jam</span></code></p></td>
+<td><p>Waktu pengukuran/perekaman data dalam format tanggal dan jam</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CO</span></code></p></td>
+<td><p>Konsentrasi karbon monoksida dalam μg/m³</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NO2</span></code></p></td>
+<td><p>Konsentrasi nitrogen dioksida dalam μg/m³</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Dataset memiliki <strong>8.760 baris data</strong>, yang sesuai dengan data per jam selama satu tahun (365 × 24 jam).</p>
+</section>
+<section id="pengertian-polutan">
+<h3>2.2 Pengertian Polutan<a class="headerlink" href="#pengertian-polutan" title="Link to this heading">#</a></h3>
+<p><strong>1. Karbon Monoksida (CO)</strong><br />
+Karbon monoksida adalah gas yang tidak berwarna dan tidak berbau. CO terutama terbentuk dari proses pembakaran bahan bakar yang tidak sempurna. Paparan CO dalam konsentrasi tinggi dapat mengganggu kemampuan darah membawa oksigen ke seluruh tubuh. Dalam konteks wilayah perkotaan, salah satu sumber penting CO adalah emisi kendaraan bermotor dan proses pembakaran lainnya.</p>
+<p><strong>2. Nitrogen Dioksida (NO2)</strong><br />
+Nitrogen dioksida adalah salah satu gas pencemar udara yang umumnya dihasilkan dari proses pembakaran pada suhu tinggi, terutama pembakaran bahan bakar fosil. Sumbernya dapat berasal dari kendaraan bermotor, pembangkit energi, dan aktivitas industri. Paparan NO2 dapat mengiritasi saluran pernapasan dan berkontribusi terhadap pembentukan pencemar udara sekunder.</p>
+<blockquote>
+<div><p><strong>Catatan:</strong> Dataset yang digunakan dalam tugas ini hanya memiliki dua parameter polutan, yaitu <strong>CO dan NO2</strong>. Oleh karena itu, analisis kualitas udara pada tugas ini difokuskan pada kedua parameter tersebut dan tidak dimaksudkan untuk menggambarkan seluruh kondisi kualitas udara.</p>
+</div></blockquote>
+</section>
+<section id="interpretasi-awal-sumber-polutan">
+<h3>2.3 Interpretasi Awal Sumber Polutan<a class="headerlink" href="#interpretasi-awal-sumber-polutan" title="Link to this heading">#</a></h3>
+<p>Dalam konteks Bangkalan, kendaraan bermotor dapat menjadi salah satu sumber emisi CO dan NO2, terutama pada area dengan aktivitas lalu lintas tinggi. Aktivitas pembakaran dan industri juga dapat berkontribusi terhadap emisi. Namun, <strong>data yang tersedia tidak memiliki variabel sumber emisi</strong>, sehingga hubungan antara lonjakan polutan dan aktivitas tertentu tidak dapat disimpulkan secara langsung. Lonjakan pada grafik hanya dapat disebut sebagai <strong>anomali atau perubahan konsentrasi yang perlu dianalisis lebih lanjut</strong>.</p>
+</section>
+<section id="pertanyaan-analisis">
+<h3>2.4 Pertanyaan Analisis<a class="headerlink" href="#pertanyaan-analisis" title="Link to this heading">#</a></h3>
+<p>Beberapa pertanyaan yang dapat dijawab dari dataset ini:</p>
+<ol class="arabic simple">
+<li><p>Bagaimana perubahan konsentrasi CO selama satu tahun?</p></li>
+<li><p>Bagaimana perubahan konsentrasi NO2 selama satu tahun?</p></li>
+<li><p>Apakah terdapat pola atau tren tertentu berdasarkan waktu?</p></li>
+<li><p>Pada periode kapan terjadi konsentrasi CO atau NO2 yang relatif tinggi?</p></li>
+<li><p>Apakah terdapat data kosong atau nilai negatif yang perlu dibersihkan?</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mengecek ukuran dataset</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah baris dan kolom:&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Mengecek tipe data</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Tipe data:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+
+<span class="c1"># Mengecek data kosong</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah data kosong:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<span class="c1"># Mengecek nilai negatif pada polutan</span>
+<span class="n">data_aneh</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah data anomali (negatif):&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_aneh</span><span class="p">))</span>
+
+<span class="c1"># Menampilkan statistik deskriptif</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Statistik deskriptif:&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span> <span class="s1">&#39;NO2&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah baris dan kolom: (8760, 3)
+
+Tipe data:
+tanggal_jam    datetime64[ns]
+CO                    float64
+NO2                   float64
+dtype: object
+
+Jumlah data kosong:
+tanggal_jam    0
+CO             0
+NO2            0
+dtype: int64
+
+Jumlah data anomali (negatif): 0
+
+Statistik deskriptif:
 </pre></div>
 </div>
 <div class="output text_html"><div>
@@ -474,111 +611,443 @@ Tujuan utama dari analisis ini adalah untuk mengetahui dan memantau tingkat kual
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>tanggal_jam</th>
       <th>CO</th>
       <th>NO2</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>2025-09-01 00:00:00</td>
-      <td>760.0</td>
-      <td>29.7</td>
+      <th>count</th>
+      <td>8760.000000</td>
+      <td>8760.000000</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>2025-09-01 01:00:00</td>
-      <td>635.0</td>
-      <td>23.4</td>
+      <th>mean</th>
+      <td>341.515639</td>
+      <td>33.734989</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>2025-09-01 02:00:00</td>
-      <td>391.0</td>
-      <td>14.8</td>
+      <th>std</th>
+      <td>190.568504</td>
+      <td>23.514247</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>2025-09-01 03:00:00</td>
-      <td>207.0</td>
-      <td>8.1</td>
+      <th>min</th>
+      <td>57.000000</td>
+      <td>2.700000</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>2025-09-01 04:00:00</td>
-      <td>165.0</td>
-      <td>5.2</td>
+      <th>25%</th>
+      <td>225.000000</td>
+      <td>16.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>290.500000</td>
+      <td>28.300000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>396.000000</td>
+      <td>46.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>2153.000000</td>
+      <td>195.500000</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
 </section>
-<section id="data-understanding">
-<h2>2. Data Understanding<a class="headerlink" href="#data-understanding" title="Link to this heading">#</a></h2>
-<p>Dataset yang ditarik berisi rekaman polusi udara per jam di Bangkalan. Berikut adalah deskripsi fiturnya:</p>
-<ul class="simple">
-<li><p><strong>tanggal_jam</strong>: Waktu perekaman data (bertipe datetime).</p></li>
-<li><p><strong>CO (Karbon Monoksida - μg/m³):</strong> Gas beracun yang tidak berwarna dan tidak berbau. <strong>Sumber utama di Bangkalan:</strong> Asap knalpot kendaraan bermotor (terutama di jalur utama lalu lintas antarkota/Suramadu) dan pembakaran sampah terbuka.</p></li>
-<li><p><strong>NO2 (Nitrogen Dioksida - μg/m³):</strong> Gas berbau tajam yang bisa merusak saluran pernapasan. <strong>Sumber utama di Bangkalan:</strong> Aktivitas pembakaran bahan bakar fosil dari kendaraan berat (truk/bus) dan aktivitas industri.</p></li>
-</ul>
-<p><strong>Eksplorasi Data Aneh (Anomali):</strong>
-Terkadang alat sensor satelit/API mencatat angka yang tidak masuk akal (misalnya nilai polutan negatif atau <code class="docutils literal notranslate"><span class="pre">NaN</span></code> / kosong karena gangguan cuaca tebal). Kita harus mengeceknya di tahap persiapan data.</p>
+</section>
+<section id="data-preparation-untuk-time-series">
+<h2>3. Data Preparation untuk Time Series<a class="headerlink" href="#data-preparation-untuk-time-series" title="Link to this heading">#</a></h2>
+<p>Karena data dicatat setiap jam, visualisasi selama 8.760 titik sekaligus dapat terlihat terlalu padat. Untuk melihat <strong>tren jangka panjang</strong>, data diringkas menjadi rata-rata harian.</p>
+<p>Perhitungan rata-rata harian tidak menghapus data asli. Data asli tetap digunakan sebagai sumber, sedangkan <code class="docutils literal notranslate"><span class="pre">df_harian</span></code> hanya merupakan hasil agregasi untuk keperluan visualisasi.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mengecek apakah ada nilai kosong (NaN)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah data kosong:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pastikan kolom waktu bertipe datetime</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;tanggal_jam&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;tanggal_jam&#39;</span><span class="p">])</span>
 
-<span class="c1"># Mengecek apakah ada data aneh (nilai polutan minus yang tidak masuk akal di dunia nyata)</span>
-<span class="n">data_aneh</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah data anomali (negatif): </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data_aneh</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Urutkan berdasarkan waktu</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;tanggal_jam&#39;</span><span class="p">)</span>
+
+<span class="c1"># Rata-rata harian untuk visualisasi time series</span>
+<span class="n">df_harian</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;tanggal_jam&#39;</span><span class="p">)[[</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span> <span class="s1">&#39;NO2&#39;</span><span class="p">]]</span>
+      <span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah titik time series harian:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_harian</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_harian</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah data kosong:
- tanggal_jam    0
-CO             0
-NO2            0
-dtype: int64
-Jumlah data anomali (negatif): 0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah titik time series harian: 365
 </pre></div>
 </div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CO</th>
+      <th>NO2</th>
+    </tr>
+    <tr>
+      <th>tanggal_jam</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2025-09-01</th>
+      <td>232.166667</td>
+      <td>12.308333</td>
+    </tr>
+    <tr>
+      <th>2025-09-02</th>
+      <td>181.791667</td>
+      <td>12.716667</td>
+    </tr>
+    <tr>
+      <th>2025-09-03</th>
+      <td>228.041667</td>
+      <td>18.191667</td>
+    </tr>
+    <tr>
+      <th>2025-09-04</th>
+      <td>268.458333</td>
+      <td>24.716667</td>
+    </tr>
+    <tr>
+      <th>2025-09-05</th>
+      <td>339.500000</td>
+      <td>26.400000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-</div>
+</section>
+<section id="visualisasi-time-series-co">
+<h2>4. Visualisasi Time Series CO<a class="headerlink" href="#visualisasi-time-series-co" title="Link to this heading">#</a></h2>
+<p>Grafik berikut menunjukkan perubahan rata-rata konsentrasi <strong>CO (Karbon Monoksida)</strong> dari hari ke hari selama periode pengamatan. Sumbu X menunjukkan waktu, sedangkan sumbu Y menunjukkan konsentrasi CO dalam μg/m³.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="c1"># Agar grafik lebih rapi, kita hitung rata-rata harian</span>
-<span class="n">df_harian</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;tanggal_jam&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-
-<span class="c1"># Membuat Grafik Time Series</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">df_harian</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="n">df_harian</span><span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">],</span>
+    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;CO (Karbon Monoksida)&#39;</span>
+<span class="p">)</span>
 
-<span class="c1"># Plot CO (Kita buat skala CO pada sumbu y yang berbeda jika nilainya terlalu njomplang, </span>
-<span class="c1"># tapi untuk kesederhanaan kita plot di satu grafik dulu)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_harian</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df_harian</span><span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Karbon Monoksida (CO)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_harian</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df_harian</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Nitrogen Dioksida (NO2)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Tren Kualitas Udara (Polutan CO dan NO2) di Bangkalan (Sep 2025 - Agu 2026)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tanggal&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Konsentrasi (μg/m³)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Time Series Rata-rata Harian CO di Bangkalan&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tanggal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Konsentrasi CO (μg/m³)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-
-<span class="c1"># Tampilkan Grafik</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f4809da5a094cd8377be3d02cd204941793db7a552daf02d1f5a38b356d2c0ac.png" src="_images/f4809da5a094cd8377be3d02cd204941793db7a552daf02d1f5a38b356d2c0ac.png" />
+<img alt="_images/572354df6813a0b0abf45b620a26535fdab7377a7c1ddff1c5ed3c04daf57823.png" src="_images/572354df6813a0b0abf45b620a26535fdab7377a7c1ddff1c5ed3c04daf57823.png" />
 </div>
 </div>
 </section>
+<section id="visualisasi-time-series-no2">
+<h2>5. Visualisasi Time Series NO2<a class="headerlink" href="#visualisasi-time-series-no2" title="Link to this heading">#</a></h2>
+<p>Grafik berikut menunjukkan perubahan rata-rata konsentrasi <strong>NO2 (Nitrogen Dioksida)</strong> dari hari ke hari selama periode pengamatan.</p>
+<p>CO dan NO2 divisualisasikan secara terpisah karena skala nilainya berbeda. Pemisahan ini membuat perubahan masing-masing polutan lebih mudah dibaca.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">df_harian</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="n">df_harian</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">],</span>
+    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;NO2 (Nitrogen Dioksida)&#39;</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Time Series Rata-rata Harian NO2 di Bangkalan&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tanggal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Konsentrasi NO2 (μg/m³)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d3373a2faa21b707c3caef3b15ef79e88fbf51927bf3858e17c8f4101cbd29dc.png" src="_images/d3373a2faa21b707c3caef3b15ef79e88fbf51927bf3858e17c8f4101cbd29dc.png" />
+</div>
+</div>
+</section>
+<section id="perbandingan-pola-co-dan-no2">
+<h2>6. Perbandingan Pola CO dan NO2<a class="headerlink" href="#perbandingan-pola-co-dan-no2" title="Link to this heading">#</a></h2>
+<p>Karena CO dan NO2 memiliki skala konsentrasi yang berbeda, perbandingan langsung pada satu sumbu Y kurang ideal. Untuk membandingkan <strong>bentuk pola/pergerakannya</strong>, kedua variabel dapat dinormalisasi menggunakan Min-Max Scaling.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Min-Max normalization untuk membandingkan pola</span>
+<span class="n">df_norm</span> <span class="o">=</span> <span class="n">df_harian</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">,</span> <span class="s1">&#39;NO2&#39;</span><span class="p">]:</span>
+    <span class="n">min_val</span> <span class="o">=</span> <span class="n">df_norm</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">max_val</span> <span class="o">=</span> <span class="n">df_norm</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">df_norm</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_norm</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_val</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_norm</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df_norm</span><span class="p">[</span><span class="s1">&#39;CO&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;CO (normalisasi)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_norm</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df_norm</span><span class="p">[</span><span class="s1">&#39;NO2&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;NO2 (normalisasi)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Perbandingan Pola Time Series CO dan NO2 (Normalisasi)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tanggal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Nilai Normalisasi (0–1)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/edf6e84cfba07be4c3f9d48a0b7c19e4835bf171a9000d19225ea75f802b6a40.png" src="_images/edf6e84cfba07be4c3f9d48a0b7c19e4835bf171a9000d19225ea75f802b6a40.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="implementasi-analisis-di-knime">
+<h1>7. Implementasi Analisis di KNIME<a class="headerlink" href="#implementasi-analisis-di-knime" title="Link to this heading">#</a></h1>
+<p>Analisis yang sama juga dapat dilakukan menggunakan <strong>KNIME Analytics Platform</strong> dengan mengambil data langsung dari PostgreSQL yang sudah tersimpan di Aiven.</p>
+<section id="alur-node-knime">
+<h2>7.1 Alur Node KNIME<a class="headerlink" href="#alur-node-knime" title="Link to this heading">#</a></h2>
+<p>Workflow dasar:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>PostgreSQL Connector
+        ↓
+DB Table Selector
+        ↓
+DB Reader
+        ↓
+Column Filter (opsional)
+        ↓
+String to Date&amp;Time / Date&amp;Time Configuration
+        ↓
+Time Series Configuration
+        ↓
+Line Plot / Time Series Plot
+</pre></div>
+</div>
+<p>Pada workflow yang sudah dibuat, tiga node pertama sudah benar:</p>
+<p><strong>PostgreSQL Connector → DB Table Selector → DB Reader</strong></p>
+<p>Node tersebut digunakan untuk mengambil tabel <code class="docutils literal notranslate"><span class="pre">data_polutan_bangkalan</span></code> dari PostgreSQL.</p>
+</section>
+<section id="langkah-langkah-di-knime">
+<h2>7.2 Langkah-Langkah di KNIME<a class="headerlink" href="#langkah-langkah-di-knime" title="Link to this heading">#</a></h2>
+<section id="langkah-1-postgresql-connector">
+<h3>Langkah 1 — PostgreSQL Connector<a class="headerlink" href="#langkah-1-postgresql-connector" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Buka KNIME dan buat workflow baru.</p></li>
+<li><p>Cari node <strong>PostgreSQL Connector</strong>.</p></li>
+<li><p>Tarik node ke workflow.</p></li>
+<li><p>Klik dua kali node tersebut.</p></li>
+<li><p>Isi informasi koneksi dari Aiven:</p>
+<ul class="simple">
+<li><p>Host</p></li>
+<li><p>Port</p></li>
+<li><p>Database</p></li>
+<li><p>Username</p></li>
+<li><p>Password</p></li>
+</ul>
+</li>
+<li><p>Gunakan pengaturan SSL sesuai konfigurasi koneksi Aiven.</p></li>
+<li><p>Klik <strong>Test Connection</strong>.</p></li>
+<li><p>Jika berhasil, klik <strong>OK</strong>.</p></li>
+</ol>
+<blockquote>
+<div><p>Password Aiven bersifat rahasia dan jangan dimasukkan ke laporan atau screenshot tugas.</p>
+</div></blockquote>
+</section>
+<section id="langkah-2-db-table-selector">
+<h3>Langkah 2 — DB Table Selector<a class="headerlink" href="#langkah-2-db-table-selector" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Cari node <strong>DB Table Selector</strong>.</p></li>
+<li><p>Hubungkan output dari <code class="docutils literal notranslate"><span class="pre">PostgreSQL</span> <span class="pre">Connector</span></code> ke <code class="docutils literal notranslate"><span class="pre">DB</span> <span class="pre">Table</span> <span class="pre">Selector</span></code>.</p></li>
+<li><p>Buka konfigurasi node.</p></li>
+<li><p>Pilih schema/database yang digunakan.</p></li>
+<li><p>Pilih tabel:
+<code class="docutils literal notranslate"><span class="pre">data_polutan_bangkalan</span></code></p></li>
+<li><p>Klik <strong>OK</strong>.</p></li>
+</ol>
+</section>
+<section id="langkah-3-db-reader">
+<h3>Langkah 3 — DB Reader<a class="headerlink" href="#langkah-3-db-reader" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Cari node <strong>DB Reader</strong>.</p></li>
+<li><p>Hubungkan <code class="docutils literal notranslate"><span class="pre">DB</span> <span class="pre">Table</span> <span class="pre">Selector</span></code> → <code class="docutils literal notranslate"><span class="pre">DB</span> <span class="pre">Reader</span></code>.</p></li>
+<li><p>Execute node.</p></li>
+<li><p>Buka hasil tabel untuk memastikan data sudah terbaca.</p></li>
+</ol>
+<p>Data yang diharapkan memiliki kolom:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>id
+tanggal_jam
+co
+no2
+</pre></div>
+</div>
+<p>dan jumlah data sekitar <strong>8.760 baris</strong>.</p>
+</section>
+<section id="langkah-4-mengecek-statistik">
+<h3>Langkah 4 — Mengecek Statistik<a class="headerlink" href="#langkah-4-mengecek-statistik" title="Link to this heading">#</a></h3>
+<p>Node <strong>Statistics</strong> dapat digunakan untuk melihat ringkasan statistik data.</p>
+<p>Hubungkan:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>DB Reader → Statistics
+</pre></div>
+</div>
+<p>Kemudian execute.</p>
+<p>Gunakan node ini untuk melihat nilai seperti:</p>
+<ul class="simple">
+<li><p>minimum</p></li>
+<li><p>maksimum</p></li>
+<li><p>mean/rata-rata</p></li>
+<li><p>standar deviasi</p></li>
+<li><p>jumlah data</p></li>
+</ul>
+</section>
+<section id="langkah-5-mengubah-kolom-waktu">
+<h3>Langkah 5 — Mengubah Kolom Waktu<a class="headerlink" href="#langkah-5-mengubah-kolom-waktu" title="Link to this heading">#</a></h3>
+<p>Kolom <code class="docutils literal notranslate"><span class="pre">tanggal_jam</span></code> harus dikenali sebagai tipe <strong>Date&amp;Time</strong> agar dapat digunakan untuk time series.</p>
+<p>Jika setelah <code class="docutils literal notranslate"><span class="pre">DB</span> <span class="pre">Reader</span></code> kolom waktu belum dikenali sebagai Date&amp;Time, gunakan node yang sesuai untuk konversi tipe tanggal/waktu, misalnya:</p>
+<p><strong>String to Date&amp;Time</strong></p>
+<p>Konfigurasi format waktu:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>yyyy-MM-dd HH:mm:ss
+</pre></div>
+</div>
+<p>Contoh:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>2025-09-01 00:00:00
+</pre></div>
+</div>
+</section>
+<section id="langkah-6-membuat-time-series">
+<h3>Langkah 6 — Membuat Time Series<a class="headerlink" href="#langkah-6-membuat-time-series" title="Link to this heading">#</a></h3>
+<p>Untuk visualisasi time series, gunakan node visualisasi time series/line plot yang tersedia pada versi KNIME yang digunakan.</p>
+<p>Atur:</p>
+<ul class="simple">
+<li><p><strong>X-axis</strong> → <code class="docutils literal notranslate"><span class="pre">tanggal_jam</span></code></p></li>
+<li><p><strong>Y-axis</strong> → <code class="docutils literal notranslate"><span class="pre">co</span></code></p></li>
+</ul>
+<p>Kemudian buat visualisasi kedua:</p>
+<ul class="simple">
+<li><p><strong>X-axis</strong> → <code class="docutils literal notranslate"><span class="pre">tanggal_jam</span></code></p></li>
+<li><p><strong>Y-axis</strong> → <code class="docutils literal notranslate"><span class="pre">no2</span></code></p></li>
+</ul>
+<p>Hasilnya adalah dua grafik yang menunjukkan perubahan CO dan NO2 terhadap waktu.</p>
+</section>
+<section id="langkah-7-jika-grafik-terlalu-padat">
+<h3>Langkah 7 — Jika Grafik Terlalu Padat<a class="headerlink" href="#langkah-7-jika-grafik-terlalu-padat" title="Link to this heading">#</a></h3>
+<p>Data memiliki 8.760 titik per jam. Jika grafik terlalu padat, lakukan agregasi terlebih dahulu menjadi rata-rata harian.</p>
+<p>Konsepnya:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>tanggal_jam
+     ↓
+ambil tanggal
+     ↓
+Group By / agregasi harian
+     ↓
+AVG(co)
+AVG(no2)
+     ↓
+Line Plot
+</pre></div>
+</div>
+<p>Dengan demikian, satu tahun data menjadi sekitar 365 titik harian sehingga tren lebih mudah dibaca.</p>
+</section>
+</section>
+<section id="workflow-knime-yang-direkomendasikan">
+<h2>7.3 Workflow KNIME yang Direkomendasikan<a class="headerlink" href="#workflow-knime-yang-direkomendasikan" title="Link to this heading">#</a></h2>
+<p><strong>Alur Kerja Ekstraksi dan Analisis Data (KNIME)</strong></p>
+<ul class="simple">
+<li><p><strong>PostgreSQL Connector:</strong> Membangun koneksi antara aplikasi KNIME dengan <em>database</em> PostgreSQL tempat data polutan disimpan.</p></li>
+<li><p><strong>DB Table Selector:</strong> Memilih tabel spesifik yang memuat data deret waktu kualitas udara dari <em>database</em> yang telah terkoneksi.</p></li>
+<li><p><strong>DB Reader:</strong> Mengeksekusi instruksi pembacaan dan menarik seluruh data dari PostgreSQL ke memori lokal KNIME untuk diproses lebih lanjut sebagai <em>data table</em>.</p></li>
+<li><p><strong>Statistics:</strong> Menghitung secara otomatis ringkasan statistik deskriptif menyeluruh (distribusi, tendensi sentral, dan dispersi) dari seluruh kolom numerik yang tersedia.</p></li>
+</ul>
+<p><img alt="image.png" src="attachment:image.png" /></p>
+</section>
+<section id="output-yang-diharapkan">
+<h2>7.4 Output yang Diharapkan<a class="headerlink" href="#output-yang-diharapkan" title="Link to this heading">#</a></h2>
+<p><strong>Interpretasi Hasil Analisis Statistik</strong></p>
+<p><img alt="image-2.png" src="attachment:image-2.png" /></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Parameter</p></th>
+<th class="head text-left"><p>Rentang (Min - Max)</p></th>
+<th class="head text-left"><p>Rata-rata</p></th>
+<th class="head text-left"><p>Skewness &amp; Kurtosis</p></th>
+<th class="head text-left"><p>Analisis Distribusi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>id</strong> (Waktu)</p></td>
+<td class="text-left"><p>1 - 8.760</p></td>
+<td class="text-left"><p>4.380,5</p></td>
+<td class="text-left"><p>Skew: 0 <br> Kurtosis: -1.2</p></td>
+<td class="text-left"><p>Total observasi mencapai 8.760 baris. Angka ini secara presisi merepresentasikan total jam dalam 1 tahun penuh (24 jam x 365 hari), menunjukkan tidak ada data waktu yang terlewat.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>co</strong> (Karbon Monoksida)</p></td>
+<td class="text-left"><p>57 - 2.153</p></td>
+<td class="text-left"><p>341,52</p></td>
+<td class="text-left"><p>Skew: 2.868 <br> Kurtosis: 13.261</p></td>
+<td class="text-left"><p>Distribusi data sangat condong ke kanan (<em>right-skewed</em>). Nilai kurtosis positif yang ekstrem (13.261) menandakan kurva berekor tebal (<em>heavy-tailed</em>), membuktikan adanya lonjakan emisi CO anomali pada waktu tertentu yang sangat jauh melampaui batas normal.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>no2</strong> (Nitrogen Dioksida)</p></td>
+<td class="text-left"><p>2.7 - 195.5</p></td>
+<td class="text-left"><p>33,744</p></td>
+<td class="text-left"><p>Skew: 1.437 <br> Kurtosis: 3.342</p></td>
+<td class="text-left"><p>Memiliki pola ketimpangan serupa dengan CO. Nilai maksimum (195.5) yang terpaut sangat jauh di atas rata-rata (33.744) menegaskan keberadaan <em>outlier</em> saat polusi NO2 berada pada tingkat puncak.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Setelah workflow selesai, hasil analisis minimal terdiri dari:</p>
+<ol class="arabic simple">
+<li><p>Data berhasil dibaca dari PostgreSQL Aiven.</p></li>
+<li><p>Statistik deskriptif CO dan NO2.</p></li>
+<li><p>Grafik <strong>time series CO</strong>.</p></li>
+<li><p>Grafik <strong>time series NO2</strong>.</p></li>
+<li><p>Jika diperlukan, grafik perbandingan pola CO dan NO2 setelah normalisasi.</p></li>
+<li><p>Kesimpulan mengenai pola perubahan konsentrasi polutan selama periode pengamatan.</p></li>
+</ol>
+<blockquote>
+<div><p><strong>Catatan interpretasi:</strong> grafik time series menunjukkan pola perubahan konsentrasi dari waktu ke waktu. Grafik tersebut belum cukup untuk membuktikan penyebab suatu lonjakan polusi. Untuk menentukan sumber penyebab, diperlukan variabel tambahan seperti volume lalu lintas, cuaca, aktivitas industri, atau data emisi.</p>
+</div></blockquote>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="kesimpulan-sementara">
+<h1>8. Kesimpulan Sementara<a class="headerlink" href="#kesimpulan-sementara" title="Link to this heading">#</a></h1>
+<p>Berdasarkan tahap Data Understanding dan visualisasi time series, dataset ini dapat digunakan untuk mengamati perubahan konsentrasi <strong>CO dan NO2</strong> di Bangkalan selama periode September 2025–Agustus 2026.</p>
+<p>Analisis time series membantu mengidentifikasi pola perubahan dan periode dengan konsentrasi yang relatif tinggi atau rendah. Tahap berikutnya dapat dikembangkan menjadi analisis yang lebih mendalam, seperti analisis pola berdasarkan <strong>jam, hari, bulan</strong>, deteksi anomali, korelasi antara CO dan NO2, atau pemodelan prediksi.</p>
+<p><strong>Kesimpulan akhir sebaiknya ditulis setelah grafik dijalankan dan hasil pengamatan terhadap pola data benar-benar tersedia.</strong></p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -645,9 +1114,40 @@ Jumlah data anomali (negatif): 0
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Analisis Kualitas Udara dan Sumber Polutan di Bangkalan</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#business-understanding">1. Business Understanding</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">2. Data Understanding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">2. Data Understanding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variabel-pada-dataset">2.1 Variabel pada Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pengertian-polutan">2.2 Pengertian Polutan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretasi-awal-sumber-polutan">2.3 Interpretasi Awal Sumber Polutan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pertanyaan-analisis">2.4 Pertanyaan Analisis</a></li>
 </ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation-untuk-time-series">3. Data Preparation untuk Time Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-time-series-co">4. Visualisasi Time Series CO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-time-series-no2">5. Visualisasi Time Series NO2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-pola-co-dan-no2">6. Perbandingan Pola CO dan NO2</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-analisis-di-knime">7. Implementasi Analisis di KNIME</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alur-node-knime">7.1 Alur Node KNIME</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-di-knime">7.2 Langkah-Langkah di KNIME</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-1-postgresql-connector">Langkah 1 — PostgreSQL Connector</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-2-db-table-selector">Langkah 2 — DB Table Selector</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-3-db-reader">Langkah 3 — DB Reader</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-4-mengecek-statistik">Langkah 4 — Mengecek Statistik</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-5-mengubah-kolom-waktu">Langkah 5 — Mengubah Kolom Waktu</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-6-membuat-time-series">Langkah 6 — Membuat Time Series</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-7-jika-grafik-terlalu-padat">Langkah 7 — Jika Grafik Terlalu Padat</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow-knime-yang-direkomendasikan">7.3 Workflow KNIME yang Direkomendasikan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-yang-diharapkan">7.4 Output yang Diharapkan</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-sementara">8. Kesimpulan Sementara</a></li>
+</ul>
+
   </nav></div>
 
 </div></div>

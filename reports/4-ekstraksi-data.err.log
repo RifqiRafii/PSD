@@ -26,8 +26,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['# Uji coba: ekstraksi NO2 untuk satu minggu pertama saja', 'test_nc_path = extract_pollutant(', '    connection=connection,', '    pollutant_name="NO2_TEST",', '    band_name=POLLUTANTS["NO2"],']
+['# Uji coba paling mendasar: unduh grid piksel mentah NO2 untuk satu hari saja,', '# TANPA aggregate_temporal_period maupun aggregate_spatial. Ini mengisolasi', '# apakah data pada sumbernya memang sudah nol/tidak ada, atau justru berubah', '# menjadi 0 pada tahap agregasi selanjutnya.', 'raw_cube = connection.load_collection(']
 ...
-['    print("  nilai rata rata   : {:.3e}".format(pd.Series(values.flatten()).mean(skipna=True)))', '', '# Jika seluruh nilai memang 0 (bukan NaN dan bukan angka sangat kecil),', '# periksa kembali nama band lewat baris berikut sebelum melanjutkan.', '# print(connection.describe_collection("SENTINEL_5P_L2"))']
+['# bernilai selain NaN atau 0.0) untuk grid mentah satu hari ini, kemungkinan', '# besar masalah ada pada request itu sendiri (bbox/polygon, nama band, atau', '# koleksi), bukan pada langkah agregasi. Jika grid mentah ini justru', '# menunjukkan banyak piksel valid dan bervariasi, artinya masalah baru muncul', '# pada langkah aggregate_temporal_period atau aggregate_spatial berikutnya.']
 -------------------
 

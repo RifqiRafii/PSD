@@ -180,6 +180,8 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="tugas01_kualitas_udara_bangkalan.html">Analisis Kualitas Udara dan Sumber Polutan di Bangkalan</a></li>
+
+
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="pengantar-analisis-polutan-bangkalan.html">Pengantar Analisis Polutan Kabupaten Bangkalan</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="1-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="2-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
@@ -406,7 +408,7 @@ document.write(`
 <p>Notebook ini melanjutkan hasil ekstraksi dari <code class="docutils literal notranslate"><span class="pre">4-ekstraksi-data.ipynb</span></code> untuk
 melakukan eksplorasi dan analisis deret waktu polutan udara (NO2, CO, SO2,
 CH4) di <strong>Kabupaten Bangkalan</strong>, menggunakan satu tabel gabungan
-<code class="docutils literal notranslate"><span class="pre">bangkalan_polutan.csv</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">data_polutan_bangkalan.csv</span></code>.</p>
 <p><strong>Alur kerja notebook ini:</strong></p>
 <ol class="arabic simple">
 <li><p>Import pustaka yang dibutuhkan</p></li>
@@ -447,16 +449,26 @@ bentuk batas administratif asli, bukan kotak</p></li>
 </section>
 <section id="memuat-tabel-gabungan-hasil-ekstraksi">
 <h2>2. Memuat Tabel Gabungan Hasil Ekstraksi<a class="headerlink" href="#memuat-tabel-gabungan-hasil-ekstraksi" title="Link to this heading">#</a></h2>
-<p>Data yang dimuat adalah satu tabel tunggal <code class="docutils literal notranslate"><span class="pre">bangkalan_polutan.csv</span></code>, dengan
+<p>Data yang dimuat adalah satu tabel tunggal <code class="docutils literal notranslate"><span class="pre">data_polutan_bangkalan.csv</span></code>, dengan
 kolom <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">NO2</span></code>, <code class="docutils literal notranslate"><span class="pre">CO</span></code>, <code class="docutils literal notranslate"><span class="pre">SO2</span></code>, dan <code class="docutils literal notranslate"><span class="pre">CH4</span></code>, dihasilkan oleh notebook
 <code class="docutils literal notranslate"><span class="pre">4-ekstraksi-data.ipynb</span></code>.</p>
+<p>Sebagai langkah pengaman tambahan, nilai yang persis 0.0 diperlakukan sebagai
+data hilang (NaN) juga di sini, berjaga jaga jika file yang dimuat berasal
+dari hasil ekstraksi versi lama yang belum menerapkan penanganan ini (lihat
+catatan pada Bagian 7 notebook <code class="docutils literal notranslate"><span class="pre">4-ekstraksi-data.ipynb</span></code>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CSV_PATH</span> <span class="o">=</span> <span class="s2">&quot;../data/csv/bangkalan_polutan.csv&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CSV_PATH</span> <span class="o">=</span> <span class="s2">&quot;data_polutan_bangkalan.csv&quot;</span>
 <span class="n">POLLUTANTS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">,</span> <span class="s2">&quot;CO&quot;</span><span class="p">,</span> <span class="s2">&quot;SO2&quot;</span><span class="p">,</span> <span class="s2">&quot;CH4&quot;</span><span class="p">]</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">CSV_PATH</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">])</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">n_zero</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">POLLUTANTS</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">n_zero</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nilai 0.0 ditemukan dan dikonversi menjadi NaN (lihat catatan di atas):&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">n_zero</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">POLLUTANTS</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">POLLUTANTS</span><span class="p">]</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">POLLUTANTS</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimuat: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> baris, dari </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="si">}</span><span class="s2"> sampai </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -464,78 +476,75 @@ kolom <code class="docutils literal notranslate"><span class="pre">date</span></
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dimuat: 314 baris, dari 2025-08-24 sampai 2026-08-23
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">CSV_PATH</span> <span class="o">=</span> <span class="s2">&quot;data_polutan_bangkalan.csv&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">POLLUTANTS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">,</span> <span class="s2">&quot;CO&quot;</span><span class="p">,</span> <span class="s2">&quot;SO2&quot;</span><span class="p">,</span> <span class="s2">&quot;CH4&quot;</span><span class="p">]</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">CSV_PATH</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">])</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">n_zero</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">POLLUTANTS</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parsers\readers.py:1026,</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1013</span> <span class="n">kwds_defaults</span> <span class="o">=</span> <span class="n">_refine_defaults_read</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1014</span>     <span class="n">dialect</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1015</span>     <span class="n">delimiter</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1022</span>     <span class="n">dtype_backend</span><span class="o">=</span><span class="n">dtype_backend</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1023</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1024</span> <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1026</span> <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parsers\readers.py:620,</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">617</span> <span class="n">_validate_names</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">619</span> <span class="c1"># Create the parser.</span>
+<span class="ne">--&gt; </span><span class="mi">620</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">622</span> <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">623</span>     <span class="k">return</span> <span class="n">parser</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parsers\readers.py:1620,</span> in <span class="ni">TextFileReader.__init__</span><span class="nt">(self, f, engine, **kwds)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1617</span>     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1619</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span> <span class="n">IOHandles</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="ne">-&gt; </span><span class="mi">1620</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parsers\readers.py:1898,</span> in <span class="ni">TextFileReader._make_engine</span><span class="nt">(self, f, engine)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1895</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1897</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1898</span>     <span class="k">return</span> <span class="n">mapping</span><span class="p">[</span><span class="n">engine</span><span class="p">](</span><span class="n">f</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1899</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1900</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parsers\c_parser_wrapper.py:161,</span> in <span class="ni">CParserWrapper.__init__</span><span class="nt">(self, src, **kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">155</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_validate_usecols_names</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">156</span>             <span class="n">usecols</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">157</span>             <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">,</span>  <span class="c1"># type: ignore[has-type]</span>
+<span class="g g-Whitespace">    </span><span class="mi">158</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">160</span> <span class="c1"># error: Cannot determine type of &#39;names&#39;</span>
+<span class="ne">--&gt; </span><span class="mi">161</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_parse_dates_presence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>  <span class="c1"># type: ignore[has-type]</span>
+<span class="g g-Whitespace">    </span><span class="mi">162</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_noconvert_columns</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">164</span> <span class="c1"># error: Cannot determine type of &#39;names&#39;</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parsers\base_parser.py:243,</span> in <span class="ni">ParserBase._validate_parse_dates_presence</span><span class="nt">(self, columns)</span>
+<span class="g g-Whitespace">    </span><span class="mi">233</span> <span class="n">missing_cols</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">234</span>     <span class="nb">sorted</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">235</span>         <span class="p">{</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">240</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">241</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">242</span> <span class="k">if</span> <span class="n">missing_cols</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">243</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">244</span>         <span class="sa">f</span><span class="s2">&quot;Missing column provided to &#39;parse_dates&#39;: &#39;</span><span class="si">{</span><span class="n">missing_cols</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">245</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">246</span> <span class="c1"># Convert positions to actual column names</span>
+<span class="g g-Whitespace">    </span><span class="mi">247</span> <span class="k">return</span> <span class="p">[</span>
+<span class="g g-Whitespace">    </span><span class="mi">248</span>     <span class="n">col</span> <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">)</span> <span class="k">else</span> <span class="n">columns</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">249</span>     <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols_needed</span>
+<span class="g g-Whitespace">    </span><span class="mi">250</span> <span class="p">]</span>
+
+<span class="ne">ValueError</span>: Missing column provided to &#39;parse_dates&#39;: &#39;date&#39;
 </pre></div>
 </div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>date</th>
-      <th>NO2</th>
-      <th>CO</th>
-      <th>SO2</th>
-      <th>CH4</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2025-08-24</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2025-08-25</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2025-08-26</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2025-08-27</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2025-08-28</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+</div>
 </div>
 </section>
 <section id="peta-interaktif-wilayah-bangkalan">
@@ -580,180 +589,6 @@ memverifikasi area yang sesungguhnya diagregasi.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -> Trust Notebook</span><iframe srcdoc="&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    
-    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
-    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;https://code.jquery.com/jquery-3.7.1.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;&gt;&lt;/script&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css&quot;/&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/&gt;
-    
-            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
-                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
-            &lt;style&gt;
-                #map_980b6979dd597aae0d47277b21209087 {
-                    position: relative;
-                    width: 100.0%;
-                    height: 100.0%;
-                    left: 0.0%;
-                    top: 0.0%;
-                }
-                .leaflet-container { font-size: 1rem; }
-            &lt;/style&gt;
-
-            &lt;style&gt;html, body {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
-            &lt;/style&gt;
-
-            &lt;style&gt;#map {
-                position:absolute;
-                top:0;
-                bottom:0;
-                right:0;
-                left:0;
-                }
-            &lt;/style&gt;
-
-            &lt;script&gt;
-                L_NO_TOUCH = false;
-                L_DISABLE_3D = false;
-            &lt;/script&gt;
-
-        
-&lt;/head&gt;
-&lt;body&gt;
-    
-    
-            &lt;div class=&quot;folium-map&quot; id=&quot;map_980b6979dd597aae0d47277b21209087&quot; &gt;&lt;/div&gt;
-        
-&lt;/body&gt;
-&lt;script&gt;
-    
-    
-            var map_980b6979dd597aae0d47277b21209087 = L.map(
-                &quot;map_980b6979dd597aae0d47277b21209087&quot;,
-                {
-                    center: [-7.029995979721012, 112.96369295889129],
-                    crs: L.CRS.EPSG3857,
-                    ...{
-  &quot;zoom&quot;: 10,
-  &quot;zoomControl&quot;: true,
-  &quot;preferCanvas&quot;: false,
-}
-
-                }
-            );
-
-            
-
-        
-    
-            var tile_layer_fbce48a4bbae2e408d62aa639d6e568a = L.tileLayer(
-                &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
-                {
-  &quot;minZoom&quot;: 0,
-  &quot;maxZoom&quot;: 19,
-  &quot;maxNativeZoom&quot;: 19,
-  &quot;noWrap&quot;: false,
-  &quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors&quot;,
-  &quot;subdomains&quot;: &quot;abc&quot;,
-  &quot;detectRetina&quot;: false,
-  &quot;tms&quot;: false,
-  &quot;opacity&quot;: 1,
-}
-
-            );
-        
-    
-            tile_layer_fbce48a4bbae2e408d62aa639d6e568a.addTo(map_980b6979dd597aae0d47277b21209087);
-        
-    
-        function geo_json_463a26da2ca6064336140bc7d51f147f_styler(feature) {
-            switch(feature.properties.name) {
-                default:
-                    return {&quot;color&quot;: &quot;#d62728&quot;, &quot;fillColor&quot;: &quot;#d62728&quot;, &quot;fillOpacity&quot;: 0.1, &quot;weight&quot;: 2.5};
-            }
-        }
-
-        function geo_json_463a26da2ca6064336140bc7d51f147f_onEachFeature(feature, layer) {
-
-            layer.on({
-            });
-        };
-        var geo_json_463a26da2ca6064336140bc7d51f147f = L.geoJson(null, {
-                onEachFeature: geo_json_463a26da2ca6064336140bc7d51f147f_onEachFeature,
-            
-                style: geo_json_463a26da2ca6064336140bc7d51f147f_styler,
-            ...{
-}
-        });
-
-        function geo_json_463a26da2ca6064336140bc7d51f147f_add (data) {
-            geo_json_463a26da2ca6064336140bc7d51f147f
-                .addData(data);
-        }
-            geo_json_463a26da2ca6064336140bc7d51f147f_add({&quot;features&quot;: [{&quot;geometry&quot;: {&quot;coordinates&quot;: [[[112.99257659900013, -7.20243835499997], [112.96482086300011, -7.199743270999932], [112.95294952400002, -7.192855833999943], [112.8911590580002, -7.178034304999869], [112.86486053400029, -7.162668226999926], [112.84511566100002, -7.165686130999973], [112.80070495500001, -7.157524585999965], [112.79096984900002, -7.161581038999941], [112.77693176300022, -7.159422396999958], [112.76923370300005, -7.162903784999969], [112.76522064200014, -7.15215158399991], [112.74948120200008, -7.15052318499994], [112.75153350800008, -7.153604984999902], [112.74038696300022, -7.165307044999963], [112.744506999, -7.16897199899995], [112.7469559990003, -7.16772999899996], [112.7459030010001, -7.170421000999966], [112.72952270500014, -7.170128821999924], [112.72235107400013, -7.175711154999874], [112.7059249880001, -7.167363166999962], [112.6911468510001, -7.153986929999974], [112.70383453300008, -7.113264559999891], [112.70586395300029, -7.096296786999915], [112.70163726800024, -7.092801569999949], [112.69166565, -7.09699153899993], [112.68576812700007, -7.09552812599992], [112.68651580900007, -7.089310646999934], [112.67342376800002, -7.073466301999929], [112.6735916140002, -7.059717177999971], [112.67651367300016, -7.056868553999891], [112.6806869510001, -7.034704207999937], [112.68846130300017, -7.029723166999929], [112.71106720000012, -7.040588378999871], [112.7235260010001, -7.038418291999903], [112.74055480900006, -7.018153666999922], [112.77044677700007, -7.000629423999897], [112.78867340100021, -6.984257220999837], [112.79282379100005, -6.978433608999978], [112.79084777800006, -6.973830222999879], [112.8040161130001, -6.96390056499996], [112.82833099400011, -6.930719852999914], [112.82648468000014, -6.9274306289999], [112.82979583800022, -6.92121505699987], [112.82234954900002, -6.912736414999927], [112.82356262100006, -6.910022735999917], [112.83224487300004, -6.906312463999882], [112.83545684800015, -6.915973661999885], [112.84104156500007, -6.916435240999931], [112.84838104200014, -6.908895014999871], [112.84735870400027, -6.898938655999871], [112.85921478200021, -6.893069265999884], [112.87125396800013, -6.891851423999924], [112.86989593500027, -6.893897532999972], [112.87525939900002, -6.897952556999883], [112.87901306200013, -6.896545886999945], [112.87751770000023, -6.891464232999965], [112.88204193100023, -6.890491007999913], [112.92079925500013, -6.893889426999976], [112.92545318600003, -6.889860630999976], [112.933082581, -6.891401290999909], [112.95190429700017, -6.886978147999969], [112.96158599900014, -6.889063835999934], [112.96366119400011, -6.886700629999893], [112.9705429080002, -6.8887982359999], [112.97848510800009, -6.885590552999872], [112.98734283500016, -6.886864662999869], [112.99288177500011, -6.883407592999959], [112.995811462, -6.885633944999938], [112.99980926500007, -6.881588935999901], [113.00219726700016, -6.887470720999943], [113.00614929200003, -6.881137846999877], [113.02563476500029, -6.881005762999962], [113.02365875200019, -6.882413863999943], [113.02735138000014, -6.883591174999935], [113.03388977000009, -6.879476068999963], [113.05265808100012, -6.884908675999952], [113.06359100400016, -6.88200044499996], [113.07737732000021, -6.883579253999926], [113.0874481190001, -6.888769149999973], [113.10797882100007, -6.888527870999951], [113.11061859200026, -6.894425391999903], [113.11724090500013, -6.894449232999932], [113.12117004400022, -6.889986991999933], [113.12718200600011, -6.898141383999814], [113.12753296000005, -6.904701708999937], [113.11876678400017, -6.905104159999951], [113.1159973140002, -6.935714243999882], [113.11121368500005, -6.93735933399995], [113.10164642400025, -6.931810378999899], [113.09510040300017, -6.9457974419999], [113.09918975900007, -6.951011656999924], [113.10816955500002, -6.953402995999909], [113.10247039800004, -6.959991454999965], [113.10615539600008, -6.97214078899998], [113.10939788800022, -6.974139689999902], [113.10392761100013, -6.985950945999889], [113.11256408600013, -6.988915919999897], [113.13384246800001, -6.976145266999936], [113.1478118900003, -6.984626293999895], [113.14475250200007, -6.989298342999916], [113.14627075300007, -6.997766971999965], [113.140907287, -6.999999998999954], [113.13875579800026, -7.005352972999958], [113.14228057800005, -7.014079093999953], [113.13359069900002, -7.023640631999967], [113.13347625800009, -7.035539626999935], [113.127853393, -7.03657340999996], [113.11522674600019, -7.031735418999972], [113.11608886600027, -7.04952478499996], [113.11064910900006, -7.047163008999973], [113.11345672500022, -7.05305528599996], [113.111968993, -7.059689998999943], [113.11984252900004, -7.066992758999959], [113.12020873900019, -7.07993221199996], [113.1167755130001, -7.082043646999921], [113.11452484100005, -7.078620910999973], [113.10812378000026, -7.077841281999952], [113.11194610700011, -7.095150947999969], [113.1161270130001, -7.098412512999914], [113.11592102100019, -7.104572296999947], [113.11267089800026, -7.105822562999947], [113.11553955000011, -7.116165159999923], [113.10727691600005, -7.107961177999869], [113.10756683400018, -7.117203711999878], [113.10382842900003, -7.125472545999969], [113.09615325900006, -7.127437113999974], [113.09216308500015, -7.133172034999916], [113.0950317390002, -7.14169597599988], [113.09358215400005, -7.151215552999929], [113.09739685000022, -7.156816004999939], [113.09185791100015, -7.157668112999943], [113.08826446500018, -7.156388759999857], [113.08808135900006, -7.152215003999913], [113.07701110800008, -7.151008605999948], [113.07019043000014, -7.162508011999876], [113.05759430000012, -7.163670063999973], [113.05480957000009, -7.169857978999971], [113.05646515000012, -7.174945831999878], [113.04983520400003, -7.178644179999878], [113.048210143, -7.184324741999887], [113.06123352100019, -7.190078735999919], [113.06095123300008, -7.196104525999942], [113.05030822800018, -7.195767879999892], [113.04036712600009, -7.212881564999975], [113.01383209200014, -7.20546007199988], [113.00064849900025, -7.209431170999949], [112.99257659900013, -7.20243835499997]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;properties&quot;: {&quot;name&quot;: &quot;Kabupaten Bangkalan&quot;, &quot;source&quot;: &quot;GADM level-2 (via mahendrayudha/indonesia-geojson), disederhanakan&quot;}, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
-
-        
-    
-            geo_json_463a26da2ca6064336140bc7d51f147f.bindTooltip(
-                `&lt;div&gt;
-                     Batas administratif Kabupaten Bangkalan
-                 &lt;/div&gt;`,
-                {
-  &quot;sticky&quot;: true,
-}
-            );
-        
-    
-            geo_json_463a26da2ca6064336140bc7d51f147f.addTo(map_980b6979dd597aae0d47277b21209087);
-        
-    
-            var marker_0657ad39438c05886863d96a96160b75 = L.marker(
-                [-7.029995979721012, 112.96369295889129],
-                {
-}
-            ).addTo(map_980b6979dd597aae0d47277b21209087);
-        
-    
-            var icon_001884bb084bd1b101eb5b3862df048b = L.AwesomeMarkers.icon(
-                {
-  &quot;markerColor&quot;: &quot;red&quot;,
-  &quot;iconColor&quot;: &quot;white&quot;,
-  &quot;icon&quot;: &quot;cloud&quot;,
-  &quot;prefix&quot;: &quot;glyphicon&quot;,
-  &quot;extraClasses&quot;: &quot;fa-rotate-0&quot;,
-}
-            );
-        
-    
-            marker_0657ad39438c05886863d96a96160b75.bindTooltip(
-                `&lt;div&gt;
-                     Titik pusat (centroid) Kabupaten Bangkalan
-                 &lt;/div&gt;`,
-                {
-  &quot;sticky&quot;: true,
-}
-            );
-        
-    
-                marker_0657ad39438c05886863d96a96160b75.setIcon(icon_001884bb084bd1b101eb5b3862df048b);
-            
-&lt;/script&gt;
-&lt;/html&gt;" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div></div></div>
 </div>
 </section>
 <section id="pengecekan-dan-penanganan-missing-values">
@@ -791,18 +626,6 @@ atau akhir deret waktu yang tidak bisa diinterpolasi.</p></li>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[NO2] Missing sebelum penanganan: 87 dari 365 baris (23.8 persen)
-[NO2] Missing setelah penanganan : 0
-[CO] Missing sebelum penanganan: 95 dari 365 baris (26.0 persen)
-[CO] Missing setelah penanganan : 0
-[SO2] Missing sebelum penanganan: 67 dari 365 baris (18.4 persen)
-[SO2] Missing setelah penanganan : 0
-[CH4] Missing sebelum penanganan: 294 dari 365 baris (80.5 persen)
-[CH4] Missing setelah penanganan : 0
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="deteksi-anomali-dengan-isolation-forest">
@@ -833,112 +656,6 @@ terdeteksi sebagai outlier.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[NO2] Outlier terdeteksi: 0 dari 365 titik (0.0 persen)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[CO] Outlier terdeteksi: 0 dari 365 titik (0.0 persen)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[SO2] Outlier terdeteksi: 0 dari 365 titik (0.0 persen)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[CH4] Outlier terdeteksi: 0 dari 365 titik (0.0 persen)
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>date</th>
-      <th>NO2</th>
-      <th>CO</th>
-      <th>SO2</th>
-      <th>CH4</th>
-      <th>NO2_anomaly</th>
-      <th>CO_anomaly</th>
-      <th>SO2_anomaly</th>
-      <th>CH4_anomaly</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2025-08-24</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2025-08-25</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2025-08-26</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2025-08-27</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2025-08-28</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 </section>
 <section id="visualisasi-deret-waktu-normal-vs-outlier">
@@ -973,12 +690,6 @@ data satelit itu sendiri.</p>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/0002eca0d08b78f01510ce0c7b95b432269d4726c07a9d76ec28e0c38fd7e726.png" src="_images/0002eca0d08b78f01510ce0c7b95b432269d4726c07a9d76ec28e0c38fd7e726.png" />
-<img alt="_images/63094bdb91d191ce9557e02ec9049b542ba720056c51a9524d06af9f279481bd.png" src="_images/63094bdb91d191ce9557e02ec9049b542ba720056c51a9524d06af9f279481bd.png" />
-<img alt="_images/5803322fb711161d2b55b17407916aea70cfaf60b2cb2baaa1655a47ec0793af.png" src="_images/5803322fb711161d2b55b17407916aea70cfaf60b2cb2baaa1655a47ec0793af.png" />
-<img alt="_images/e2f4f2de6d5a6aef5d47822c52604e462f8edd7996368685cd479dd2659c8b59.png" src="_images/e2f4f2de6d5a6aef5d47822c52604e462f8edd7996368685cd479dd2659c8b59.png" />
 </div>
 </div>
 </section>
