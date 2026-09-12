@@ -185,8 +185,8 @@
 <li class="toctree-l2"><a class="reference internal" href="1-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Data Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3-eksplorasi-data-bangkalan.html">Eksplorasi Data - Kabupaten Bangkalan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="4-ekstraksi-data.html">Ekstraksi Data Kualitas Udara Kabupaten Bangkalan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="5-analisis-bangkalan.html">Analisis Kualitas Udara Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-ekstraksi-data.html">Ekstraksi Data Kualitas Udara - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5-analisis-bangkalan.html">Analisis Kualitas Udara - Kabupaten Bangkalan</a></li>
 </ul>
 </details></li>
 </ul>
@@ -393,7 +393,8 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-ekstraksi-data">4. Proses Ekstraksi Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-data-hasil">5. Struktur Data Hasil</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keterbatasan-data">6. Keterbatasan Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">7. Kesimpulan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catatan-jika-hasil-ekstraksi-bernilai-0">7. Catatan Jika Hasil Ekstraksi Bernilai 0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">8. Kesimpulan</a></li>
 </ul>
             </nav>
         </div>
@@ -508,49 +509,33 @@ permintaan.</p>
 </section>
 <section id="area-of-interest-aoi-kabupaten-bangkalan">
 <h2>3. Area of Interest (AOI) Kabupaten Bangkalan<a class="headerlink" href="#area-of-interest-aoi-kabupaten-bangkalan" title="Link to this heading">#</a></h2>
-<p>AOI didefinisikan sebagai bounding box yang mencakup wilayah administratif
-Kabupaten Bangkalan.</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Atribut</p></th>
-<th class="head"><p>Nilai</p></th>
-<th class="head"><p>Keterangan</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">west</span></code></p></td>
-<td><p>112.671</p></td>
-<td><p>Longitude terkecil, batas kiri</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">east</span></code></p></td>
-<td><p>113.116</p></td>
-<td><p>Longitude terbesar, batas kanan</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">south</span></code></p></td>
-<td><p>-7.227</p></td>
-<td><p>Latitude terkecil, batas bawah</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">north</span></code></p></td>
-<td><p>-6.848</p></td>
-<td><p>Latitude terbesar, batas atas</p></td>
-</tr>
-</tbody>
-</table>
+<p>AOI didefinisikan sebagai <strong>batas administratif asli Kabupaten Bangkalan</strong>
+(bentuk polygon sesuai wilayah sebenarnya), bukan kotak bounding box.
+Polygon ini diambil dari data batas administratif resmi (GADM level 2,
+kode wilayah BPS/Kemendagri 3526), lalu disederhanakan agar tidak terlalu
+berat saat dikirim sebagai parameter permintaan ke openEO, namun tetap
+mengikuti lekukan pesisir dan bentuk asli kabupaten, tersimpan sebagai
+<code class="docutils literal notranslate"><span class="pre">../data/bangkalan-boundary.geojson</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data/bangkalan-boundary.geojson&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">bangkalan_geojson</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">bangkalan_polygon</span> <span class="o">=</span> <span class="n">bangkalan_geojson</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">]</span>  <span class="c1"># objek Polygon GeoJSON</span>
+</pre></div>
 </div>
-<p>Parameter <code class="docutils literal notranslate"><span class="pre">spatial_extent</span></code> pada <code class="docutils literal notranslate"><span class="pre">load_collection</span></code> menggunakan bounding
-box (<code class="docutils literal notranslate"><span class="pre">west</span></code>, <code class="docutils literal notranslate"><span class="pre">south</span></code>, <code class="docutils literal notranslate"><span class="pre">east</span></code>, <code class="docutils literal notranslate"><span class="pre">north</span></code>) di atas. Untuk agregasi spasial
-pada <code class="docutils literal notranslate"><span class="pre">aggregate_spatial</span></code>, bounding box yang sama direpresentasikan
-sebagai polygon GeoJSON yang tertutup, artinya titik pertama dan titik
-terakhir pada koordinat sama.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bangkalan_polygon</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[[</span>
-        <span class="p">[</span><span class="mf">112.671</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.227</span><span class="p">],</span>   <span class="c1"># kiri bawah, barat daya</span>
-        <span class="p">[</span><span class="mf">113.116</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.227</span><span class="p">],</span>   <span class="c1"># kanan bawah, tenggara</span>
-        <span class="p">[</span><span class="mf">113.116</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.848</span><span class="p">],</span>   <span class="c1"># kanan atas, timur laut</span>
-        <span class="p">[</span><span class="mf">112.671</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.848</span><span class="p">],</span>   <span class="c1"># kiri atas, barat laut</span>
-        <span class="p">[</span><span class="mf">112.671</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.227</span><span class="p">],</span>   <span class="c1"># kembali ke titik awal</span>
-    <span class="p">]],</span>
+<p>Bounding box (<code class="docutils literal notranslate"><span class="pre">west</span></code>, <code class="docutils literal notranslate"><span class="pre">south</span></code>, <code class="docutils literal notranslate"><span class="pre">east</span></code>, <code class="docutils literal notranslate"><span class="pre">north</span></code>) tetap dihitung, tetapi
+hanya dipakai sebagai batas kasar pada parameter <code class="docutils literal notranslate"><span class="pre">spatial_extent</span></code> di
+<code class="docutils literal notranslate"><span class="pre">load_collection</span></code>, sekadar mempersempit area unduhan data mentah. Batas
+yang sesungguhnya dipakai untuk agregasi spasial pada <code class="docutils literal notranslate"><span class="pre">aggregate_spatial</span></code>
+adalah polygon administratif di atas, bukan kotak ini.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lons</span> <span class="o">=</span> <span class="p">[</span><span class="n">pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">bangkalan_polygon</span><span class="p">[</span><span class="s2">&quot;coordinates&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">lats</span> <span class="o">=</span> <span class="p">[</span><span class="n">pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">bangkalan_polygon</span><span class="p">[</span><span class="s2">&quot;coordinates&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">bangkalan_bbox</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;west&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">lons</span><span class="p">),</span>
+    <span class="s2">&quot;east&quot;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">lons</span><span class="p">),</span>
+    <span class="s2">&quot;south&quot;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">lats</span><span class="p">),</span>
+    <span class="s2">&quot;north&quot;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">lats</span><span class="p">),</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -561,7 +546,8 @@ bagian <strong>Eksplorasi Data</strong>.</p>
 <section id="proses-ekstraksi-data">
 <h2>4. Proses Ekstraksi Data<a class="headerlink" href="#proses-ekstraksi-data" title="Link to this heading">#</a></h2>
 <p>Untuk setiap polutan, data dimuat, diagregasi secara temporal (harian,
-mean), lalu diagregasi secara spasial (mean di dalam polygon AOI).</p>
+mean), lalu diagregasi secara spasial (mean di dalam polygon AOI asli
+Bangkalan).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s5</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">load_collection</span><span class="p">(</span>
     <span class="s2">&quot;SENTINEL_5P_L2&quot;</span><span class="p">,</span>
     <span class="n">temporal_extent</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;2025-08-24&quot;</span><span class="p">,</span> <span class="s2">&quot;2026-08-24&quot;</span><span class="p">],</span>
@@ -579,14 +565,19 @@ mean), lalu diagregasi secara spasial (mean di dalam polygon AOI).</p>
 </div>
 <p>Proses ini dijalankan sebagai batch job di server openEO, dan dapat
 dipantau melalui openEO Web Editor. Setelah selesai, hasil diunduh dalam
-format NetCDF (<code class="docutils literal notranslate"><span class="pre">.nc</span></code>), lalu dikonversi menjadi CSV agar mudah dipakai
-pada tahap eksplorasi dan analisis lanjutan. Detail lengkap kode
-ekstraksi dan konversi tersedia pada notebook <code class="docutils literal notranslate"><span class="pre">1-ekstraksi-data.ipynb</span></code>.</p>
+format NetCDF (<code class="docutils literal notranslate"><span class="pre">.nc</span></code>) untuk masing masing polutan, lalu keempatnya
+digabungkan menjadi satu tabel CSV agar mudah dipakai pada tahap
+eksplorasi dan analisis lanjutan. Detail lengkap kode ekstraksi dan
+penggabungan tersedia pada notebook <code class="docutils literal notranslate"><span class="pre">4-ekstraksi-data.ipynb</span></code>, termasuk
+sel diagnostik untuk memeriksa apakah hasil ekstraksi benar benar
+bernilai nol atau hanya nilai yang sangat kecil.</p>
 </section>
 <section id="struktur-data-hasil">
 <h2>5. Struktur Data Hasil<a class="headerlink" href="#struktur-data-hasil" title="Link to this heading">#</a></h2>
-<p>Setiap file CSV hasil ekstraksi memiliki struktur (skema) yang sama:
-kolom tanggal, dan kolom nilai konsentrasi polutan.</p>
+<p>Berbeda dari pendekatan menyimpan satu file CSV per polutan, keempat
+polutan hasil ekstraksi digabungkan menjadi <strong>satu tabel tunggal</strong>, mirip
+struktur tabel pada basis data, dengan satu baris per tanggal dan satu
+kolom per polutan.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Kolom</p></th>
@@ -599,36 +590,62 @@ kolom tanggal, dan kolom nilai konsentrasi polutan.</p>
 <td><p>datetime</p></td>
 <td><p>Tanggal pengukuran (harian)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NO2</span></code> / <code class="docutils literal notranslate"><span class="pre">CO</span></code> / <code class="docutils literal notranslate"><span class="pre">SO2</span></code> / <code class="docutils literal notranslate"><span class="pre">CH4</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NO2</span></code></p></td>
 <td><p>float</p></td>
-<td><p>Nilai konsentrasi rata rata harian pada wilayah Bangkalan</p></td>
+<td><p>Nilai konsentrasi rata rata harian NO2 pada wilayah Bangkalan</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CO</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Nilai konsentrasi rata rata harian CO pada wilayah Bangkalan</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SO2</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Nilai konsentrasi rata rata harian SO2 pada wilayah Bangkalan</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CH4</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Nilai konsentrasi rata rata harian CH4 pada wilayah Bangkalan</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Contoh isi file <code class="docutils literal notranslate"><span class="pre">bangkalan_NO2.csv</span></code>:</p>
+<p>Contoh isi file <code class="docutils literal notranslate"><span class="pre">bangkalan_polutan.csv</span></code>:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>date</p></th>
 <th class="head"><p>NO2</p></th>
+<th class="head"><p>CO</p></th>
+<th class="head"><p>SO2</p></th>
+<th class="head"><p>CH4</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>2025-08-24</p></td>
 <td><p>0.000123</p></td>
+<td><p>0.021</p></td>
+<td><p>0.0004</p></td>
+<td><p>0.00019</p></td>
 </tr>
 <tr class="row-odd"><td><p>2025-08-25</p></td>
 <td><p>0.000119</p></td>
+<td><p>0.020</p></td>
+<td><p>0.0003</p></td>
+<td><p>0.00018</p></td>
 </tr>
 <tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
 <td><p>…</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Terdapat empat file CSV yang dihasilkan, masing masing untuk satu
-polutan: <code class="docutils literal notranslate"><span class="pre">bangkalan_NO2.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">bangkalan_CO.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">bangkalan_SO2.csv</span></code>, dan
-<code class="docutils literal notranslate"><span class="pre">bangkalan_CH4.csv</span></code>, seluruhnya tersimpan di folder <code class="docutils literal notranslate"><span class="pre">../data/csv/</span></code>.</p>
+<p>Hanya ada satu file CSV yang dihasilkan, yaitu <code class="docutils literal notranslate"><span class="pre">bangkalan_polutan.csv</span></code>,
+tersimpan di folder <code class="docutils literal notranslate"><span class="pre">../data/csv/</span></code>. File NetCDF per polutan
+(<code class="docutils literal notranslate"><span class="pre">bangkalan_NO2.nc</span></code>, <code class="docutils literal notranslate"><span class="pre">bangkalan_CO.nc</span></code>, <code class="docutils literal notranslate"><span class="pre">bangkalan_SO2.nc</span></code>,
+<code class="docutils literal notranslate"><span class="pre">bangkalan_CH4.nc</span></code>) tetap disimpan di folder <code class="docutils literal notranslate"><span class="pre">../data/nc/</span></code> sebagai data
+mentah untuk keperluan pelacakan (traceability) atau pemeriksaan ulang.</p>
 </section>
 <section id="keterbatasan-data">
 <h2>6. Keterbatasan Data<a class="headerlink" href="#keterbatasan-data" title="Link to this heading">#</a></h2>
@@ -645,17 +662,41 @@ berhati hati saat dikaitkan dengan dampak kesehatan langsung pada
 manusia di permukaan.</p></li>
 </ol>
 </section>
+<section id="catatan-jika-hasil-ekstraksi-bernilai-0">
+<h2>7. Catatan Jika Hasil Ekstraksi Bernilai 0<a class="headerlink" href="#catatan-jika-hasil-ekstraksi-bernilai-0" title="Link to this heading">#</a></h2>
+<p>Jika seluruh nilai pada tabel hasil ekstraksi terlihat bernilai 0, hal ini
+umumnya bukan berarti udara benar benar bersih sempurna, melainkan
+menandakan salah satu dari beberapa kemungkinan berikut.</p>
+<ol class="arabic simple">
+<li><p>Nama band yang diminta tidak sesuai dengan nama band pada koleksi
+<code class="docutils literal notranslate"><span class="pre">SENTINEL_5P_L2</span></code> (bersifat case sensitive).</p></li>
+<li><p>Nilai kosong (NaN) akibat tutupan awan tidak sengaja terisi 0 pada
+suatu tahap pemrosesan, alih alih dibiarkan sebagai data hilang.</p></li>
+<li><p>Nilai konsentrasi memang sangat kecil (orde 1e-4 hingga 1e-6), sehingga
+terlihat seperti 0.000000 jika dicetak dengan pembulatan yang terlalu
+sedikit angka desimal.</p></li>
+<li><p>Area yang diagregasi meleset dari wilayah yang dimaksud, misalnya
+sebagian besar jatuh di area laut tanpa data yang relevan.</p></li>
+</ol>
+<p>Notebook <code class="docutils literal notranslate"><span class="pre">4-ekstraksi-data.ipynb</span></code> menyediakan sel uji coba dan diagnostik
+khusus untuk memeriksa kemungkinan kemungkinan ini sebelum menjalankan
+ekstraksi penuh setahun.</p>
+</section>
 <section id="kesimpulan">
-<h2>7. Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h2>
+<h2>8. Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h2>
 <p>Data Sentinel-5P L2 yang diakses melalui openEO Copernicus Data Space
 Ecosystem terbukti dapat diambil untuk wilayah dan rentang waktu yang
 ditentukan, yaitu 24 Agustus 2025 sampai dengan 24 Agustus 2026, dengan
 catatan penting bahwa ekstraksi harus dilakukan per polutan karena
-keterbatasan backend. Area of Interest yang didefinisikan dalam bentuk
-bounding box dan polygon sudah jelas cakupannya, dan struktur data hasil
-ekstraksi berupa CSV harian per polutan sudah dirancang agar mudah dipakai
-pada tahap berikutnya. Dengan mempertimbangkan keterbatasan resolusi
-spasial dan kemungkinan data kosong, data ini dinyatakan cukup untuk
+keterbatasan backend. Area of Interest yang dipakai sudah mengikuti
+bentuk administratif asli Kabupaten Bangkalan, bukan kotak bounding box,
+sehingga agregasi spasial lebih mencerminkan wilayah yang sesungguhnya.
+Struktur data hasil ekstraksi berupa satu tabel gabungan berkolom
+<code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">NO2</span></code>, <code class="docutils literal notranslate"><span class="pre">CO</span></code>, <code class="docutils literal notranslate"><span class="pre">SO2</span></code>, dan <code class="docutils literal notranslate"><span class="pre">CH4</span></code> sudah dirancang agar mudah dipakai
+pada tahap berikutnya, mirip sebuah tabel pada basis data. Dengan
+mempertimbangkan keterbatasan resolusi spasial dan kemungkinan data
+kosong, serta setelah memastikan hasil ekstraksi tidak seluruhnya
+bernilai 0 melalui sel diagnostik, data ini dinyatakan cukup untuk
 dilanjutkan ke tahap <strong>Eksplorasi Data</strong>, tempat kualitas data akan
 diperiksa lebih lanjut sebelum dianalisis secara mendalam.</p>
 </section>
@@ -734,7 +775,8 @@ diperiksa lebih lanjut sebelum dianalisis secara mendalam.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-ekstraksi-data">4. Proses Ekstraksi Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-data-hasil">5. Struktur Data Hasil</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keterbatasan-data">6. Keterbatasan Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">7. Kesimpulan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catatan-jika-hasil-ekstraksi-bernilai-0">7. Catatan Jika Hasil Ekstraksi Bernilai 0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">8. Kesimpulan</a></li>
 </ul>
   </nav></div>
 

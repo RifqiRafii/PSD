@@ -26,8 +26,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['nc_paths = {}', '', 'for pollutant_name, band_name in POLLUTANTS.items():', '    try:', '        nc_path = extract_pollutant(']
+['# Uji coba paling mendasar: unduh grid piksel mentah NO2 untuk satu hari saja,', '# TANPA aggregate_temporal_period maupun aggregate_spatial. Ini mengisolasi', '# apakah data pada sumbernya memang sudah nol/tidak ada, atau justru berubah', '# menjadi 0 pada tahap agregasi selanjutnya.', 'raw_cube = connection.load_collection(']
 ...
-['', 'print()', 'print("Ringkasan file NetCDF yang berhasil dibuat:")', 'for pollutant_name, path in nc_paths.items():', '    print(f"  - {pollutant_name}: {path}")']
+['# bernilai selain NaN atau 0.0) untuk grid mentah satu hari ini, kemungkinan', '# besar masalah ada pada request itu sendiri (bbox/polygon, nama band, atau', '# koleksi), bukan pada langkah agregasi. Jika grid mentah ini justru', '# menunjukkan banyak piksel valid dan bervariasi, artinya masalah baru muncul', '# pada langkah aggregate_temporal_period atau aggregate_spatial berikutnya.']
 -------------------
 

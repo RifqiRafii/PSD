@@ -82,32 +82,37 @@ permintaan.
 
 ## 3. Area of Interest (AOI) Kabupaten Bangkalan
 
-AOI didefinisikan sebagai bounding box yang mencakup wilayah administratif
-Kabupaten Bangkalan.
-
-| Atribut | Nilai | Keterangan |
-|---------|-------|------------|
-| `west` | 112.671 | Longitude terkecil, batas kiri |
-| `east` | 113.116 | Longitude terbesar, batas kanan |
-| `south` | -7.227 | Latitude terkecil, batas bawah |
-| `north` | -6.848 | Latitude terbesar, batas atas |
-
-Parameter `spatial_extent` pada `load_collection` menggunakan bounding
-box (`west`, `south`, `east`, `north`) di atas. Untuk agregasi spasial
-pada `aggregate_spatial`, bounding box yang sama direpresentasikan
-sebagai polygon GeoJSON yang tertutup, artinya titik pertama dan titik
-terakhir pada koordinat sama.
+AOI didefinisikan sebagai **batas administratif asli Kabupaten Bangkalan**
+(bentuk polygon sesuai wilayah sebenarnya), bukan kotak bounding box.
+Polygon ini diambil dari data batas administratif resmi (GADM level 2,
+kode wilayah BPS/Kemendagri 3526), lalu disederhanakan agar tidak terlalu
+berat saat dikirim sebagai parameter permintaan ke openEO, namun tetap
+mengikuti lekukan pesisir dan bentuk asli kabupaten, tersimpan sebagai
+`../data/bangkalan-boundary.geojson`.
 
 ```python
-bangkalan_polygon = {
-    "type": "Polygon",
-    "coordinates": [[
-        [112.671, -7.227],   # kiri bawah, barat daya
-        [113.116, -7.227],   # kanan bawah, tenggara
-        [113.116, -6.848],   # kanan atas, timur laut
-        [112.671, -6.848],   # kiri atas, barat laut
-        [112.671, -7.227],   # kembali ke titik awal
-    ]],
+import json
+
+with open("../data/bangkalan-boundary.geojson", encoding="utf-8") as f:
+    bangkalan_geojson = json.load(f)
+
+bangkalan_polygon = bangkalan_geojson["geometry"]  # objek Polygon GeoJSON
+```
+
+Bounding box (`west`, `south`, `east`, `north`) tetap dihitung, tetapi
+hanya dipakai sebagai batas kasar pada parameter `spatial_extent` di
+`load_collection`, sekadar mempersempit area unduhan data mentah. Batas
+yang sesungguhnya dipakai untuk agregasi spasial pada `aggregate_spatial`
+adalah polygon administratif di atas, bukan kotak ini.
+
+```python
+lons = [pt[0] for pt in bangkalan_polygon["coordinates"][0]]
+lats = [pt[1] for pt in bangkalan_polygon["coordinates"][0]]
+bangkalan_bbox = {
+    "west": min(lons),
+    "east": max(lons),
+    "south": min(lats),
+    "north": max(lats),
 }
 ```
 
@@ -118,7 +123,8 @@ bagian **Eksplorasi Data**.
 ## 4. Proses Ekstraksi Data
 
 Untuk setiap polutan, data dimuat, diagregasi secara temporal (harian,
-mean), lalu diagregasi secara spasial (mean di dalam polygon AOI).
+mean), lalu diagregasi secara spasial (mean di dalam polygon AOI asli
+Bangkalan).
 
 ```python
 s5 = connection.load_collection(
@@ -138,31 +144,41 @@ job = s5.execute_batch(
 
 Proses ini dijalankan sebagai batch job di server openEO, dan dapat
 dipantau melalui openEO Web Editor. Setelah selesai, hasil diunduh dalam
-format NetCDF (`.nc`), lalu dikonversi menjadi CSV agar mudah dipakai
-pada tahap eksplorasi dan analisis lanjutan. Detail lengkap kode
-ekstraksi dan konversi tersedia pada notebook `1-ekstraksi-data.ipynb`.
+format NetCDF (`.nc`) untuk masing masing polutan, lalu keempatnya
+digabungkan menjadi satu tabel CSV agar mudah dipakai pada tahap
+eksplorasi dan analisis lanjutan. Detail lengkap kode ekstraksi dan
+penggabungan tersedia pada notebook `4-ekstraksi-data.ipynb`, termasuk
+sel diagnostik untuk memeriksa apakah hasil ekstraksi benar benar
+bernilai nol atau hanya nilai yang sangat kecil.
 
 ## 5. Struktur Data Hasil
 
-Setiap file CSV hasil ekstraksi memiliki struktur (skema) yang sama:
-kolom tanggal, dan kolom nilai konsentrasi polutan.
+Berbeda dari pendekatan menyimpan satu file CSV per polutan, keempat
+polutan hasil ekstraksi digabungkan menjadi **satu tabel tunggal**, mirip
+struktur tabel pada basis data, dengan satu baris per tanggal dan satu
+kolom per polutan.
 
 | Kolom | Tipe Data | Keterangan |
 |-------|-----------|------------|
 | `date` | datetime | Tanggal pengukuran (harian) |
-| `NO2` / `CO` / `SO2` / `CH4` | float | Nilai konsentrasi rata rata harian pada wilayah Bangkalan |
+| `NO2` | float | Nilai konsentrasi rata rata harian NO2 pada wilayah Bangkalan |
+| `CO` | float | Nilai konsentrasi rata rata harian CO pada wilayah Bangkalan |
+| `SO2` | float | Nilai konsentrasi rata rata harian SO2 pada wilayah Bangkalan |
+| `CH4` | float | Nilai konsentrasi rata rata harian CH4 pada wilayah Bangkalan |
 
-Contoh isi file `bangkalan_NO2.csv`:
+Contoh isi file `bangkalan_polutan.csv`:
 
-| date | NO2 |
-|------|-----|
-| 2025-08-24 | 0.000123 |
-| 2025-08-25 | 0.000119 |
-| ... | ... |
+| date | NO2 | CO | SO2 | CH4 |
+|------|-----|----|----|-----|
+| 2025-08-24 | 0.000123 | 0.021 | 0.0004 | 0.00019 |
+| 2025-08-25 | 0.000119 | 0.020 | 0.0003 | 0.00018 |
+| ... | ... | ... | ... | ... |
 
-Terdapat empat file CSV yang dihasilkan, masing masing untuk satu
-polutan: `bangkalan_NO2.csv`, `bangkalan_CO.csv`, `bangkalan_SO2.csv`, dan
-`bangkalan_CH4.csv`, seluruhnya tersimpan di folder `../data/csv/`.
+Hanya ada satu file CSV yang dihasilkan, yaitu `bangkalan_polutan.csv`,
+tersimpan di folder `../data/csv/`. File NetCDF per polutan
+(`bangkalan_NO2.nc`, `bangkalan_CO.nc`, `bangkalan_SO2.nc`,
+`bangkalan_CH4.nc`) tetap disimpan di folder `../data/nc/` sebagai data
+mentah untuk keperluan pelacakan (traceability) atau pemeriksaan ulang.
 
 ## 6. Keterbatasan Data
 
@@ -178,16 +194,40 @@ Beberapa keterbatasan yang perlu disadari sejak tahap ini:
    berhati hati saat dikaitkan dengan dampak kesehatan langsung pada
    manusia di permukaan.
 
-## 7. Kesimpulan
+## 7. Catatan Jika Hasil Ekstraksi Bernilai 0
+
+Jika seluruh nilai pada tabel hasil ekstraksi terlihat bernilai 0, hal ini
+umumnya bukan berarti udara benar benar bersih sempurna, melainkan
+menandakan salah satu dari beberapa kemungkinan berikut.
+
+1. Nama band yang diminta tidak sesuai dengan nama band pada koleksi
+   `SENTINEL_5P_L2` (bersifat case sensitive).
+2. Nilai kosong (NaN) akibat tutupan awan tidak sengaja terisi 0 pada
+   suatu tahap pemrosesan, alih alih dibiarkan sebagai data hilang.
+3. Nilai konsentrasi memang sangat kecil (orde 1e-4 hingga 1e-6), sehingga
+   terlihat seperti 0.000000 jika dicetak dengan pembulatan yang terlalu
+   sedikit angka desimal.
+4. Area yang diagregasi meleset dari wilayah yang dimaksud, misalnya
+   sebagian besar jatuh di area laut tanpa data yang relevan.
+
+Notebook `4-ekstraksi-data.ipynb` menyediakan sel uji coba dan diagnostik
+khusus untuk memeriksa kemungkinan kemungkinan ini sebelum menjalankan
+ekstraksi penuh setahun.
+
+## 8. Kesimpulan
 
 Data Sentinel-5P L2 yang diakses melalui openEO Copernicus Data Space
 Ecosystem terbukti dapat diambil untuk wilayah dan rentang waktu yang
 ditentukan, yaitu 24 Agustus 2025 sampai dengan 24 Agustus 2026, dengan
 catatan penting bahwa ekstraksi harus dilakukan per polutan karena
-keterbatasan backend. Area of Interest yang didefinisikan dalam bentuk
-bounding box dan polygon sudah jelas cakupannya, dan struktur data hasil
-ekstraksi berupa CSV harian per polutan sudah dirancang agar mudah dipakai
-pada tahap berikutnya. Dengan mempertimbangkan keterbatasan resolusi
-spasial dan kemungkinan data kosong, data ini dinyatakan cukup untuk
+keterbatasan backend. Area of Interest yang dipakai sudah mengikuti
+bentuk administratif asli Kabupaten Bangkalan, bukan kotak bounding box,
+sehingga agregasi spasial lebih mencerminkan wilayah yang sesungguhnya.
+Struktur data hasil ekstraksi berupa satu tabel gabungan berkolom
+`date`, `NO2`, `CO`, `SO2`, dan `CH4` sudah dirancang agar mudah dipakai
+pada tahap berikutnya, mirip sebuah tabel pada basis data. Dengan
+mempertimbangkan keterbatasan resolusi spasial dan kemungkinan data
+kosong, serta setelah memastikan hasil ekstraksi tidak seluruhnya
+bernilai 0 melalui sel diagnostik, data ini dinyatakan cukup untuk
 dilanjutkan ke tahap **Eksplorasi Data**, tempat kualitas data akan
 diperiksa lebih lanjut sebelum dianalisis secara mendalam.

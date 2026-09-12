@@ -18,23 +18,36 @@ Eksplorasi Data adalah tahap untuk melihat, memvisualisasikan, dan
 memeriksa kualitas data yang telah diperoleh pada tahap Data
 Understanding, sebelum data diolah lebih lanjut pada tahap analisis
 utama. Bagian ini mencakup peta interaktif wilayah, statistik deskriptif,
-pemeriksaan missing values, dan deteksi outlier awal.
+pemeriksaan missing values, dan deteksi outlier awal, menggunakan satu
+tabel gabungan hasil ekstraksi.
 
 ## 1. Peta Interaktif Wilayah Bangkalan
 
-Peta berikut menampilkan bounding box AOI, titik pusat, serta beberapa
-titik acuan kontekstual, yaitu akses Suramadu dan area pesisir Klampis,
-yang relevan sebagai potensi sumber emisi. Peta mendukung dua basemap,
-yaitu peta jalan dan citra satelit, yang dapat dipilih melalui kontrol
-layer di kanan atas peta.
+Peta berikut menampilkan **batas administratif asli Kabupaten Bangkalan**
+menggunakan `folium.GeoJson`, bukan kotak bounding box, beserta titik
+pusat wilayah dan beberapa titik acuan kontekstual, yaitu akses Suramadu
+dan area pesisir Klampis, yang relevan sebagai potensi sumber emisi. Peta
+mendukung dua basemap, yaitu peta jalan dan citra satelit, yang dapat
+dipilih melalui kontrol layer di kanan atas peta.
+
+Bentuk polygon yang ditampilkan sama persis dengan polygon yang dipakai
+pada `aggregate_spatial` di notebook ekstraksi, sehingga peta ini juga
+berfungsi memverifikasi area yang sesungguhnya diagregasi, bukan sekadar
+ilustrasi.
 
 ```{code-cell}
 :tags: [hide-input]
+import json
+
 import folium
 from folium.plugins import Fullscreen, MeasureControl, MiniMap
 
-bbox = {"west": 112.671, "east": 113.116, "south": -7.227, "north": -6.848}
-center = ((bbox["south"] + bbox["north"]) / 2, (bbox["west"] + bbox["east"]) / 2)
+with open("../data/bangkalan-boundary.geojson", encoding="utf-8") as f:
+    bangkalan_geojson = json.load(f)
+
+coords = bangkalan_geojson["geometry"]["coordinates"][0]
+centroid_lon = sum(pt[0] for pt in coords) / len(coords)
+centroid_lat = sum(pt[1] for pt in coords) / len(coords)
 
 landmarks = [
     {"name": "Pusat Kota Bangkalan", "lat": -7.0392, "lon": 112.7487,
@@ -45,7 +58,7 @@ landmarks = [
      "desc": "Area pesisir dengan rencana fasilitas stockpile batu bara."},
 ]
 
-m = folium.Map(location=center, zoom_start=10, tiles=None, control_scale=True)
+m = folium.Map(location=(centroid_lat, centroid_lon), zoom_start=10, tiles=None, control_scale=True)
 folium.TileLayer("OpenStreetMap", name="Peta Jalan").add_to(m)
 folium.TileLayer(
     tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -53,14 +66,17 @@ folium.TileLayer(
     name="Citra Satelit",
 ).add_to(m)
 
-folium.Rectangle(
-    bounds=[(bbox["south"], bbox["west"]), (bbox["north"], bbox["east"])],
-    color="#d62728", weight=2.5, fill=True, fill_color="#d62728", fill_opacity=0.08,
-    tooltip="Bounding box AOI Kabupaten Bangkalan",
+folium.GeoJson(
+    bangkalan_geojson,
+    name="Batas Kabupaten Bangkalan",
+    style_function=lambda feature: {
+        "fillColor": "#d62728", "color": "#d62728", "weight": 2.5, "fillOpacity": 0.08,
+    },
+    tooltip="Batas administratif Kabupaten Bangkalan",
 ).add_to(m)
 
 folium.Marker(
-    location=center, tooltip="Titik pusat AOI",
+    location=(centroid_lat, centroid_lon), tooltip="Titik pusat (centroid) Kabupaten Bangkalan",
     icon=folium.Icon(color="red", icon="cloud", prefix="fa"),
 ).add_to(m)
 
@@ -79,40 +95,45 @@ MeasureControl(primary_length_unit="kilometers").add_to(m)
 m
 ```
 
-## 2. Memuat Data Hasil Ekstraksi
+## 2. Memuat Tabel Gabungan Hasil Ekstraksi
+
+Data yang dimuat adalah satu tabel tunggal `bangkalan_polutan.csv`, dengan
+kolom `date`, `NO2`, `CO`, `SO2`, dan `CH4`, mirip struktur tabel pada
+basis data, bukan empat file terpisah.
 
 ```{code-cell}
 :tags: [hide-input]
 import pandas as pd
 
 pollutants = ["NO2", "CO", "SO2", "CH4"]
-dataframes = {}
 
-for pollutant in pollutants:
-    df = pd.read_csv(f"../data/csv/bangkalan_{pollutant}.csv", parse_dates=["date"])
-    df = df.sort_values("date").reset_index(drop=True)
-    dataframes[pollutant] = df
-    print(f"{pollutant}: {len(df)} baris, dari {df['date'].min().date()} sampai {df['date'].max().date()}")
+df = pd.read_csv("../data/csv/bangkalan_polutan.csv", parse_dates=["date"])
+df = df.sort_values("date").reset_index(drop=True)
+
+print(f"Dimuat: {len(df)} baris, dari {df['date'].min().date()} sampai {df['date'].max().date()}")
+df.head()
 ```
 
 ## 3. Statistik Deskriptif
 
 Statistik deskriptif memberikan gambaran umum sebaran nilai tiap polutan,
 seperti nilai rata rata, nilai minimum, nilai maksimum, dan sebaran
-kuartil.
+kuartil. Nilai ditampilkan dalam notasi ilmiah karena konsentrasi trace
+gas pada data Sentinel-5P umumnya sangat kecil, sehingga pembulatan
+desimal biasa dapat menyembunyikan nilai yang sebenarnya bukan nol.
 
 ```{code-cell}
 :tags: [hide-input]
 summary_rows = []
-for pollutant, df in dataframes.items():
+for pollutant in pollutants:
     desc = df[pollutant].describe()
     summary_rows.append({
         "polutan": pollutant,
         "jumlah_data": int(desc["count"]),
-        "rata_rata": round(desc["mean"], 6),
-        "std": round(desc["std"], 6),
-        "minimum": round(desc["min"], 6),
-        "maksimum": round(desc["max"], 6),
+        "rata_rata": f"{desc['mean']:.3e}",
+        "std": f"{desc['std']:.3e}",
+        "minimum": f"{desc['min']:.3e}",
+        "maksimum": f"{desc['max']:.3e}",
     })
 
 summary_df = pd.DataFrame(summary_rows)
@@ -128,8 +149,8 @@ adanya lintasan satelit pada hari tersebut.
 
 ```{code-cell}
 :tags: [hide-input]
-for pollutant, df in dataframes.items():
-    df_full = df.set_index("date").asfreq("D")
+df_full = df.set_index("date").asfreq("D")
+for pollutant in pollutants:
     n_missing = df_full[pollutant].isna().sum()
     pct_missing = 100 * n_missing / len(df_full)
     print(f"{pollutant}: {n_missing} dari {len(df_full)} hari kosong ({pct_missing:.1f} persen)")
@@ -154,7 +175,7 @@ from sklearn.ensemble import IsolationForest
 fig, axes = plt.subplots(len(pollutants), 1, figsize=(11, 3 * len(pollutants)), sharex=False)
 
 for ax, pollutant in zip(axes, pollutants):
-    df_clean = dataframes[pollutant].dropna(subset=[pollutant]).copy()
+    df_clean = df.dropna(subset=[pollutant]).copy()
 
     model = IsolationForest(contamination=0.05, random_state=42)
     df_clean["outlier"] = model.fit_predict(df_clean[[pollutant]])
@@ -179,17 +200,15 @@ plt.show()
 
 Sebagai eksplorasi tambahan, korelasi antar polutan dapat memberi
 gambaran apakah polutan tertentu cenderung naik atau turun bersamaan,
-yang dapat mengindikasikan sumber emisi yang berkaitan.
+yang dapat mengindikasikan sumber emisi yang berkaitan. Karena data
+sudah berada dalam satu tabel gabungan, perhitungan korelasi tidak lagi
+memerlukan penggabungan manual antar file.
 
 ```{code-cell}
 :tags: [hide-input]
 import seaborn as sns
 
-merged = dataframes["NO2"][["date", "NO2"]].copy()
-for pollutant in ["CO", "SO2", "CH4"]:
-    merged = merged.merge(dataframes[pollutant][["date", pollutant]], on="date", how="outer")
-
-corr = merged[pollutants].corr()
+corr = df[pollutants].corr()
 
 plt.figure(figsize=(5, 4))
 sns.heatmap(corr, annot=True, cmap="coolwarm", vmin=-1, vmax=1)
@@ -200,9 +219,9 @@ plt.show()
 
 ## 7. Temuan Sementara
 
-Beberapa hal yang perlu diperhatikan berdasarkan eksplorasi di atas,
-akan terisi secara otomatis dengan angka sebenarnya begitu data hasil
-ekstraksi tersedia:
+Beberapa hal yang perlu diperhatikan berdasarkan eksplorasi di atas, akan
+terisi secara otomatis dengan angka sebenarnya begitu data hasil ekstraksi
+tersedia.
 
 1. Proporsi missing values pada tiap polutan, sebagai dasar penentuan
    metode penanganan yang tepat pada tahap berikutnya.
@@ -212,16 +231,21 @@ ekstraksi tersedia:
 3. Pola korelasi antar polutan, sebagai dasar dugaan awal mengenai
    keterkaitan sumber emisi, misalnya NO2 dan CO yang sama sama berasal
    dari transportasi.
+4. Jika nilai pada statistik deskriptif (Bagian 3) menunjukkan seluruh
+   angka bernilai nol, bukan angka kecil dalam notasi ilmiah, kemungkinan
+   besar ada masalah pada tahap ekstraksi yang perlu ditelusuri kembali di
+   notebook `4-ekstraksi-data.ipynb`, misalnya nama band yang salah atau
+   nilai kosong yang tidak sengaja terisi nol.
 
 ## 8. Kesimpulan
 
 Eksplorasi data menunjukkan bahwa data hasil ekstraksi Sentinel-5P untuk
-Kabupaten Bangkalan sudah berada dalam struktur yang siap diolah, yaitu
-deret waktu harian per polutan dengan rentang tanggal yang jelas. Peta
-interaktif memastikan bahwa cakupan wilayah AOI sudah sesuai dengan
-konteks yang ingin dipantau, termasuk titik titik dengan potensi sumber
-emisi seperti akses Suramadu dan pesisir Klampis. Pemeriksaan missing
-values dan deteksi outlier awal pada bagian ini menjadi dasar bagi
-penanganan data yang lebih menyeluruh, seperti interpolasi nilai kosong
-dan investigasi outlier, yang akan dilakukan pada notebook
-`2-analisis-bangkalan.ipynb`.
+Kabupaten Bangkalan sudah berada dalam struktur satu tabel gabungan yang
+siap diolah, dengan rentang tanggal yang jelas untuk keempat polutan
+sekaligus. Peta interaktif memastikan bahwa cakupan wilayah yang
+diagregasi mengikuti bentuk administratif asli Kabupaten Bangkalan, bukan
+kotak bounding box, termasuk titik titik dengan potensi sumber emisi
+seperti akses Suramadu dan pesisir Klampis. Pemeriksaan missing values dan
+deteksi outlier awal pada bagian ini menjadi dasar bagi penanganan data
+yang lebih menyeluruh, seperti interpolasi nilai kosong dan investigasi
+outlier, yang akan dilakukan pada notebook `5-analisis-bangkalan.ipynb`.
