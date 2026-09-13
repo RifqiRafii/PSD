@@ -60,7 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '2-business-understanding-bangkalan';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Business Understanding - Kabupaten Bangkalan" href="3-data-understanding-bangkalan.html" />
+    <link rel="next" title="Data Understanding - Kabupaten Bangkalan" href="3-data-understanding-bangkalan.html" />
     <link rel="prev" title="Ekstraksi Data Kualitas Udara - Kabupaten Bangkalan" href="1-ekstraksi-data.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -183,7 +183,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="pengantar-analisis-polutan-bangkalan.html">Pengantar Analisis Polutan Kabupaten Bangkalan</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data.html">Ekstraksi Data Kualitas Udara - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Business Understanding - Kabupaten Bangkalan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="3-data-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
 </ul>
 </details></li>
 </ul>
@@ -392,7 +392,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ch4-metana">5.4 CH4 (Metana)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ruang-lingkup-analisis">6. Ruang Lingkup Analisis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ruang-lingkup-analisis">6. Ruang Lingkup Analisis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perluasan-ruang-lingkup-pada-tugas-3">6.1 Perluasan Ruang Lingkup pada Tugas 3</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">7. Kesimpulan</a></li>
 </ul>
             </nav>
@@ -590,6 +593,21 @@ Ecosystem.</p></li>
 <li><p><strong>Keluaran:</strong> deret waktu harian per polutan, visualisasi tren, dan
 daftar tanggal dengan anomali atau outlier yang terdeteksi.</p></li>
 </ul>
+<section id="perluasan-ruang-lingkup-pada-tugas-3">
+<h3>6.1 Perluasan Ruang Lingkup pada Tugas 3<a class="headerlink" href="#perluasan-ruang-lingkup-pada-tugas-3" title="Link to this heading">#</a></h3>
+<p>Pada Tugas 3, cakupan wilayah dipersempit dari tingkat kabupaten menjadi
+tingkat <strong>kecamatan</strong>, yaitu <strong>Kecamatan Bangkalan</strong>, mengikuti arahan
+tugas bahwa setiap mahasiswa menganalisis kecamatan masing masing.
+Periode data juga digeser menjadi <strong>31 Agustus 2025 sampai dengan 31
+Agustus 2026</strong>, dan analisis difokuskan pada satu polutan, yaitu <strong>NO2</strong>.</p>
+<p>Tujuan analisis juga bertambah satu, yaitu:</p>
+<ol class="arabic simple" start="5">
+<li><p><strong>Mengubah deret waktu NO2 menjadi representasi fitur numerik</strong> melalui
+ekstraksi fitur time series (menggunakan pustaka TSFEL), mencakup
+domain statistik, temporal, dan spektral, sebagai bahan untuk
+pemodelan lebih lanjut pada tahap berikutnya.</p></li>
+</ol>
+</section>
 </section>
 <section id="kesimpulan">
 <h2>7. Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h2>
@@ -604,9 +622,14 @@ emisi yang berbeda: transportasi, industri, dan aktivitas agraris.
 Dengan demikian, analisis ini dapat menjadi baseline kualitas udara
 sebelum pembangunan lebih lanjut berlangsung, sekaligus menjadi alat
 pemantauan tren dan deteksi anomali yang dapat dijalankan secara berkala
-di masa depan. Tahap selanjutnya adalah <strong>Data Understanding</strong>, yaitu
-memahami sumber data, cakupan wilayah, dan cara memperoleh data yang
-dibutuhkan untuk mencapai tujuan di atas.</p>
+di masa depan.</p>
+<p>Pada tahap lanjutan (Tugas 3), fokus analisis dipersempit ke Kecamatan
+Bangkalan dan polutan NO2, dengan tujuan tambahan menyiapkan data
+tersebut menjadi kumpulan fitur numerik siap pakai (melalui preprocessing
+dan ekstraksi fitur TSFEL) untuk keperluan pemodelan pada tahap
+selanjutnya. Detail sumber data, cakupan wilayah, dan cara memperoleh
+data untuk mencapai seluruh tujuan di atas dibahas pada dokumen
+<strong>Data Understanding</strong>.</p>
 </section>
 </section>
 
@@ -654,7 +677,7 @@ dibutuhkan untuk mencapai tujuan di atas.</p>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Business Understanding - Kabupaten Bangkalan</p>
+        <p class="prev-next-title">Data Understanding - Kabupaten Bangkalan</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -685,7 +708,10 @@ dibutuhkan untuk mencapai tujuan di atas.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ch4-metana">5.4 CH4 (Metana)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ruang-lingkup-analisis">6. Ruang Lingkup Analisis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ruang-lingkup-analisis">6. Ruang Lingkup Analisis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perluasan-ruang-lingkup-pada-tugas-3">6.1 Perluasan Ruang Lingkup pada Tugas 3</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">7. Kesimpulan</a></li>
 </ul>
   </nav></div>

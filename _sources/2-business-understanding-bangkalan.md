@@ -170,6 +170,21 @@ signifikan terhadap perubahan iklim dan pemanasan global.
 - **Keluaran:** deret waktu harian per polutan, visualisasi tren, dan
   daftar tanggal dengan anomali atau outlier yang terdeteksi.
 
+### 6.1 Perluasan Ruang Lingkup pada Tugas 3
+
+Pada Tugas 3, cakupan wilayah dipersempit dari tingkat kabupaten menjadi
+tingkat **kecamatan**, yaitu **Kecamatan Bangkalan**, mengikuti arahan
+tugas bahwa setiap mahasiswa menganalisis kecamatan masing masing.
+Periode data juga digeser menjadi **31 Agustus 2025 sampai dengan 31
+Agustus 2026**, dan analisis difokuskan pada satu polutan, yaitu **NO2**.
+
+Tujuan analisis juga bertambah satu, yaitu:
+
+5. **Mengubah deret waktu NO2 menjadi representasi fitur numerik** melalui
+   ekstraksi fitur time series (menggunakan pustaka TSFEL), mencakup
+   domain statistik, temporal, dan spektral, sebagai bahan untuk
+   pemodelan lebih lanjut pada tahap berikutnya.
+
 ## 7. Kesimpulan
 
 Kabupaten Bangkalan memiliki karakteristik yang menjadikannya relevan
@@ -184,6 +199,13 @@ emisi yang berbeda: transportasi, industri, dan aktivitas agraris.
 Dengan demikian, analisis ini dapat menjadi baseline kualitas udara
 sebelum pembangunan lebih lanjut berlangsung, sekaligus menjadi alat
 pemantauan tren dan deteksi anomali yang dapat dijalankan secara berkala
-di masa depan. Tahap selanjutnya adalah **Data Understanding**, yaitu
-memahami sumber data, cakupan wilayah, dan cara memperoleh data yang
-dibutuhkan untuk mencapai tujuan di atas.
+di masa depan.
+
+Pada tahap lanjutan (Tugas 3), fokus analisis dipersempit ke Kecamatan
+Bangkalan dan polutan NO2, dengan tujuan tambahan menyiapkan data
+tersebut menjadi kumpulan fitur numerik siap pakai (melalui preprocessing
+dan ekstraksi fitur TSFEL) untuk keperluan pemodelan pada tahap
+selanjutnya. Detail sumber data, cakupan wilayah, dan cara memperoleh
+data untuk mencapai seluruh tujuan di atas dibahas pada dokumen
+**Data Understanding**.
+
