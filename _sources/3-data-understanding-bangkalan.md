@@ -521,6 +521,19 @@ Berikut adalah 68 nilai fitur hasil ekstraksi TSFEL yang sebenarnya dari
 | `mse` | NaN |
 | `petrosian_fractal_dimension` | 1.0471e+00 |
 
+
+```{code-cell}
+import pandas as pd
+
+# 1. Membaca file CSV yang berada di folder yang sama
+file_path = "ekstraksi_fitur_no2_psd-a.csv"
+df = pd.read_csv(file_path)
+
+# 2. Menampilkan 37 baris data sebagai tabel berformat rapi di Jupyter Notebook
+display(df.head(37))
+
+```
+
 **Catatan tentang nilai NaN pada domain fractal:** 5 dari 6 fitur pada
 domain ini (`dfa`, `higuchi_fractal_dimension`, `hurst_exponent`,
 `maximum_fractal_length`, `mse`) bernilai NaN pada hasil ekstraksi ini.
