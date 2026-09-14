@@ -262,7 +262,7 @@ Jupyter Book ini.
 import matplotlib.pyplot as plt
 import pandas as pd
 
-df_kab = pd.read_csv("../data/data_polutan_bangkalan.csv", parse_dates=["date"])
+df_kab = pd.read_csv("data_polutan_bangkalan.csv", parse_dates=["date"])
 
 fig, axes = plt.subplots(4, 1, figsize=(11, 12))
 

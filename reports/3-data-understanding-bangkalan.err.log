@@ -25,27 +25,15 @@ nbclient.exceptions.CellExecutionError: An error occurred while executing the fo
 import matplotlib.pyplot as plt
 import pandas as pd
 
-df_kab = pd.read_csv("../data/data_polutan_bangkalan.csv", parse_dates=["date"])
+df_kec = pd.read_csv("../data/NO2-Bangkalan.csv", parse_dates=["date"])
+sub_kec = df_kec[["date", "NO2"]].dropna()
 
-fig, axes = plt.subplots(4, 1, figsize=(11, 12))
-
-for ax, col, color in zip(axes[:3], ["NO2", "CO", "SO2"], ["#1f77b4", "#ff7f0e", "#2ca02c"]):
-    sub = df_kab[["date", col]].dropna()
-    ax.plot(sub["date"], sub[col], color=color, linewidth=1.2, marker="o", markersize=2)
-    ax.set_title(f"{col} - Kabupaten Bangkalan (data asli, tanpa imputasi)")
-    ax.set_ylabel(col)
-    ax.grid(alpha=0.3)
-
-# CH4 ditampilkan sebagai scatter, bukan garis, karena sekitar 77 persen
-# datanya hilang -- garis yang menyambung celah sebesar itu akan terlihat
-# seperti interpolasi linear, padahal bukan.
-sub_ch4 = df_kab[["date", "CH4"]].dropna()
-axes[3].scatter(sub_ch4["date"], sub_ch4["CH4"], color="#d62728", s=12)
-axes[3].set_title("CH4 - Kabupaten Bangkalan (scatter, karena sekitar 77% data hilang)")
-axes[3].set_ylabel("CH4")
-axes[3].set_xlabel("Tanggal")
-axes[3].grid(alpha=0.3)
-
+plt.figure(figsize=(11, 3.5))
+plt.plot(sub_kec["date"], sub_kec["NO2"], color="#9467bd", linewidth=1.2, marker="o", markersize=2)
+plt.title("NO2 - Kecamatan Bangkalan (data asli, tanpa imputasi)")
+plt.ylabel("NO2")
+plt.xlabel("Tanggal")
+plt.grid(alpha=0.3)
 plt.tight_layout()
 plt.show()
 ------------------
@@ -53,12 +41,12 @@ plt.show()
 
 [1;31m---------------------------------------------------------------------------[0m
 [1;31mFileNotFoundError[0m                         Traceback (most recent call last)
-Cell [1;32mIn[1], line 4[0m
+Cell [1;32mIn[2], line 4[0m
 [0;32m      1[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mplt[39;00m
 [0;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mpd[39;00m
-[1;32m----> 4[0m df_kab [38;5;241m=[39m [43mpd[49m[38;5;241;43m.[39;49m[43mread_csv[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43m../data/data_polutan_bangkalan.csv[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[43mparse_dates[49m[38;5;241;43m=[39;49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mdate[39;49m[38;5;124;43m"[39;49m[43m][49m[43m)[49m
-[0;32m      6[0m fig, axes [38;5;241m=[39m plt[38;5;241m.[39msubplots([38;5;241m4[39m, [38;5;241m1[39m, figsize[38;5;241m=[39m([38;5;241m11[39m, [38;5;241m12[39m))
-[0;32m      8[0m [38;5;28;01mfor[39;00m ax, col, color [38;5;129;01min[39;00m [38;5;28mzip[39m(axes[:[38;5;241m3[39m], [[38;5;124m"[39m[38;5;124mNO2[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mCO[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mSO2[39m[38;5;124m"[39m], [[38;5;124m"[39m[38;5;124m#1f77b4[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m#ff7f0e[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m#2ca02c[39m[38;5;124m"[39m]):
+[1;32m----> 4[0m df_kec [38;5;241m=[39m [43mpd[49m[38;5;241;43m.[39;49m[43mread_csv[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43m../data/NO2-Bangkalan.csv[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[43mparse_dates[49m[38;5;241;43m=[39;49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43mdate[39;49m[38;5;124;43m"[39;49m[43m][49m[43m)[49m
+[0;32m      5[0m sub_kec [38;5;241m=[39m df_kec[[[38;5;124m"[39m[38;5;124mdate[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mNO2[39m[38;5;124m"[39m]][38;5;241m.[39mdropna()
+[0;32m      7[0m plt[38;5;241m.[39mfigure(figsize[38;5;241m=[39m([38;5;241m11[39m, [38;5;241m3.5[39m))
 
 File [1;32m~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parsers\readers.py:1026[0m, in [0;36mread_csv[1;34m(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)[0m
 [0;32m   1013[0m kwds_defaults [38;5;241m=[39m _refine_defaults_read(
@@ -115,5 +103,5 @@ File [1;32m~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io
 [0;32m    881[0m         [38;5;66;03m# Binary mode[39;00m
 [0;32m    882[0m         handle [38;5;241m=[39m [38;5;28mopen[39m(handle, ioargs[38;5;241m.[39mmode)
 
-[1;31mFileNotFoundError[0m: [Errno 2] No such file or directory: '../data/data_polutan_bangkalan.csv'
+[1;31mFileNotFoundError[0m: [Errno 2] No such file or directory: '../data/NO2-Bangkalan.csv'
 
