@@ -362,7 +362,7 @@ bukan tercatat sebagai NaN.
 import matplotlib.pyplot as plt
 import pandas as pd
 
-df_kec = pd.read_csv("../data/NO2-Bangkalan.csv", parse_dates=["date"])
+df_kec = pd.read_csv("NO2-Bangkalan.csv", parse_dates=["date"])
 sub_kec = df_kec[["date", "NO2"]].dropna()
 
 plt.figure(figsize=(11, 3.5))
