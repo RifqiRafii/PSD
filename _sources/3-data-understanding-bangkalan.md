@@ -250,6 +250,49 @@ Line PLot SO2:
 Line Plot CH4: 
 ![LinePlot CH4](LinePlot_CH4_Bangkalan.png)
 
+### 8.1 Visualisasi Tambahan Menggunakan Library Python
+
+Selain Line Plot dari KNIME di atas, deret waktu yang sama juga
+divisualisasikan menggunakan **library Python (matplotlib)** sebagai
+pembanding sekaligus alternatif yang dapat dijalankan langsung di dalam
+Jupyter Book ini.
+
+```{code-cell}
+:tags: [hide-input]
+import matplotlib.pyplot as plt
+import pandas as pd
+
+df_kab = pd.read_csv("../data/data_polutan_bangkalan.csv", parse_dates=["date"])
+
+fig, axes = plt.subplots(4, 1, figsize=(11, 12))
+
+for ax, col, color in zip(axes[:3], ["NO2", "CO", "SO2"], ["#1f77b4", "#ff7f0e", "#2ca02c"]):
+    sub = df_kab[["date", col]].dropna()
+    ax.plot(sub["date"], sub[col], color=color, linewidth=1.2, marker="o", markersize=2)
+    ax.set_title(f"{col} - Kabupaten Bangkalan (data asli, tanpa imputasi)")
+    ax.set_ylabel(col)
+    ax.grid(alpha=0.3)
+
+# CH4 ditampilkan sebagai scatter, bukan garis, karena sekitar 77 persen
+# datanya hilang -- garis yang menyambung celah sebesar itu akan terlihat
+# seperti interpolasi linear, padahal bukan.
+sub_ch4 = df_kab[["date", "CH4"]].dropna()
+axes[3].scatter(sub_ch4["date"], sub_ch4["CH4"], color="#d62728", s=12)
+axes[3].set_title("CH4 - Kabupaten Bangkalan (scatter, karena sekitar 77% data hilang)")
+axes[3].set_ylabel("CH4")
+axes[3].set_xlabel("Tanggal")
+axes[3].grid(alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+```
+
+Dari grafik di atas terlihat NO2, CO, dan SO2 punya cakupan data yang
+relatif baik (masing masing sekitar 85-95% hari terisi), sementara CH4
+paling banyak kehilangan data (hanya sekitar 23% hari yang punya
+pengukuran), sehingga pola musimannya belum bisa disimpulkan dengan
+yakin dari data mentah ini saja.
+
 ## 9. Catatan Jika Hasil Ekstraksi Bernilai 0
 
 Jika seluruh nilai pada tabel hasil ekstraksi terlihat bernilai 0, hal ini
@@ -292,6 +335,51 @@ per hari juga jauh berkurang, sehingga risiko rate limit dari backend
 openEO (dibahas pada Bagian 9) menjadi jauh lebih rendah. Detail lengkap
 kode ekstraksi tersedia pada notebook `1-ekstraksi-data-kecamatan.ipynb`,
 dengan keluaran berupa file `NO2-Bangkalan.csv`.
+
+### 10.1 Statistik Deskriptif dan Visualisasi Data Kecamatan
+
+Berbeda dari file kabupaten yang memiliki satu baris untuk setiap
+tanggal kalender (dengan NaN pada hari tanpa data), file
+`NO2-Bangkalan.csv` hanya berisi baris untuk hari hari yang benar benar
+punya pengukuran. Dari rentang 31 Agustus 2025 sampai 31 Agustus 2026
+(360 hari kalender), tersedia **132 baris data** (sekitar 37% hari),
+sehingga 228 hari lainnya tidak muncul sama sekali sebagai baris,
+bukan tercatat sebagai NaN.
+
+| Statistik | Nilai |
+|-----------|------:|
+| Jumlah data tersedia | 132 dari 360 hari (~37%) |
+| Rata rata | 2.95e-05 |
+| Standar deviasi | 1.22e-05 |
+| Minimum | 3.71e-06 |
+| Kuartil 1 (Q1) | 2.17e-05 |
+| Median | 2.80e-05 |
+| Kuartil 3 (Q3) | 3.72e-05 |
+| Maksimum | 6.40e-05 |
+
+```{code-cell}
+:tags: [hide-input]
+import matplotlib.pyplot as plt
+import pandas as pd
+
+df_kec = pd.read_csv("../data/NO2-Bangkalan.csv", parse_dates=["date"])
+sub_kec = df_kec[["date", "NO2"]].dropna()
+
+plt.figure(figsize=(11, 3.5))
+plt.plot(sub_kec["date"], sub_kec["NO2"], color="#9467bd", linewidth=1.2, marker="o", markersize=2)
+plt.title("NO2 - Kecamatan Bangkalan (data asli, tanpa imputasi)")
+plt.ylabel("NO2")
+plt.xlabel("Tanggal")
+plt.grid(alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+Rata rata NO2 di Kecamatan Bangkalan (2.95e-05) sedikit lebih tinggi
+dibanding rata rata NO2 pada data kabupaten (2.30e-05), yang masuk akal
+mengingat Kecamatan Bangkalan adalah pusat kota dengan kepadatan
+transportasi lebih tinggi dibanding rata rata seluruh kabupaten yang
+juga mencakup area pedesaan dan pesisir.
 
 ## 11. Preprocessing Sebelum Ekstraksi Fitur
 
@@ -340,6 +428,110 @@ Hasil ekstraksi fitur disimpan dalam dua format: `NO2_Bangkalan_TSFEL.csv`
 (satu baris, 68 kolom) dan `NO2_Bangkalan_TSFEL_long.csv` (satu baris per
 fitur, dengan kolom domain).
 
+### 12.1 Hasil Ekstraksi Fitur (Nilai Sebenarnya)
+
+Berikut adalah 68 nilai fitur hasil ekstraksi TSFEL yang sebenarnya dari
+`NO2_Bangkalan_TSFEL.csv`, dikelompokkan per domain.
+
+#### Domain Statistical (21 fitur)
+
+| Fitur | Nilai |
+|-------|------:|
+| `abs_energy` | 1.2371e-07 |
+| `average_power` | 9.4434e-10 |
+| `calc_max` | 5.5028e-05 |
+| `calc_mean` | 2.8683e-05 |
+| `calc_median` | 2.7528e-05 |
+| `calc_min` | 3.7077e-06 |
+| `calc_std` | 1.0699e-05 |
+| `calc_var` | 1.1446e-10 |
+| `ecdf` | 4.1667e-02 |
+| `ecdf_percentile` | 2.9616e-05 |
+| `ecdf_percentile_count` | 6.5500e+01 |
+| `ecdf_slope` | 2.8342e+04 |
+| `entropy` | 1.0000e+00 |
+| `hist_mode` | 2.1670e-05 |
+| `interq_range` | 1.4629e-05 |
+| `kurtosis` | -1.8650e-01 |
+| `mean_abs_deviation` | 8.6180e-06 |
+| `median_abs_deviation` | 6.4321e-06 |
+| `pk_pk_distance` | 5.1321e-05 |
+| `rms` | 3.0614e-05 |
+| `skewness` | 2.6123e-01 |
+
+#### Domain Temporal (15 fitur)
+
+| Fitur | Nilai |
+|-------|------:|
+| `auc` | 3.7725e-03 |
+| `autocorr` | 1.0000e+00 |
+| `calc_centroid` | 6.9622e+01 |
+| `distance` | 1.3100e+02 |
+| `lempel_ziv` | 2.6515e-01 |
+| `mean_abs_diff` | 1.0306e-05 |
+| `mean_diff` | 7.5395e-08 |
+| `median_abs_diff` | 7.6850e-06 |
+| `median_diff` | -1.1218e-06 |
+| `negative_turning` | 4.0000e+01 |
+| `neighbourhood_peaks` | 5.0000e+00 |
+| `positive_turning` | 4.1000e+01 |
+| `slope` | 5.4539e-08 |
+| `sum_abs_diff` | 1.3501e-03 |
+| `zero_cross` | 0.0000e+00 |
+
+#### Domain Spectral (26 fitur)
+
+| Fitur | Nilai |
+|-------|------:|
+| `fundamental_frequency` | 7.5758e-03 |
+| `human_range_energy` | 0.0000e+00 |
+| `lpcc` | 5.8847e-01 |
+| `max_frequency` | 4.4697e-01 |
+| `max_power_spectrum` | 8.9585e+00 |
+| `median_frequency` | 1.0606e-01 |
+| `mfcc` | 4.1274e+01 |
+| `power_bandwidth` | 4.0152e-01 |
+| `spectral_centroid` | 1.5182e-01 |
+| `spectral_decrease` | -2.4197e+00 |
+| `spectral_distance` | -1.4779e-01 |
+| `spectral_entropy` | 8.9156e-01 |
+| `spectral_kurtosis` | 1.9848e+00 |
+| `spectral_positive_turning` | 2.3000e+01 |
+| `spectral_roll_off` | 4.4697e-01 |
+| `spectral_roll_on` | 0.0000e+00 |
+| `spectral_skewness` | 6.4089e-01 |
+| `spectral_slope` | -6.8272e-02 |
+| `spectral_spread` | 1.6082e-01 |
+| `spectral_variation` | 6.1084e-01 |
+| `spectrogram_mean_coeff` | 1.9737e-10 |
+| `wavelet_abs_mean` | 4.6191e-06 |
+| `wavelet_energy` | 1.6235e-05 |
+| `wavelet_entropy` | 2.1376e+00 |
+| `wavelet_std` | 1.5432e-05 |
+| `wavelet_var` | 2.5940e-10 |
+
+#### Domain Fractal (6 fitur)
+
+| Fitur | Nilai |
+|-------|------:|
+| `dfa` | NaN |
+| `higuchi_fractal_dimension` | NaN |
+| `hurst_exponent` | NaN |
+| `maximum_fractal_length` | NaN |
+| `mse` | NaN |
+| `petrosian_fractal_dimension` | 1.0471e+00 |
+
+**Catatan tentang nilai NaN pada domain fractal:** 5 dari 6 fitur pada
+domain ini (`dfa`, `higuchi_fractal_dimension`, `hurst_exponent`,
+`maximum_fractal_length`, `mse`) bernilai NaN pada hasil ekstraksi ini.
+Fitur fitur tersebut mengukur kompleksitas/kekasaran sinyal dan umumnya
+memerlukan panjang deret waktu tertentu atau variasi tertentu pada
+sinyal agar dapat dihitung secara stabil; kemungkinan panjang atau
+karakteristik deret waktu NO2 Kecamatan Bangkalan (132 titik data, tidak
+harian penuh) belum memenuhi syarat tersebut. Ini perlu dicatat sebagai
+keterbatasan hasil ekstraksi fitur, dan dapat dijelaskan sebagai temuan
+pada laporan, bukan dianggap error yang harus diperbaiki.
+
 ## 13. Kesimpulan
 
 Data Sentinel-5P L2 yang diakses melalui openEO Copernicus Data Space
@@ -358,7 +550,11 @@ menggunakan KNIME.
 Pada Tugas 3, data NO2 Kecamatan Bangkalan diproses lebih lanjut melalui
 deteksi outlier (IQR) dan imputasi missing value, hingga bersih
 sepenuhnya, lalu diubah menjadi 68 fitur numerik menggunakan TSFEL yang
-mencakup domain statistical, temporal, spectral, dan fractal. Dengan
-cakupan ini, tahap Data Understanding beserta preprocessing dan ekstraksi
-fitur pada Tugas 3 dinyatakan selesai; pemodelan lebih lanjut memakai
-fitur fitur ini dikerjakan sebagai bagian dari tugas terpisah.
+mencakup domain statistical, temporal, spectral, dan fractal (dengan
+catatan 5 dari 6 fitur fractal bernilai NaN pada hasil aktual, lihat
+Bagian 12.1). Visualisasi time series dilakukan dengan dua cara yang
+saling melengkapi: Line Plot pada KNIME (Bagian 8) dan library Python
+matplotlib (Bagian 8.1 dan 10.1). Dengan cakupan ini, tahap Data
+Understanding beserta preprocessing dan ekstraksi fitur pada Tugas 3
+dinyatakan selesai; pemodelan lebih lanjut memakai fitur fitur ini
+dikerjakan sebagai bagian dari tugas terpisah.

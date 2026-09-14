@@ -185,6 +185,61 @@ Tujuan analisis juga bertambah satu, yaitu:
    domain statistik, temporal, dan spektral, sebagai bahan untuk
    pemodelan lebih lanjut pada tahap berikutnya.
 
+### 6.2 TSFEL: Time Series Feature Extraction Library
+
+**TSFEL (Time Series Feature Extraction Library)** adalah pustaka Python
+open source yang dikembangkan untuk mengubah data deret waktu mentah
+menjadi sekumpulan **fitur numerik** yang merangkum karakteristik sinyal
+tersebut. Alih alih menganalisis ratusan titik data mentah satu per
+satu, TSFEL meringkasnya menjadi beberapa puluh angka yang masing masing
+menangkap satu aspek tertentu dari pola data, misalnya seberapa besar
+variasinya, seberapa sering nilainya naik-turun, atau seberapa dominan
+frekuensi tertentu dalam datanya.
+
+**Kenapa TSFEL dipakai pada proyek ini?** Data konsentrasi NO2 yang
+sudah diperoleh berbentuk deret waktu harian selama kurang lebih
+setahun. Bentuk mentah ini sulit langsung dipakai untuk perbandingan
+antar wilayah (misalnya antar kecamatan) atau untuk pemodelan machine
+learning, karena jumlah titik data per wilayah bisa berbeda beda dan
+posisinya tidak selalu bisa dibandingkan langsung hari demi hari.
+Dengan mengekstraksi fitur, satu deret waktu (berapapun panjangnya)
+diringkas menjadi **satu baris angka dengan jumlah kolom tetap**
+(68 fitur pada proyek ini), sehingga:
+
+- Mudah dibandingkan antar kecamatan/wilayah yang berbeda.
+- Bisa langsung dipakai sebagai input model klasifikasi atau clustering
+  pada tahap pemodelan berikutnya (misalnya mengelompokkan kecamatan
+  berdasarkan pola kualitas udaranya).
+- Menangkap pola yang tidak selalu terlihat langsung dari grafik, seperti
+  tingkat keacakan (entropy), kekasaran sinyal (fitur domain fractal),
+  atau dominasi frekuensi tertentu (fitur domain spectral).
+
+**Empat domain fitur TSFEL:**
+
+1. **Statistical** (statistik) — merangkum sebaran nilai secara
+   keseluruhan, seperti rata rata, standar deviasi, skewness, kurtosis,
+   dan rentang interkuartil. Domain ini menjawab pertanyaan "seperti apa
+   bentuk sebaran nilai NO2 selama setahun?".
+2. **Temporal** (waktu) — merangkum pola perubahan nilai dari satu titik
+   waktu ke titik berikutnya, seperti autokorelasi, kemiringan tren
+   (slope), dan jumlah pergantian arah naik/turun. Domain ini menjawab
+   "seberapa fluktuatif dan seberapa kuat trennya dari hari ke hari?".
+3. **Spectral** (frekuensi) — mengubah sinyal ke domain frekuensi
+   (memakai transformasi seperti Fourier dan wavelet) untuk melihat
+   apakah ada pola berulang (musiman/periodik) yang dominan. Domain ini
+   menjawab "apakah ada siklus tertentu yang berulang dalam data NO2?".
+4. **Fractal** — mengukur kompleksitas atau "kekasaran" sinyal, misalnya
+   lewat dimensi fraktal atau eksponen Hurst. Domain ini menjawab
+   "apakah polanya cenderung acak, ataukah punya struktur yang bisa
+   diprediksi?".
+
+Hasil dari keempat domain ini digabung menjadi satu tabel fitur yang
+menjadi jembatan antara tahap Data Understanding (memahami data mentah)
+dan tahap pemodelan (menggunakan data untuk analisis lanjutan atau
+machine learning) pada tugas berikutnya. Detail hasil ekstraksi fitur
+(nilai sebenarnya untuk NO2 Kecamatan Bangkalan) dibahas pada dokumen
+**Data Understanding**, Bagian 12.
+
 ## 7. Kesimpulan
 
 Kabupaten Bangkalan memiliki karakteristik yang menjadikannya relevan

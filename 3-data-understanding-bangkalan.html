@@ -181,6 +181,8 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="pengantar-analisis-polutan-bangkalan.html">Pengantar Analisis Polutan Kabupaten Bangkalan</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data.html">Ekstraksi Data Kualitas Udara - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data-kecamatan.html">Ekstraksi Data NO2 - Kecamatan Bangkalan (Tugas 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-preprocessing-ekstraksi-fitur.html">Preprocessing dan Ekstraksi Fitur TSFEL - NO2 Kecamatan Bangkalan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="2-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Data Understanding - Kabupaten Bangkalan</a></li>
 </ul>
@@ -390,15 +392,30 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-data-hasil">5. Struktur Data Hasil</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keterbatasan-data">6. Keterbatasan Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-deskriptif-data-knime">7. Statistik Deskriptif Data (KNIME)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-time-series">8. Visualisasi Time Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-time-series">8. Visualisasi Time Series</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-tambahan-menggunakan-library-python">8.1 Visualisasi Tambahan Menggunakan Library Python</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catatan-jika-hasil-ekstraksi-bernilai-0">9. Catatan Jika Hasil Ekstraksi Bernilai 0</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perluasan-pada-tugas-3-aoi-kecamatan-dan-rentang-waktu-baru">10. Perluasan pada Tugas 3: AOI Kecamatan dan Rentang Waktu Baru</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perluasan-pada-tugas-3-aoi-kecamatan-dan-rentang-waktu-baru">10. Perluasan pada Tugas 3: AOI Kecamatan dan Rentang Waktu Baru</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-deskriptif-dan-visualisasi-data-kecamatan">10.1 Statistik Deskriptif dan Visualisasi Data Kecamatan</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-sebelum-ekstraksi-fitur">11. Preprocessing Sebelum Ekstraksi Fitur</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier-metode-iqr">11.1 Deteksi Outlier (Metode IQR)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#imputasi-missing-value">11.2 Imputasi Missing Value</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-fitur-dengan-tsfel">12. Ekstraksi Fitur dengan TSFEL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-fitur-dengan-tsfel">12. Ekstraksi Fitur dengan TSFEL</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-ekstraksi-fitur-nilai-sebenarnya">12.1 Hasil Ekstraksi Fitur (Nilai Sebenarnya)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#domain-statistical-21-fitur">Domain Statistical (21 fitur)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#domain-temporal-15-fitur">Domain Temporal (15 fitur)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#domain-spectral-26-fitur">Domain Spectral (26 fitur)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#domain-fractal-6-fitur">Domain Fractal (6 fitur)</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">13. Kesimpulan</a></li>
 </ul>
             </nav>
@@ -776,6 +793,125 @@ sebelum data diproses lebih lanjut pada tugas berikutnya.</p>
 <img alt="LinePlot SO2" src="_images/LinePlot_SO2_Bangkalan.png" /></p>
 <p>Line Plot CH4:
 <img alt="LinePlot CH4" src="_images/LinePlot_CH4_Bangkalan.png" /></p>
+<section id="visualisasi-tambahan-menggunakan-library-python">
+<h3>8.1 Visualisasi Tambahan Menggunakan Library Python<a class="headerlink" href="#visualisasi-tambahan-menggunakan-library-python" title="Link to this heading">#</a></h3>
+<p>Selain Line Plot dari KNIME di atas, deret waktu yang sama juga
+divisualisasikan menggunakan <strong>library Python (matplotlib)</strong> sebagai
+pembanding sekaligus alternatif yang dapat dijalankan langsung di dalam
+Jupyter Book ini.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">df_kab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/data_polutan_bangkalan.csv&quot;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">,</span> <span class="s2">&quot;CO&quot;</span><span class="p">,</span> <span class="s2">&quot;SO2&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;#1f77b4&quot;</span><span class="p">,</span> <span class="s2">&quot;#ff7f0e&quot;</span><span class="p">,</span> <span class="s2">&quot;#2ca02c&quot;</span><span class="p">]):</span>
+    <span class="n">sub</span> <span class="o">=</span> <span class="n">df_kab</span><span class="p">[[</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="n">col</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sub</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">sub</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> - Kabupaten Bangkalan (data asli, tanpa imputasi)&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># CH4 ditampilkan sebagai scatter, bukan garis, karena sekitar 77 persen</span>
+<span class="c1"># datanya hilang -- garis yang menyambung celah sebesar itu akan terlihat</span>
+<span class="c1"># seperti interpolasi linear, padahal bukan.</span>
+<span class="n">sub_ch4</span> <span class="o">=</span> <span class="n">df_kab</span><span class="p">[[</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;CH4&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sub_ch4</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">sub_ch4</span><span class="p">[</span><span class="s2">&quot;CH4&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#d62728&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;CH4 - Kabupaten Bangkalan (scatter, karena sekitar 77</span><span class="si">% d</span><span class="s2">ata hilang)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;CH4&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Tanggal&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">df_kab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/data_polutan_bangkalan.csv&quot;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">])</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">,</span> <span class="s2">&quot;CO&quot;</span><span class="p">,</span> <span class="s2">&quot;SO2&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;#1f77b4&quot;</span><span class="p">,</span> <span class="s2">&quot;#ff7f0e&quot;</span><span class="p">,</span> <span class="s2">&quot;#2ca02c&quot;</span><span class="p">]):</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parsers\readers.py:1026,</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1013</span> <span class="n">kwds_defaults</span> <span class="o">=</span> <span class="n">_refine_defaults_read</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1014</span>     <span class="n">dialect</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1015</span>     <span class="n">delimiter</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1022</span>     <span class="n">dtype_backend</span><span class="o">=</span><span class="n">dtype_backend</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1023</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1024</span> <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1026</span> <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parsers\readers.py:620,</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">617</span> <span class="n">_validate_names</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">619</span> <span class="c1"># Create the parser.</span>
+<span class="ne">--&gt; </span><span class="mi">620</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">622</span> <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">623</span>     <span class="k">return</span> <span class="n">parser</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parsers\readers.py:1620,</span> in <span class="ni">TextFileReader.__init__</span><span class="nt">(self, f, engine, **kwds)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1617</span>     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1619</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span> <span class="n">IOHandles</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="ne">-&gt; </span><span class="mi">1620</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\parsers\readers.py:1880,</span> in <span class="ni">TextFileReader._make_engine</span><span class="nt">(self, f, engine)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1878</span>     <span class="k">if</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1879</span>         <span class="n">mode</span> <span class="o">+=</span> <span class="s2">&quot;b&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1880</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="o">=</span> <span class="n">get_handle</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1881</span>     <span class="n">f</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1882</span>     <span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1883</span>     <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1884</span>     <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;compression&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1885</span>     <span class="n">memory_map</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_map&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1886</span>     <span class="n">is_text</span><span class="o">=</span><span class="n">is_text</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1887</span>     <span class="n">errors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding_errors&quot;</span><span class="p">,</span> <span class="s2">&quot;strict&quot;</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1888</span>     <span class="n">storage_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storage_options&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1889</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1890</span> <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1891</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">handle</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pandas\io\common.py:873,</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">868</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">869</span>     <span class="c1"># Check whether the filename is to be opened in binary mode.</span>
+<span class="g g-Whitespace">    </span><span class="mi">870</span>     <span class="c1"># Binary mode does not support &#39;encoding&#39; and &#39;newline&#39;.</span>
+<span class="g g-Whitespace">    </span><span class="mi">871</span>     <span class="k">if</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span> <span class="ow">and</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">872</span>         <span class="c1"># Encoding</span>
+<span class="ne">--&gt; </span><span class="mi">873</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">874</span>             <span class="n">handle</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">875</span>             <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">876</span>             <span class="n">encoding</span><span class="o">=</span><span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">877</span>             <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">878</span>             <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">879</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">880</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">881</span>         <span class="c1"># Binary mode</span>
+<span class="g g-Whitespace">    </span><span class="mi">882</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../data/data_polutan_bangkalan.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dari grafik di atas terlihat NO2, CO, dan SO2 punya cakupan data yang
+relatif baik (masing masing sekitar 85-95% hari terisi), sementara CH4
+paling banyak kehilangan data (hanya sekitar 23% hari yang punya
+pengukuran), sehingga pola musimannya belum bisa disimpulkan dengan
+yakin dari data mentah ini saja.</p>
+</section>
 </section>
 <section id="catatan-jika-hasil-ekstraksi-bernilai-0">
 <h2>9. Catatan Jika Hasil Ekstraksi Bernilai 0<a class="headerlink" href="#catatan-jika-hasil-ekstraksi-bernilai-0" title="Link to this heading">#</a></h2>
@@ -838,6 +974,81 @@ per hari juga jauh berkurang, sehingga risiko rate limit dari backend
 openEO (dibahas pada Bagian 9) menjadi jauh lebih rendah. Detail lengkap
 kode ekstraksi tersedia pada notebook <code class="docutils literal notranslate"><span class="pre">1-ekstraksi-data-kecamatan.ipynb</span></code>,
 dengan keluaran berupa file <code class="docutils literal notranslate"><span class="pre">NO2-Bangkalan.csv</span></code>.</p>
+<section id="statistik-deskriptif-dan-visualisasi-data-kecamatan">
+<h3>10.1 Statistik Deskriptif dan Visualisasi Data Kecamatan<a class="headerlink" href="#statistik-deskriptif-dan-visualisasi-data-kecamatan" title="Link to this heading">#</a></h3>
+<p>Berbeda dari file kabupaten yang memiliki satu baris untuk setiap
+tanggal kalender (dengan NaN pada hari tanpa data), file
+<code class="docutils literal notranslate"><span class="pre">NO2-Bangkalan.csv</span></code> hanya berisi baris untuk hari hari yang benar benar
+punya pengukuran. Dari rentang 31 Agustus 2025 sampai 31 Agustus 2026
+(360 hari kalender), tersedia <strong>132 baris data</strong> (sekitar 37% hari),
+sehingga 228 hari lainnya tidak muncul sama sekali sebagai baris,
+bukan tercatat sebagai NaN.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Statistik</p></th>
+<th class="head text-right"><p>Nilai</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Jumlah data tersedia</p></td>
+<td class="text-right"><p>132 dari 360 hari (~37%)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Rata rata</p></td>
+<td class="text-right"><p>2.95e-05</p></td>
+</tr>
+<tr class="row-even"><td><p>Standar deviasi</p></td>
+<td class="text-right"><p>1.22e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p>Minimum</p></td>
+<td class="text-right"><p>3.71e-06</p></td>
+</tr>
+<tr class="row-even"><td><p>Kuartil 1 (Q1)</p></td>
+<td class="text-right"><p>2.17e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p>Median</p></td>
+<td class="text-right"><p>2.80e-05</p></td>
+</tr>
+<tr class="row-even"><td><p>Kuartil 3 (Q3)</p></td>
+<td class="text-right"><p>3.72e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p>Maksimum</p></td>
+<td class="text-right"><p>6.40e-05</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">df_kec</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/NO2-Bangkalan.csv&quot;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">])</span>
+<span class="n">sub_kec</span> <span class="o">=</span> <span class="n">df_kec</span><span class="p">[[</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;NO2&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sub_kec</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">sub_kec</span><span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#9467bd&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;NO2 - Kecamatan Bangkalan (data asli, tanpa imputasi)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;NO2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Tanggal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Rata rata NO2 di Kecamatan Bangkalan (2.95e-05) sedikit lebih tinggi
+dibanding rata rata NO2 pada data kabupaten (2.30e-05), yang masuk akal
+mengingat Kecamatan Bangkalan adalah pusat kota dengan kepadatan
+transportasi lebih tinggi dibanding rata rata seluruh kabupaten yang
+juga mencakup area pedesaan dan pesisir.</p>
+</section>
 </section>
 <section id="preprocessing-sebelum-ekstraksi-fitur">
 <h2>11. Preprocessing Sebelum Ekstraksi Fitur<a class="headerlink" href="#preprocessing-sebelum-ekstraksi-fitur" title="Link to this heading">#</a></h2>
@@ -902,6 +1113,277 @@ spectral), fitur fraktal dapat digabungkan ke dalam kelompok temporal.</p>
 <p>Hasil ekstraksi fitur disimpan dalam dua format: <code class="docutils literal notranslate"><span class="pre">NO2_Bangkalan_TSFEL.csv</span></code>
 (satu baris, 68 kolom) dan <code class="docutils literal notranslate"><span class="pre">NO2_Bangkalan_TSFEL_long.csv</span></code> (satu baris per
 fitur, dengan kolom domain).</p>
+<section id="hasil-ekstraksi-fitur-nilai-sebenarnya">
+<h3>12.1 Hasil Ekstraksi Fitur (Nilai Sebenarnya)<a class="headerlink" href="#hasil-ekstraksi-fitur-nilai-sebenarnya" title="Link to this heading">#</a></h3>
+<p>Berikut adalah 68 nilai fitur hasil ekstraksi TSFEL yang sebenarnya dari
+<code class="docutils literal notranslate"><span class="pre">NO2_Bangkalan_TSFEL.csv</span></code>, dikelompokkan per domain.</p>
+<section id="domain-statistical-21-fitur">
+<h4>Domain Statistical (21 fitur)<a class="headerlink" href="#domain-statistical-21-fitur" title="Link to this heading">#</a></h4>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fitur</p></th>
+<th class="head text-right"><p>Nilai</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">abs_energy</span></code></p></td>
+<td class="text-right"><p>1.2371e-07</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">average_power</span></code></p></td>
+<td class="text-right"><p>9.4434e-10</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">calc_max</span></code></p></td>
+<td class="text-right"><p>5.5028e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">calc_mean</span></code></p></td>
+<td class="text-right"><p>2.8683e-05</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">calc_median</span></code></p></td>
+<td class="text-right"><p>2.7528e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">calc_min</span></code></p></td>
+<td class="text-right"><p>3.7077e-06</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">calc_std</span></code></p></td>
+<td class="text-right"><p>1.0699e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">calc_var</span></code></p></td>
+<td class="text-right"><p>1.1446e-10</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ecdf</span></code></p></td>
+<td class="text-right"><p>4.1667e-02</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ecdf_percentile</span></code></p></td>
+<td class="text-right"><p>2.9616e-05</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ecdf_percentile_count</span></code></p></td>
+<td class="text-right"><p>6.5500e+01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ecdf_slope</span></code></p></td>
+<td class="text-right"><p>2.8342e+04</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">entropy</span></code></p></td>
+<td class="text-right"><p>1.0000e+00</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hist_mode</span></code></p></td>
+<td class="text-right"><p>2.1670e-05</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">interq_range</span></code></p></td>
+<td class="text-right"><p>1.4629e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kurtosis</span></code></p></td>
+<td class="text-right"><p>-1.8650e-01</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mean_abs_deviation</span></code></p></td>
+<td class="text-right"><p>8.6180e-06</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">median_abs_deviation</span></code></p></td>
+<td class="text-right"><p>6.4321e-06</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pk_pk_distance</span></code></p></td>
+<td class="text-right"><p>5.1321e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rms</span></code></p></td>
+<td class="text-right"><p>3.0614e-05</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">skewness</span></code></p></td>
+<td class="text-right"><p>2.6123e-01</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="domain-temporal-15-fitur">
+<h4>Domain Temporal (15 fitur)<a class="headerlink" href="#domain-temporal-15-fitur" title="Link to this heading">#</a></h4>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fitur</p></th>
+<th class="head text-right"><p>Nilai</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">auc</span></code></p></td>
+<td class="text-right"><p>3.7725e-03</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">autocorr</span></code></p></td>
+<td class="text-right"><p>1.0000e+00</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">calc_centroid</span></code></p></td>
+<td class="text-right"><p>6.9622e+01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">distance</span></code></p></td>
+<td class="text-right"><p>1.3100e+02</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lempel_ziv</span></code></p></td>
+<td class="text-right"><p>2.6515e-01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mean_abs_diff</span></code></p></td>
+<td class="text-right"><p>1.0306e-05</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mean_diff</span></code></p></td>
+<td class="text-right"><p>7.5395e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">median_abs_diff</span></code></p></td>
+<td class="text-right"><p>7.6850e-06</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">median_diff</span></code></p></td>
+<td class="text-right"><p>-1.1218e-06</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">negative_turning</span></code></p></td>
+<td class="text-right"><p>4.0000e+01</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">neighbourhood_peaks</span></code></p></td>
+<td class="text-right"><p>5.0000e+00</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">positive_turning</span></code></p></td>
+<td class="text-right"><p>4.1000e+01</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">slope</span></code></p></td>
+<td class="text-right"><p>5.4539e-08</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sum_abs_diff</span></code></p></td>
+<td class="text-right"><p>1.3501e-03</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">zero_cross</span></code></p></td>
+<td class="text-right"><p>0.0000e+00</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="domain-spectral-26-fitur">
+<h4>Domain Spectral (26 fitur)<a class="headerlink" href="#domain-spectral-26-fitur" title="Link to this heading">#</a></h4>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fitur</p></th>
+<th class="head text-right"><p>Nilai</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fundamental_frequency</span></code></p></td>
+<td class="text-right"><p>7.5758e-03</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">human_range_energy</span></code></p></td>
+<td class="text-right"><p>0.0000e+00</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lpcc</span></code></p></td>
+<td class="text-right"><p>5.8847e-01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_frequency</span></code></p></td>
+<td class="text-right"><p>4.4697e-01</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_power_spectrum</span></code></p></td>
+<td class="text-right"><p>8.9585e+00</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">median_frequency</span></code></p></td>
+<td class="text-right"><p>1.0606e-01</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mfcc</span></code></p></td>
+<td class="text-right"><p>4.1274e+01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">power_bandwidth</span></code></p></td>
+<td class="text-right"><p>4.0152e-01</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">spectral_centroid</span></code></p></td>
+<td class="text-right"><p>1.5182e-01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spectral_decrease</span></code></p></td>
+<td class="text-right"><p>-2.4197e+00</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">spectral_distance</span></code></p></td>
+<td class="text-right"><p>-1.4779e-01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spectral_entropy</span></code></p></td>
+<td class="text-right"><p>8.9156e-01</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">spectral_kurtosis</span></code></p></td>
+<td class="text-right"><p>1.9848e+00</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spectral_positive_turning</span></code></p></td>
+<td class="text-right"><p>2.3000e+01</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">spectral_roll_off</span></code></p></td>
+<td class="text-right"><p>4.4697e-01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spectral_roll_on</span></code></p></td>
+<td class="text-right"><p>0.0000e+00</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">spectral_skewness</span></code></p></td>
+<td class="text-right"><p>6.4089e-01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spectral_slope</span></code></p></td>
+<td class="text-right"><p>-6.8272e-02</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">spectral_spread</span></code></p></td>
+<td class="text-right"><p>1.6082e-01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spectral_variation</span></code></p></td>
+<td class="text-right"><p>6.1084e-01</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">spectrogram_mean_coeff</span></code></p></td>
+<td class="text-right"><p>1.9737e-10</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wavelet_abs_mean</span></code></p></td>
+<td class="text-right"><p>4.6191e-06</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">wavelet_energy</span></code></p></td>
+<td class="text-right"><p>1.6235e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wavelet_entropy</span></code></p></td>
+<td class="text-right"><p>2.1376e+00</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">wavelet_std</span></code></p></td>
+<td class="text-right"><p>1.5432e-05</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wavelet_var</span></code></p></td>
+<td class="text-right"><p>2.5940e-10</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="domain-fractal-6-fitur">
+<h4>Domain Fractal (6 fitur)<a class="headerlink" href="#domain-fractal-6-fitur" title="Link to this heading">#</a></h4>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fitur</p></th>
+<th class="head text-right"><p>Nilai</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dfa</span></code></p></td>
+<td class="text-right"><p>NaN</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">higuchi_fractal_dimension</span></code></p></td>
+<td class="text-right"><p>NaN</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hurst_exponent</span></code></p></td>
+<td class="text-right"><p>NaN</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">maximum_fractal_length</span></code></p></td>
+<td class="text-right"><p>NaN</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mse</span></code></p></td>
+<td class="text-right"><p>NaN</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">petrosian_fractal_dimension</span></code></p></td>
+<td class="text-right"><p>1.0471e+00</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Catatan tentang nilai NaN pada domain fractal:</strong> 5 dari 6 fitur pada
+domain ini (<code class="docutils literal notranslate"><span class="pre">dfa</span></code>, <code class="docutils literal notranslate"><span class="pre">higuchi_fractal_dimension</span></code>, <code class="docutils literal notranslate"><span class="pre">hurst_exponent</span></code>,
+<code class="docutils literal notranslate"><span class="pre">maximum_fractal_length</span></code>, <code class="docutils literal notranslate"><span class="pre">mse</span></code>) bernilai NaN pada hasil ekstraksi ini.
+Fitur fitur tersebut mengukur kompleksitas/kekasaran sinyal dan umumnya
+memerlukan panjang deret waktu tertentu atau variasi tertentu pada
+sinyal agar dapat dihitung secara stabil; kemungkinan panjang atau
+karakteristik deret waktu NO2 Kecamatan Bangkalan (132 titik data, tidak
+harian penuh) belum memenuhi syarat tersebut. Ini perlu dicatat sebagai
+keterbatasan hasil ekstraksi fitur, dan dapat dijelaskan sebagai temuan
+pada laporan, bukan dianggap error yang harus diperbaiki.</p>
+</section>
+</section>
 </section>
 <section id="kesimpulan">
 <h2>13. Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h2>
@@ -920,10 +1402,14 @@ menggunakan KNIME.</p>
 <p>Pada Tugas 3, data NO2 Kecamatan Bangkalan diproses lebih lanjut melalui
 deteksi outlier (IQR) dan imputasi missing value, hingga bersih
 sepenuhnya, lalu diubah menjadi 68 fitur numerik menggunakan TSFEL yang
-mencakup domain statistical, temporal, spectral, dan fractal. Dengan
-cakupan ini, tahap Data Understanding beserta preprocessing dan ekstraksi
-fitur pada Tugas 3 dinyatakan selesai; pemodelan lebih lanjut memakai
-fitur fitur ini dikerjakan sebagai bagian dari tugas terpisah.</p>
+mencakup domain statistical, temporal, spectral, dan fractal (dengan
+catatan 5 dari 6 fitur fractal bernilai NaN pada hasil aktual, lihat
+Bagian 12.1). Visualisasi time series dilakukan dengan dua cara yang
+saling melengkapi: Line Plot pada KNIME (Bagian 8) dan library Python
+matplotlib (Bagian 8.1 dan 10.1). Dengan cakupan ini, tahap Data
+Understanding beserta preprocessing dan ekstraksi fitur pada Tugas 3
+dinyatakan selesai; pemodelan lebih lanjut memakai fitur fitur ini
+dikerjakan sebagai bagian dari tugas terpisah.</p>
 </section>
 </section>
 
@@ -992,15 +1478,30 @@ fitur fitur ini dikerjakan sebagai bagian dari tugas terpisah.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-data-hasil">5. Struktur Data Hasil</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keterbatasan-data">6. Keterbatasan Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-deskriptif-data-knime">7. Statistik Deskriptif Data (KNIME)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-time-series">8. Visualisasi Time Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-time-series">8. Visualisasi Time Series</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-tambahan-menggunakan-library-python">8.1 Visualisasi Tambahan Menggunakan Library Python</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catatan-jika-hasil-ekstraksi-bernilai-0">9. Catatan Jika Hasil Ekstraksi Bernilai 0</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perluasan-pada-tugas-3-aoi-kecamatan-dan-rentang-waktu-baru">10. Perluasan pada Tugas 3: AOI Kecamatan dan Rentang Waktu Baru</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perluasan-pada-tugas-3-aoi-kecamatan-dan-rentang-waktu-baru">10. Perluasan pada Tugas 3: AOI Kecamatan dan Rentang Waktu Baru</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-deskriptif-dan-visualisasi-data-kecamatan">10.1 Statistik Deskriptif dan Visualisasi Data Kecamatan</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-sebelum-ekstraksi-fitur">11. Preprocessing Sebelum Ekstraksi Fitur</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outlier-metode-iqr">11.1 Deteksi Outlier (Metode IQR)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#imputasi-missing-value">11.2 Imputasi Missing Value</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-fitur-dengan-tsfel">12. Ekstraksi Fitur dengan TSFEL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-fitur-dengan-tsfel">12. Ekstraksi Fitur dengan TSFEL</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-ekstraksi-fitur-nilai-sebenarnya">12.1 Hasil Ekstraksi Fitur (Nilai Sebenarnya)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#domain-statistical-21-fitur">Domain Statistical (21 fitur)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#domain-temporal-15-fitur">Domain Temporal (15 fitur)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#domain-spectral-26-fitur">Domain Spectral (26 fitur)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#domain-fractal-6-fitur">Domain Fractal (6 fitur)</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">13. Kesimpulan</a></li>
 </ul>
   </nav></div>
