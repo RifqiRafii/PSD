@@ -26,14 +26,9 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-import json
-import os
-import time
-
-import numpy as np
-import openeo
-import pandas as pd
-import xarray as xr
-
+EVAL_A1, BEST_A1 = {}, {}
+for p in POLUTAN:
+    EVAL_A1[p] = evaluasi_k(PCA_A[p][1])
+    BEST_A1[p] = gambar_evaluasi(EVAL_A1[p], f"{p} - PC1 sampai PC37")
 -------------------
 

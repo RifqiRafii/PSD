@@ -1,0 +1,2180 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Modeling - K-Means Clustering pada Fitur TSFEL &#8212; Proyek Sains Data</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4-modeling-kmeans-clustering';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Data Understanding - Kabupaten Bangkalan" href="3-data-understanding-bangkalan.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Proyek Sains Data - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Proyek Sains Data - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Proyek Sains Data
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="pengantar-analisis-polutan-bangkalan.html">Pengantar Analisis Polutan Kabupaten Bangkalan</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data.html">Ekstraksi Data Kualitas Udara - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data-kecamatan.html">Ekstraksi Data Polutan - Kecamatan Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-preprocessing-ekstraksi-fitur_TSFEL.html">Preprocessing dan Ekstraksi 68 Fitur TSFEL - Tiga Polutan Kecamatan Bangkalan</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="2-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Modeling - K-Means Clustering pada Fitur TSFEL</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F4-modeling-kmeans-clustering.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/4-modeling-kmeans-clustering.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Modeling - K-Means Clustering pada Fitur TSFEL</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pertanyaan-yang-dijawab-dan-rencana-analisis">1. Pertanyaan yang Dijawab dan Rencana Analisis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-dipakai">2. Data yang Dipakai</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-kualitas-data-sebelum-clustering">3. Pemeriksaan Kualitas Data Sebelum Clustering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#persiapan-data-fitur-konstan-dan-standardisasi">4. Persiapan Data: Fitur Konstan dan Standardisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-menentukan-jumlah-cluster-k-terbaik">5. Cara Menentukan Jumlah Cluster (k) Terbaik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-1-pca-37-komponen-lalu-k-means-skenario-a">6. Analisis 1: PCA 37 Komponen lalu K-Means (Skenario A)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-dimensi-menjadi-37-komponen-pc1-sampai-pc37">6.1 Reduksi Dimensi menjadi 37 Komponen (PC1 sampai PC37)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-jumlah-cluster-terbaik-pada-pc1-sampai-pc37">6.2 Menentukan Jumlah Cluster Terbaik pada PC1 sampai PC37</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seberapa-baik-data-ini-dikelompokkan">6.3 Seberapa Baik Data Ini Dikelompokkan?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-di-knime-pca-37-komponen-k-means">7. Implementasi di KNIME: PCA 37 Komponen + K-Means</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gambaran-alur-kerja">7.1 Gambaran Alur Kerja</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-demi-langkah">7.2 Langkah Demi Langkah</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catatan-agar-hasil-knime-cocok-dengan-python">7.3 Catatan agar Hasil KNIME Cocok dengan Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tempat-hasil-implementasi-knime-isi-setelah-dijalankan">7.4 Tempat Hasil Implementasi KNIME (Isi Setelah Dijalankan)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-2-k-means-pada-fitur-asli-68-fitur-tanpa-pca">8. Analisis 2: K-Means pada Fitur Asli (68 Fitur) Tanpa PCA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mengapa-hasilnya-sama-dengan-pca-37">8.1 Mengapa Hasilnya Sama dengan PCA 37?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-di-knime-k-means-pada-fitur-asli-tanpa-pca">9. Implementasi di KNIME: K-Means pada Fitur Asli (Tanpa PCA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">9.1 Gambaran Alur Kerja</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">9.2 Langkah Demi Langkah</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuktikan-kesamaan-dengan-versi-pca-di-knime">9.3 Membuktikan Kesamaan dengan Versi PCA (di KNIME)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">9.4 Tempat Hasil Implementasi KNIME (Isi Setelah Dijalankan)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-sensitivitas-skenario-b-tanpa-baris-tidak-konsisten">10. Analisis Sensitivitas: Skenario B (Tanpa Baris Tidak Konsisten)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catatan-knime-untuk-skenario-b">10.1 Catatan KNIME untuk Skenario B</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">11. Kesimpulan</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="modeling-k-means-clustering-pada-fitur-tsfel">
+<h1>Modeling - K-Means Clustering pada Fitur TSFEL<a class="headerlink" href="#modeling-k-means-clustering-pada-fitur-tsfel" title="Link to this heading">#</a></h1>
+<p>Dokumen ini adalah tahap <strong>Modeling</strong> pada kerangka CRISP-DM. Berbeda
+dari dokumen Data Understanding (satu kecamatan, satu mahasiswa), tahap
+ini memakai <strong>data ekstraksi fitur TSFEL dari banyak daerah</strong> yang
+dikumpulkan bersama oleh teman teman kelas. Tujuannya adalah mengelompokkan
+daerah daerah tersebut berdasarkan karakter deret waktu polutannya
+memakai <strong>K-Means</strong>, sekaligus menilai seberapa layak data ini
+dikelompokkan.</p>
+<section id="pertanyaan-yang-dijawab-dan-rencana-analisis">
+<h2>1. Pertanyaan yang Dijawab dan Rencana Analisis<a class="headerlink" href="#pertanyaan-yang-dijawab-dan-rencana-analisis" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>No</p></th>
+<th class="head"><p>Pertanyaan</p></th>
+<th class="head"><p>Dijawab pada</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Berapa jumlah cluster (k) terbaik pada K-Means?</p></td>
+<td><p>Bagian 5 dan 6.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Bagaimana hasil reduksi dimensi PCA menjadi 37 komponen (PC1 sampai PC37)?</p></td>
+<td><p>Bagian 6.1</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Dari PC1 sampai PC37, berapa k terbaik dan seberapa baik hasil cluster-nya?</p></td>
+<td><p>Bagian 6.2 dan 6.3</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Seberapa baik data ini dapat dikelompokkan?</p></td>
+<td><p>Bagian 6.3, 8, 10, dan 11</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Apakah hasilnya sama jika memakai 68 fitur asli tanpa PCA?</p></td>
+<td><p>Bagian 8</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>Bagaimana mengerjakannya di KNIME?</p></td>
+<td><p>Bagian 7 (PCA 37) dan 9 (68 fitur)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Setiap analisis Python di dokumen ini diikuti langsung oleh satu bagian
+khusus untuk implementasi di <strong>KNIME</strong>, lengkap dengan langkah langkah
+node dan tempat untuk menempelkan hasil eksekusinya.</p>
+<p>Semua sel kode di bawah benar benar dieksekusi saat buku dibangun, jadi
+seluruh angka yang tampil berasal dari data, bukan tabel statis.</p>
+</section>
+<section id="data-yang-dipakai">
+<h2>2. Data yang Dipakai<a class="headerlink" href="#data-yang-dipakai" title="Link to this heading">#</a></h2>
+<p>Tiga file CSV, satu per polutan, masing masing berisi hasil ekstraksi
+68 fitur TSFEL untuk 37 daerah (satu baris per mahasiswa/daerah).</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Kolom</p></th>
+<th class="head"><p>Isi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">id</span></code></p></td>
+<td><p>Nomor baris pada sumber data. <strong>Bukan fitur</strong>, dan nilainya berbeda antar file, sehingga tidak boleh dipakai untuk menggabungkan file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nama</span></code>, <code class="docutils literal notranslate"><span class="pre">daerah</span></code></p></td>
+<td><p>Identitas baris (label). Bukan fitur numerik.</p></td>
+</tr>
+<tr class="row-even"><td><p>68 kolom sisanya</p></td>
+<td><p>Fitur TSFEL (statistical, temporal, spectral, fractal), lihat Bagian 12 dokumen Data Understanding.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Karena <code class="docutils literal notranslate"><span class="pre">id</span></code> tidak konsisten antar file dan penulisan nama sedikit berbeda
+(misalnya <code class="docutils literal notranslate"><span class="pre">A.Choiril</span></code> dan <code class="docutils literal notranslate"><span class="pre">A.</span> <span class="pre">Choiril</span></code>), analisis dilakukan <strong>terpisah
+per polutan</strong>. Menggabungkan ketiga polutan menjadi 204 fitur per daerah
+mungkin dilakukan pada tahap lanjutan, dengan menormalkan nama terlebih
+dahulu.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">pdist</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">silhouette_score</span><span class="p">,</span>
+    <span class="n">calinski_harabasz_score</span><span class="p">,</span>
+    <span class="n">davies_bouldin_score</span><span class="p">,</span>
+    <span class="n">adjusted_rand_score</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
+
+<span class="n">SEED</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">POLUTAN</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NO2&quot;</span><span class="p">,</span> <span class="s2">&quot;CO&quot;</span><span class="p">,</span> <span class="s2">&quot;SO2&quot;</span><span class="p">]</span>
+<span class="n">META</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;nama&quot;</span><span class="p">,</span> <span class="s2">&quot;daerah&quot;</span><span class="p">]</span>
+<span class="n">K_RANGE</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>   <span class="c1"># k = 2 sampai 10</span>
+<span class="n">N_KOMPONEN</span> <span class="o">=</span> <span class="mi">37</span>          <span class="c1"># jumlah komponen PCA yang diminta</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">&quot;display.width&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">cari_file</span><span class="p">(</span><span class="n">nama_file</span><span class="p">):</span>
+    <span class="c1"># mencoba beberapa lokasi umum agar sel ini aman dijalankan dari</span>
+    <span class="c1"># folder notebook maupun dari root proyek</span>
+    <span class="k">for</span> <span class="n">basis</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;data/&quot;</span><span class="p">,</span> <span class="s2">&quot;../data/&quot;</span><span class="p">,</span> <span class="s2">&quot;../&quot;</span><span class="p">,</span> <span class="s2">&quot;../../data/&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">basis</span> <span class="o">+</span> <span class="n">nama_file</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">basis</span> <span class="o">+</span> <span class="n">nama_file</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">nama_file</span><span class="p">)</span>
+
+
+<span class="n">raw</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">cari_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ekstraksi_fitur_</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">}</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Polutan&quot;</span><span class="p">:</span> <span class="n">POLUTAN</span><span class="p">,</span>
+    <span class="s2">&quot;Baris (daerah)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">raw</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">],</span>
+    <span class="s2">&quot;Kolom total&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">raw</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">],</span>
+    <span class="s2">&quot;Kolom fitur&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">raw</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">META</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">],</span>
+    <span class="s2">&quot;Nilai hilang&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">],</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Polutan</th>
+      <th>Baris (daerah)</th>
+      <th>Kolom total</th>
+      <th>Kolom fitur</th>
+      <th>Nilai hilang</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NO2</td>
+      <td>37</td>
+      <td>71</td>
+      <td>68</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>CO</td>
+      <td>37</td>
+      <td>71</td>
+      <td>68</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SO2</td>
+      <td>37</td>
+      <td>71</td>
+      <td>68</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="pemeriksaan-kualitas-data-sebelum-clustering">
+<h2>3. Pemeriksaan Kualitas Data Sebelum Clustering<a class="headerlink" href="#pemeriksaan-kualitas-data-sebelum-clustering" title="Link to this heading">#</a></h2>
+<p>K-Means berbasis jarak Euclidean, sehingga satu baris yang skalanya
+menyimpang jauh dapat mendominasi seluruh hasil. Karena data berasal dari
+banyak orang yang mengekstrak sendiri sendiri, perlu dicek dulu apakah
+semua baris sebanding. Dua pemeriksaan dipakai:</p>
+<ul class="simple">
+<li><p><strong>Rasio skala</strong> = <code class="docutils literal notranslate"><span class="pre">calc_max</span></code> baris tersebut dibagi median <code class="docutils literal notranslate"><span class="pre">calc_max</span></code>
+seluruh baris. Nilai mendekati 1 berarti setara. Nilai ribuan atau lebih
+menandakan satuan atau skala yang berbeda (mis. hasil konversi satuan).</p></li>
+<li><p><strong>Rasio panjang deret</strong> = <code class="docutils literal notranslate"><span class="pre">ecdf_percentile_count</span></code> baris tersebut dibagi
+mediannya. Fitur ini (bersama <code class="docutils literal notranslate"><span class="pre">calc_centroid</span></code>, <code class="docutils literal notranslate"><span class="pre">distance</span></code>, <code class="docutils literal notranslate"><span class="pre">auc</span></code>,
+<code class="docutils literal notranslate"><span class="pre">abs_energy</span></code>) membesar seiring jumlah titik data, sehingga rasio ini
+dipakai sebagai perkiraan kasar panjang deret. Deret sepanjang 366 hari
+akan memberi rasio sekitar 1.</p></li>
+</ul>
+<p>Baris ditandai untuk dikeluarkan pada Skenario B bila rasio skala &gt; 100
+atau rasio panjang &gt; 3. Baris dengan deret jauh lebih pendek (rasio &lt; 0.7)
+hanya dicatat, tidak dikeluarkan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">cek_konsistensi</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">META</span><span class="p">)</span>
+    <span class="n">rasio_skala</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;calc_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">/</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;calc_max&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+    <span class="n">rasio_panjang</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;ecdf_percentile_count&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;ecdf_percentile_count&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+    <span class="n">tabel</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;nama&quot;</span><span class="p">,</span> <span class="s2">&quot;daerah&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">tabel</span><span class="p">[</span><span class="s2">&quot;rasio_skala&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rasio_skala</span>
+    <span class="n">tabel</span><span class="p">[</span><span class="s2">&quot;rasio_panjang&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rasio_panjang</span>
+    <span class="n">tabel</span><span class="p">[</span><span class="s2">&quot;dikeluarkan_B&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rasio_skala</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">rasio_panjang</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tabel</span>
+
+
+<span class="n">konsistensi</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">cek_konsistensi</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">p</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">}</span>
+<span class="n">keluarkan</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">p</span><span class="p">:</span> <span class="n">konsistensi</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">konsistensi</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="s2">&quot;dikeluarkan_B&quot;</span><span class="p">],</span> <span class="s2">&quot;nama&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span>
+<span class="p">}</span>
+
+<span class="n">catatan</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">konsistensi</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;dikeluarkan_B&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;rasio_panjang&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.7</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Polutan&quot;</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">catatan</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">catatan</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">catatan</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">catatan</span><span class="p">[</span><span class="s2">&quot;Status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">catatan</span><span class="p">[</span><span class="s2">&quot;dikeluarkan_B&quot;</span><span class="p">],</span> <span class="s2">&quot;dikeluarkan di Skenario B&quot;</span><span class="p">,</span> <span class="s2">&quot;hanya dicatat&quot;</span><span class="p">)</span>
+<span class="n">catatan</span><span class="p">[[</span><span class="s2">&quot;Polutan&quot;</span><span class="p">,</span> <span class="s2">&quot;nama&quot;</span><span class="p">,</span> <span class="s2">&quot;daerah&quot;</span><span class="p">,</span> <span class="s2">&quot;rasio_skala&quot;</span><span class="p">,</span> <span class="s2">&quot;rasio_panjang&quot;</span><span class="p">,</span> <span class="s2">&quot;Status&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Polutan</th>
+      <th>nama</th>
+      <th>daerah</th>
+      <th>rasio_skala</th>
+      <th>rasio_panjang</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NO2</td>
+      <td>Robbaniyah Umdatun Ni'mah</td>
+      <td>Cerme, Gresik</td>
+      <td>1.86</td>
+      <td>0.63</td>
+      <td>hanya dicatat</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NO2</td>
+      <td>Marshella Aulia Putri</td>
+      <td>Kec. Kalianget, Sumenep</td>
+      <td>0.50</td>
+      <td>0.53</td>
+      <td>hanya dicatat</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NO2</td>
+      <td>Dewi Geizya</td>
+      <td>Kamal, Banyuajuh</td>
+      <td>1165623.73</td>
+      <td>1.00</td>
+      <td>dikeluarkan di Skenario B</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>CO</td>
+      <td>Marshella Aulia Putri</td>
+      <td>Kec. Kalianget, Sumenep</td>
+      <td>0.93</td>
+      <td>0.55</td>
+      <td>hanya dicatat</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>CO</td>
+      <td>Muhammad Zaidan Nabil Rafi</td>
+      <td>Kamal, Bangkalan</td>
+      <td>1.00</td>
+      <td>14.07</td>
+      <td>dikeluarkan di Skenario B</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>CO</td>
+      <td>Dewi Geizya</td>
+      <td>Kamal, Banyuajuh</td>
+      <td>56544.64</td>
+      <td>1.00</td>
+      <td>dikeluarkan di Skenario B</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>SO2</td>
+      <td>Marshella Aulia Putri</td>
+      <td>Kec. Kalianget, Sumenep</td>
+      <td>0.77</td>
+      <td>0.65</td>
+      <td>hanya dicatat</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>SO2</td>
+      <td>Muhammad Zaidan Nabil Rafi</td>
+      <td>Kamal, Bangkalan</td>
+      <td>1.73</td>
+      <td>14.07</td>
+      <td>dikeluarkan di Skenario B</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>SO2</td>
+      <td>Dewi Geizya</td>
+      <td>Kamal, Banyuajuh</td>
+      <td>92418.60</td>
+      <td>1.00</td>
+      <td>dikeluarkan di Skenario B</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Temuan pada tabel di atas perlu dibaca dengan hati hati:</p>
+<ol class="arabic simple">
+<li><p><strong>Dewi Geizya (Kamal, Banyuajuh)</strong> memiliki nilai fitur berskala
+puluhan ribu sampai jutaan kali lebih besar pada ketiga polutan
+(misalnya rata rata NO2 sekitar 33.6, sedangkan baris lain sekitar
+0.00003). Ini hampir pasti akibat perbedaan satuan atau kesalahan
+ekstraksi, bukan kondisi udara yang sebenarnya.</p></li>
+<li><p><strong>Muhammad Zaidan Nabil Rafi (Kamal, Bangkalan)</strong> pada CO dan SO2
+memiliki deret sekitar 14 kali lebih panjang dari baris lain, tanda
+bahwa data yang diekstrak berbeda cakupan atau resolusi waktu (bukan
+365 sampai 366 hari). Pada NO2 barisnya normal.</p></li>
+<li><p><strong>Marshella Aulia Putri dan Robbaniyah Umdatun Ni’mah</strong> memiliki deret
+yang lebih pendek (sekitar separuh sampai tiga perempat panjang normal).
+Ini masih mungkin wajar (mis. lebih banyak hari tanpa data valid),
+sehingga hanya dicatat.</p></li>
+</ol>
+<blockquote>
+<div><p><strong>Saran tindak lanjut.</strong> Dua temuan pertama sebaiknya dikonfirmasi ke
+pemilik datanya dan diekstrak ulang (periksa satuan, dan pastikan sinyal
+sudah di-reindex ke 366 hari seperti pada Bagian 12 Data Understanding).
+Sampai itu dilakukan, analisis dijalankan dalam dua skenario:</p>
+<ul class="simple">
+<li><p><strong>Skenario A</strong> memakai data <strong>apa adanya</strong> (37 baris). Ini yang
+sesuai permintaan awal (PCA 37 komponen dari 37 daerah).</p></li>
+<li><p><strong>Skenario B</strong> memakai data <strong>tanpa baris yang ditandai</strong> di atas
+(36 baris untuk NO2, 35 baris untuk CO dan SO2), sebagai uji
+sensitivitas (Bagian 10).</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="persiapan-data-fitur-konstan-dan-standardisasi">
+<h2>4. Persiapan Data: Fitur Konstan dan Standardisasi<a class="headerlink" href="#persiapan-data-fitur-konstan-dan-standardisasi" title="Link to this heading">#</a></h2>
+<p><strong>Fitur konstan dibuang.</strong> Fitur yang nilainya sama pada semua baris
+(varians nol) tidak membawa informasi dan membuat standardisasi
+(pembagian dengan simpangan baku) tidak terdefinisi. Karena itu, dari
+“68 fitur” yang benar benar dipakai adalah 66 (NO2, SO2) dan 65 (CO),
+seperti terlihat pada tabel di bawah.</p>
+<p><strong>Standardisasi z-score wajib.</strong> Skala antar fitur TSFEL sangat berbeda
+(misalnya <code class="docutils literal notranslate"><span class="pre">abs_energy</span></code> pada orde 1e-6, sedangkan <code class="docutils literal notranslate"><span class="pre">zero_cross</span></code> berupa
+bilangan bulat ratusan). Tanpa standardisasi, fitur berskala besar akan
+mendominasi jarak Euclidean dan PCA. Setiap fitur diubah menjadi
+<code class="docutils literal notranslate"><span class="pre">(x</span> <span class="pre">-</span> <span class="pre">rata</span> <span class="pre">rata)</span> <span class="pre">/</span> <span class="pre">simpangan</span> <span class="pre">baku</span></code> sehingga bermean 0 dan bervarians 1.
+Kolom <code class="docutils literal notranslate"><span class="pre">id</span></code> tidak ikut karena bukan fitur.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">siapkan</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">keluarkan_nama</span><span class="o">=</span><span class="p">()):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;nama&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">keluarkan_nama</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">META</span><span class="p">)</span>
+    <span class="n">konstan</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">X</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">konstan</span><span class="p">)</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">d</span><span class="p">[</span><span class="n">META</span><span class="p">],</span> <span class="n">X</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">konstan</span>
+
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">siapkan</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">p</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">}</span>   <span class="c1"># Skenario A: data apa adanya</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Polutan&quot;</span><span class="p">:</span> <span class="n">POLUTAN</span><span class="p">,</span>
+    <span class="s2">&quot;Baris&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">],</span>
+    <span class="s2">&quot;Fitur dipakai&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">],</span>
+    <span class="s2">&quot;Fitur konstan dibuang&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">],</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Polutan</th>
+      <th>Baris</th>
+      <th>Fitur dipakai</th>
+      <th>Fitur konstan dibuang</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NO2</td>
+      <td>37</td>
+      <td>66</td>
+      <td>human_range_energy, spectral_roll_on</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>CO</td>
+      <td>37</td>
+      <td>65</td>
+      <td>human_range_energy, spectral_roll_on, zero_cross</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SO2</td>
+      <td>37</td>
+      <td>66</td>
+      <td>human_range_energy, spectral_roll_on</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="cara-menentukan-jumlah-cluster-k-terbaik">
+<h2>5. Cara Menentukan Jumlah Cluster (k) Terbaik<a class="headerlink" href="#cara-menentukan-jumlah-cluster-k-terbaik" title="Link to this heading">#</a></h2>
+<p>K-Means tidak menentukan k sendiri, sehingga k dicari dengan
+membandingkan beberapa nilai k (2 sampai 10) memakai empat ukuran. Untuk
+tiap k, K-Means dijalankan dengan <code class="docutils literal notranslate"><span class="pre">n_init=50</span></code> (50 inisialisasi acak, dipilih
+yang terbaik) dan <code class="docutils literal notranslate"><span class="pre">random_state=42</span></code> agar hasilnya dapat direproduksi.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Ukuran</p></th>
+<th class="head"><p>Cara membaca</p></th>
+<th class="head"><p>k terbaik</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>WSS</strong> (inertia, metode elbow)</p></td>
+<td><p>Jumlah kuadrat jarak titik ke pusat clusternya. Selalu turun saat k naik, jadi dicari “siku” tempat penurunannya mulai melandai.</p></td>
+<td><p>Siku kurva</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Silhouette</strong></p></td>
+<td><p>Rata rata seberapa dekat titik ke clusternya dibanding cluster tetangga terdekat. Rentang -1 sampai 1.</p></td>
+<td><p>Nilai tertinggi</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Calinski-Harabasz</strong></p></td>
+<td><p>Rasio sebaran antar cluster terhadap sebaran dalam cluster.</p></td>
+<td><p>Nilai tertinggi</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Davies-Bouldin</strong></p></td>
+<td><p>Rata rata kemiripan tiap cluster dengan cluster terdekatnya.</p></td>
+<td><p>Nilai terendah</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Selain itu dihitung dua ukuran pendukung:</p>
+<ul class="simple">
+<li><p><strong>Cluster terkecil</strong>: jumlah anggota cluster paling kecil. Nilai 1
+berarti ada cluster yang hanya berisi satu daerah, yang pada praktiknya
+adalah pencilan, bukan kelompok.</p></li>
+<li><p><strong>Stabilitas (ARI)</strong>: rata rata <em>Adjusted Rand Index</em> antara hasil pada
+data penuh dan hasil pada 30 subsampel acak berisi 80% baris. Nilai 1
+berarti pengelompokan tidak berubah saat sebagian data dibuang. Untuk
+solusi yang memuat cluster satu anggota, nilai ini kurang bermakna
+(bila titik itu ikut terbuang, strukturnya hilang).</p></li>
+</ul>
+<p>Aturan keputusan yang dipakai: <strong>k terbaik adalah k dengan silhouette
+tertinggi</strong>, lalu hasilnya dicek terhadap ukuran cluster terkecil dan
+stabilitas. Kategori nilai silhouette mengikuti Kaufman dan Rousseeuw
+(1990):</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Silhouette rata rata</p></th>
+<th class="head"><p>Tafsir</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>0.71 - 1.00</p></td>
+<td><p>Struktur cluster kuat</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.51 - 0.70</p></td>
+<td><p>Struktur cukup wajar</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>0.26 - 0.50</p></td>
+<td><p>Struktur lemah, mungkin buatan</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>&lt;= 0.25</p></td>
+<td><p>Tidak ada struktur cluster yang berarti</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">stabilitas_bootstrap</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">n_ulang</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">frac</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">SEED</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">skor</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_ulang</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">frac</span> <span class="o">*</span> <span class="n">n</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">km_b</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+        <span class="n">skor</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">adjusted_rand_score</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">km_b</span><span class="o">.</span><span class="n">labels_</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">skor</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluasi_k</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">k_range</span><span class="o">=</span><span class="n">K_RANGE</span><span class="p">):</span>
+    <span class="n">baris</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_range</span><span class="p">:</span>
+        <span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+        <span class="n">lab</span> <span class="o">=</span> <span class="n">km</span><span class="o">.</span><span class="n">labels_</span>
+        <span class="n">baris</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span>
+            <span class="s2">&quot;WSS&quot;</span><span class="p">:</span> <span class="n">km</span><span class="o">.</span><span class="n">inertia_</span><span class="p">,</span>
+            <span class="s2">&quot;Silhouette&quot;</span><span class="p">:</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">lab</span><span class="p">),</span>
+            <span class="s2">&quot;Calinski-Harabasz&quot;</span><span class="p">:</span> <span class="n">calinski_harabasz_score</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">lab</span><span class="p">),</span>
+            <span class="s2">&quot;Davies-Bouldin&quot;</span><span class="p">:</span> <span class="n">davies_bouldin_score</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">lab</span><span class="p">),</span>
+            <span class="s2">&quot;Cluster terkecil&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">lab</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span>
+            <span class="s2">&quot;Stabilitas (ARI)&quot;</span><span class="p">:</span> <span class="n">stabilitas_bootstrap</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span>
+        <span class="p">})</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">baris</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+    <span class="n">t</span><span class="p">[</span><span class="s2">&quot;Turun WSS (%)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;WSS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">t</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">gambar_evaluasi</span><span class="p">(</span><span class="n">tabel</span><span class="p">,</span> <span class="n">judul</span><span class="p">):</span>
+    <span class="n">k_best</span> <span class="o">=</span> <span class="n">tabel</span><span class="p">[</span><span class="s2">&quot;Silhouette&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">))</span>
+    <span class="n">panel</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;WSS&quot;</span><span class="p">,</span> <span class="s2">&quot;WSS (cari siku)&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;Silhouette&quot;</span><span class="p">,</span> <span class="s2">&quot;Silhouette (tertinggi terbaik)&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;Calinski-Harabasz&quot;</span><span class="p">,</span> <span class="s2">&quot;Calinski-Harabasz (tertinggi terbaik)&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;Davies-Bouldin&quot;</span><span class="p">,</span> <span class="s2">&quot;Davies-Bouldin (terendah terbaik)&quot;</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="p">(</span><span class="n">kolom</span><span class="p">,</span> <span class="n">judul_panel</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">panel</span><span class="p">):</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tabel</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">tabel</span><span class="p">[</span><span class="n">kolom</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">k_best</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">judul_panel</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">judul</span><span class="si">}</span><span class="s2">  |  garis merah = k terbaik menurut silhouette (k=</span><span class="si">{</span><span class="n">k_best</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.04</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">k_best</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tafsir_silhouette</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mf">0.70</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;kuat&quot;</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mf">0.50</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;cukup wajar&quot;</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mf">0.25</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;lemah&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;tidak ada struktur berarti&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tabel_ringkasan</span><span class="p">(</span><span class="n">eval_d</span><span class="p">,</span> <span class="n">best_d</span><span class="p">,</span> <span class="n">matriks_d</span><span class="p">,</span> <span class="n">meta_d</span><span class="p">):</span>
+    <span class="n">baris</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">best_d</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">eval_d</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">lab</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span><span class="p">)</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">matriks_d</span><span class="p">[</span><span class="n">p</span><span class="p">])</span>
+        <span class="n">ukuran</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">lab</span><span class="p">)</span>
+        <span class="n">kecil</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">ukuran</span><span class="p">)</span>
+        <span class="n">anggota_kecil</span> <span class="o">=</span> <span class="n">meta_d</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="s2">&quot;nama&quot;</span><span class="p">][</span><span class="n">lab</span> <span class="o">==</span> <span class="n">kecil</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="k">if</span> <span class="n">ukuran</span><span class="p">[</span><span class="n">kecil</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">3</span> <span class="k">else</span> <span class="s2">&quot;-&quot;</span>
+        <span class="n">baris</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;Polutan&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">,</span>
+            <span class="s2">&quot;k terbaik&quot;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span>
+            <span class="s2">&quot;Silhouette&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;Silhouette&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;Tafsir&quot;</span><span class="p">:</span> <span class="n">tafsir_silhouette</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;Silhouette&quot;</span><span class="p">]),</span>
+            <span class="s2">&quot;Ukuran cluster&quot;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">ukuran</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="s2">&quot;Anggota cluster terkecil (jika &lt;= 3)&quot;</span><span class="p">:</span> <span class="n">anggota_kecil</span><span class="p">,</span>
+            <span class="s2">&quot;Stabilitas (ARI)&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;Stabilitas (ARI)&quot;</span><span class="p">],</span>
+        <span class="p">})</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">baris</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Polutan&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="analisis-1-pca-37-komponen-lalu-k-means-skenario-a">
+<h2>6. Analisis 1: PCA 37 Komponen lalu K-Means (Skenario A)<a class="headerlink" href="#analisis-1-pca-37-komponen-lalu-k-means-skenario-a" title="Link to this heading">#</a></h2>
+<section id="reduksi-dimensi-menjadi-37-komponen-pc1-sampai-pc37">
+<h3>6.1 Reduksi Dimensi menjadi 37 Komponen (PC1 sampai PC37)<a class="headerlink" href="#reduksi-dimensi-menjadi-37-komponen-pc1-sampai-pc37" title="Link to this heading">#</a></h3>
+<p>Data z-score tiap polutan (37 baris x 65 atau 66 fitur) diproyeksikan
+dengan PCA menjadi 37 komponen utama.</p>
+<p>Ada satu fakta matematis yang menentukan cara membaca seluruh hasil
+berikutnya. Jumlah komponen PCA tidak bisa melebihi
+<code class="docutils literal notranslate"><span class="pre">min(jumlah</span> <span class="pre">baris,</span> <span class="pre">jumlah</span> <span class="pre">fitur)</span></code>, yaitu <code class="docutils literal notranslate"><span class="pre">min(37,</span> <span class="pre">66)</span> <span class="pre">=</span> <span class="pre">37</span></code>. Jadi 37
+adalah <strong>batas maksimum</strong>, bukan angka pemampatan. Lebih jauh lagi,
+karena data sudah dipusatkan (mean 0), 37 baris hanya membentang ruang
+berdimensi paling banyak <strong>36</strong> (rank = n - 1). Akibatnya:</p>
+<ul class="simple">
+<li><p><strong>PC37 memiliki varians nol</strong> (nilainya hanya sisa galat numerik,
+sekitar 1e-33; lihat kolom <code class="docutils literal notranslate"><span class="pre">Varians</span> <span class="pre">PC37</span></code> di bawah).</p></li>
+<li><p><strong>PC1 sampai PC37 menyimpan 100% varians data.</strong> Tidak ada informasi
+yang dibuang; PCA di sini hanya memutar sumbu koordinat.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">jalankan_pca</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">n_komponen</span><span class="o">=</span><span class="n">N_KOMPONEN</span><span class="p">):</span>
+    <span class="n">n_komponen</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_komponen</span><span class="p">,</span> <span class="o">*</span><span class="n">Z</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_komponen</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pca</span><span class="p">,</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+
+
+<span class="n">PCA_A</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">jalankan_pca</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">}</span>
+
+<span class="n">ringkas</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+    <span class="n">pca</span><span class="p">,</span> <span class="n">P</span> <span class="o">=</span> <span class="n">PCA_A</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+    <span class="n">kum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)</span>
+    <span class="n">ringkas</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;Polutan&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">,</span>
+        <span class="s2">&quot;Baris x Fitur&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> x </span><span class="si">{</span><span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Jumlah komponen&quot;</span><span class="p">:</span> <span class="n">P</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s2">&quot;Rank data&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">])),</span>
+        <span class="s2">&quot;PC1 (%)&quot;</span><span class="p">:</span> <span class="n">kum</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s2">&quot;PC1-2 (%)&quot;</span><span class="p">:</span> <span class="n">kum</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s2">&quot;PC1-5 (%)&quot;</span><span class="p">:</span> <span class="n">kum</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s2">&quot;PC1-10 (%)&quot;</span><span class="p">:</span> <span class="n">kum</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s2">&quot;Komponen utk 90%&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">kum</span> <span class="o">&gt;=</span> <span class="mf">0.90</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s2">&quot;Komponen utk 95%&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">kum</span> <span class="o">&gt;=</span> <span class="mf">0.95</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s2">&quot;PC1-37 (%)&quot;</span><span class="p">:</span> <span class="n">kum</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s2">&quot;Varians PC37&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">})</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ringkas</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Polutan&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Baris x Fitur</th>
+      <th>Jumlah komponen</th>
+      <th>Rank data</th>
+      <th>PC1 (%)</th>
+      <th>PC1-2 (%)</th>
+      <th>PC1-5 (%)</th>
+      <th>PC1-10 (%)</th>
+      <th>Komponen utk 90%</th>
+      <th>Komponen utk 95%</th>
+      <th>PC1-37 (%)</th>
+      <th>Varians PC37</th>
+    </tr>
+    <tr>
+      <th>Polutan</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>NO2</th>
+      <td>37 x 66</td>
+      <td>37</td>
+      <td>36</td>
+      <td>45.8151</td>
+      <td>68.5793</td>
+      <td>86.2886</td>
+      <td>95.6579</td>
+      <td>7</td>
+      <td>10</td>
+      <td>100.0</td>
+      <td>1.8e-31</td>
+    </tr>
+    <tr>
+      <th>CO</th>
+      <td>37 x 65</td>
+      <td>37</td>
+      <td>36</td>
+      <td>53.9550</td>
+      <td>77.6264</td>
+      <td>90.4670</td>
+      <td>97.0289</td>
+      <td>5</td>
+      <td>8</td>
+      <td>100.0</td>
+      <td>1.9e-31</td>
+    </tr>
+    <tr>
+      <th>SO2</th>
+      <td>37 x 66</td>
+      <td>37</td>
+      <td>36</td>
+      <td>53.0483</td>
+      <td>77.4551</td>
+      <td>91.4009</td>
+      <td>97.6745</td>
+      <td>5</td>
+      <td>8</td>
+      <td>100.0</td>
+      <td>2.4e-31</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">POLUTAN</span><span class="p">):</span>
+    <span class="n">ev</span> <span class="o">=</span> <span class="n">PCA_A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">explained_variance_ratio_</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ev</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ev</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;per komponen&quot;</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ev</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">ev</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;kumulatif&quot;</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scree plot </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Komponen utama ke-&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Varians dijelaskan (%)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/535f0386509d92b04c2b3b3e8594fc814f332948ec1f5abc4ab6d584a9443c17.png" src="_images/535f0386509d92b04c2b3b3e8594fc814f332948ec1f5abc4ab6d584a9443c17.png" />
+</div>
+</div>
+<p>Sebagian besar informasi terkumpul pada beberapa komponen pertama
+(sekitar 96 sampai 98 persen varians pada 10 komponen pertama), sedangkan
+komponen komponen belakang nyaris tidak membawa informasi. Artinya 37
+komponen sebenarnya jauh lebih banyak dari yang dibutuhkan; ini
+diperhatikan lagi pada uji jumlah PC di Bagian 6.3.</p>
+</section>
+<section id="menentukan-jumlah-cluster-terbaik-pada-pc1-sampai-pc37">
+<h3>6.2 Menentukan Jumlah Cluster Terbaik pada PC1 sampai PC37<a class="headerlink" href="#menentukan-jumlah-cluster-terbaik-pada-pc1-sampai-pc37" title="Link to this heading">#</a></h3>
+<p>K-Means dijalankan pada seluruh 37 komponen (PC1 sampai PC37) untuk
+k = 2 sampai 10, lalu dievaluasi memakai empat ukuran pada Bagian 5.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">EVAL_A1</span><span class="p">,</span> <span class="n">BEST_A1</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+    <span class="n">EVAL_A1</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluasi_k</span><span class="p">(</span><span class="n">PCA_A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">BEST_A1</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">gambar_evaluasi</span><span class="p">(</span><span class="n">EVAL_A1</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> - PC1 sampai PC37&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/31c1ed5a6e3066cabc1f0e6ff5fd6c26a99efa5dfafe5d373bef79e6f4a244d9.png" src="_images/31c1ed5a6e3066cabc1f0e6ff5fd6c26a99efa5dfafe5d373bef79e6f4a244d9.png" />
+<img alt="_images/7b96009f472495ecc738a34e5e4eed8c6f0f05a9cfdb6038e122686e83ae4a1a.png" src="_images/7b96009f472495ecc738a34e5e4eed8c6f0f05a9cfdb6038e122686e83ae4a1a.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">EVAL_A1</span><span class="p">,</span> <span class="n">BEST_A1</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+<span class="ne">----&gt; </span><span class="mi">3</span>     <span class="n">EVAL_A1</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluasi_k</span><span class="p">(</span><span class="n">PCA_A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">BEST_A1</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">gambar_evaluasi</span><span class="p">(</span><span class="n">EVAL_A1</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> - PC1 sampai PC37&quot;</span><span class="p">)</span>
+
+<span class="nn">Cell In[4], line 15,</span> in <span class="ni">evaluasi_k</span><span class="nt">(M, k_range)</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">baris</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_range</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">15</span>     <span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">lab</span> <span class="o">=</span> <span class="n">km</span><span class="o">.</span><span class="n">labels_</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">baris</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>         <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>         <span class="s2">&quot;WSS&quot;</span><span class="p">:</span> <span class="n">km</span><span class="o">.</span><span class="n">inertia_</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span>         <span class="s2">&quot;Stabilitas (ARI)&quot;</span><span class="p">:</span> <span class="n">stabilitas_bootstrap</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="p">})</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\base.py:1389,</span> in <span class="ni">_fit_context.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="nt">(estimator, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1382</span>     <span class="n">estimator</span><span class="o">.</span><span class="n">_validate_params</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1384</span> <span class="k">with</span> <span class="n">config_context</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1385</span>     <span class="n">skip_parameter_validation</span><span class="o">=</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1386</span>         <span class="n">prefer_skip_nested_validation</span> <span class="ow">or</span> <span class="n">global_skip_validation</span>
+<span class="g g-Whitespace">   </span><span class="mi">1387</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1388</span> <span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1389</span>     <span class="k">return</span> <span class="n">fit_method</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\cluster\_kmeans.py:1510,</span> in <span class="ni">KMeans.fit</span><span class="nt">(self, X, y, sample_weight)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1507</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initialization complete&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1509</span> <span class="c1"># run a k-means once</span>
+<span class="ne">-&gt; </span><span class="mi">1510</span> <span class="n">labels</span><span class="p">,</span> <span class="n">inertia</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">n_iter_</span> <span class="o">=</span> <span class="n">kmeans_single</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1511</span>     <span class="n">X</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1512</span>     <span class="n">sample_weight</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1513</span>     <span class="n">centers_init</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1514</span>     <span class="n">max_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1515</span>     <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1516</span>     <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_tol</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1517</span>     <span class="n">n_threads</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_n_threads</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1518</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1520</span> <span class="c1"># determine if these results are the best so far</span>
+<span class="g g-Whitespace">   </span><span class="mi">1521</span> <span class="c1"># we chose a new run if it has a better inertia and the clustering is</span>
+<span class="g g-Whitespace">   </span><span class="mi">1522</span> <span class="c1"># different from the best so far (it&#39;s possible that the inertia is</span>
+<span class="g g-Whitespace">   </span><span class="mi">1523</span> <span class="c1"># slightly better even if the clustering is the same with potentially</span>
+<span class="g g-Whitespace">   </span><span class="mi">1524</span> <span class="c1"># permuted labels, due to rounding errors)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1525</span> <span class="k">if</span> <span class="n">best_inertia</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1526</span>     <span class="n">inertia</span> <span class="o">&lt;</span> <span class="n">best_inertia</span>
+<span class="g g-Whitespace">   </span><span class="mi">1527</span>     <span class="ow">and</span> <span class="ow">not</span> <span class="n">_is_same_clustering</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">best_labels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1528</span> <span class="p">):</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\utils\parallel.py:164,</span> in <span class="ni">_threadpool_controller_decorator.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">161</span> <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">162</span> <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">163</span>     <span class="n">controller</span> <span class="o">=</span> <span class="n">_get_threadpool_controller</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">164</span>     <span class="k">with</span> <span class="n">controller</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">limits</span><span class="o">=</span><span class="n">limits</span><span class="p">,</span> <span class="n">user_api</span><span class="o">=</span><span class="n">user_api</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">165</span>         <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\threadpoolctl.py:921,</span> in <span class="ni">ThreadpoolController.limit</span><span class="nt">(self, limits, user_api)</span>
+<span class="g g-Whitespace">    </span><span class="mi">870</span> <span class="nd">@_format_docstring</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">871</span>     <span class="n">USER_APIS</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">api</span><span class="p">)</span> <span class="k">for</span> <span class="n">api</span> <span class="ow">in</span> <span class="n">_ALL_USER_APIS</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">872</span>     <span class="n">BLAS_LIBS</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_ALL_BLAS_LIBRARIES</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">873</span>     <span class="n">OPENMP_LIBS</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_ALL_OPENMP_LIBRARIES</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">874</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">875</span> <span class="k">def</span><span class="w"> </span><span class="nf">limit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">user_api</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">876</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Change the maximal number of threads that can be used in thread pools.</span>
+<span class="g g-Whitespace">    </span><span class="mi">877</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">878</span><span class="sd">     This function returns an object that can be used either as a callable (the</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">919</span><span class="sd">         - If None, this function will apply to all supported libraries.</span>
+<span class="g g-Whitespace">    </span><span class="mi">920</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">921</span>     <span class="k">return</span> <span class="n">_ThreadpoolLimiter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="n">limits</span><span class="p">,</span> <span class="n">user_api</span><span class="o">=</span><span class="n">user_api</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\threadpoolctl.py:587,</span> in <span class="ni">_ThreadpoolLimiter.__init__</span><span class="nt">(self, controller, limits, user_api)</span>
+<span class="g g-Whitespace">    </span><span class="mi">583</span> <span class="bp">self</span><span class="o">.</span><span class="n">_limits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_api</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prefixes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">584</span>     <span class="n">limits</span><span class="p">,</span> <span class="n">user_api</span>
+<span class="g g-Whitespace">    </span><span class="mi">585</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">586</span> <span class="bp">self</span><span class="o">.</span><span class="n">_original_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_controller</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">587</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_threadpool_limits</span><span class="p">()</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\threadpoolctl.py:720,</span> in <span class="ni">_ThreadpoolLimiter._set_threadpool_limits</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">717</span>     <span class="k">continue</span>
+<span class="g g-Whitespace">    </span><span class="mi">719</span> <span class="k">if</span> <span class="n">num_threads</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">720</span>     <span class="n">lib_controller</span><span class="o">.</span><span class="n">set_num_threads</span><span class="p">(</span><span class="n">num_threads</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\threadpoolctl.py:199,</span> in <span class="ni">OpenBLASController.set_num_threads</span><span class="nt">(self, num_threads)</span>
+<span class="g g-Whitespace">    </span><span class="mi">197</span> <span class="n">set_num_threads_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_symbol</span><span class="p">(</span><span class="s2">&quot;openblas_set_num_threads&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">198</span> <span class="k">if</span> <span class="n">set_num_threads_func</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">199</span>     <span class="k">return</span> <span class="n">set_num_threads_func</span><span class="p">(</span><span class="n">num_threads</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">200</span> <span class="k">return</span> <span class="kc">None</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> (PC1-PC37) ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">EVAL_A1</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Tabel acuan berikut merangkum silhouette per k untuk ketiga polutan.
+Simpan sebagai pembanding hasil KNIME pada Bagian 7.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">p</span><span class="p">:</span> <span class="n">EVAL_A1</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="s2">&quot;Silhouette&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">})</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="seberapa-baik-data-ini-dikelompokkan">
+<h3>6.3 Seberapa Baik Data Ini Dikelompokkan?<a class="headerlink" href="#seberapa-baik-data-ini-dikelompokkan" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tabel_ringkasan</span><span class="p">(</span><span class="n">EVAL_A1</span><span class="p">,</span> <span class="n">BEST_A1</span><span class="p">,</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">PCA_A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">},</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Jawaban singkat untuk Skenario A.</strong> k terbaik menurut silhouette adalah
+<strong>k = 2 pada ketiga polutan</strong>, dengan silhouette sekitar 0.75 sampai 0.80
+yang secara angka tergolong “kuat”. <strong>Angka ini menyesatkan.</strong> Tabel di
+atas menunjukkan ukuran cluster <code class="docutils literal notranslate"><span class="pre">[36,</span> <span class="pre">1]</span></code>: K-Means hanya memisahkan
+satu daerah, yaitu Dewi Geizya, dari 36 daerah lainnya. Silhouette tinggi
+di sini semata mencerminkan jauhnya satu titik pencilan dari semua titik
+lain, bukan adanya dua kelompok alami. Beberapa bukti pendukung:</p>
+<ul class="simple">
+<li><p>Kolom “Cluster terkecil” pada tabel per k di Bagian 6.2 bernilai 1 untuk
+<strong>semua</strong> k dari 2 sampai 10. Selalu ada daerah yang berdiri sendiri.</p></li>
+<li><p>Pada plot PC1 vs PC2 di bawah, satu titik tampak terpisah jauh dari
+awan titik lainnya (dan pada CO serta SO2 ada satu titik lagi yang
+menjauh pada PC2, yaitu Muhammad Zaidan Nabil Rafi).</p></li>
+<li><p>Pencilan ini berasal dari masalah konsistensi data pada Bagian 3,
+bukan dari perbedaan kualitas udara antar daerah.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">gambar_scatter</span><span class="p">(</span><span class="n">pca_dict</span><span class="p">,</span> <span class="n">k_dict</span><span class="p">,</span> <span class="n">judul</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">POLUTAN</span><span class="p">):</span>
+        <span class="n">pca</span><span class="p">,</span> <span class="n">P</span> <span class="o">=</span> <span class="n">pca_dict</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+        <span class="n">lab</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k_dict</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span><span class="p">)</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">P</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">P</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">lab</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;tab10&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PC1 (</span><span class="si">{</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PC2 (</span><span class="si">{</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">, k=</span><span class="si">{</span><span class="n">k_dict</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">judul</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="n">gambar_scatter</span><span class="p">(</span><span class="n">PCA_A</span><span class="p">,</span> <span class="n">BEST_A1</span><span class="p">,</span> <span class="s2">&quot;Skenario A: posisi tiap daerah pada PC1 vs PC2 (warna = cluster)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Berapa baik hasil PC1 sampai PC37, dan apakah perlu 37 komponen?</strong>
+Sel berikut memakai hanya PC1 sampai PC<em>m</em> (untuk beberapa nilai <em>m</em>),
+mencari k terbaik, lalu melaporkan silhouette dan ukuran cluster
+terkecilnya. Ini menunjukkan apakah hasil bergantung pada jumlah komponen
+yang dipakai.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">k_terbaik_dan_skor</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="n">skor</span><span class="p">,</span> <span class="n">kecil</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K_RANGE</span><span class="p">:</span>
+        <span class="n">lab</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span><span class="p">)</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+        <span class="n">skor</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">lab</span><span class="p">)</span>
+        <span class="n">kecil</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">lab</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+    <span class="n">k_b</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">skor</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">skor</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">k_b</span><span class="p">,</span> <span class="n">skor</span><span class="p">[</span><span class="n">k_b</span><span class="p">],</span> <span class="n">kecil</span><span class="p">[</span><span class="n">k_b</span><span class="p">]</span>
+
+
+<span class="n">JUMLAH_PC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">37</span><span class="p">]</span>
+<span class="n">sweep</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">JUMLAH_PC</span><span class="p">:</span>
+    <span class="n">baris</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+        <span class="n">k_b</span><span class="p">,</span> <span class="n">s_b</span><span class="p">,</span> <span class="n">kc</span> <span class="o">=</span> <span class="n">k_terbaik_dan_skor</span><span class="p">(</span><span class="n">PCA_A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">1</span><span class="p">][:,</span> <span class="p">:</span><span class="n">m</span><span class="p">])</span>
+        <span class="n">baris</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;k=</span><span class="si">{</span><span class="n">k_b</span><span class="si">}</span><span class="s2">, sil=</span><span class="si">{</span><span class="n">s_b</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, terkecil=</span><span class="si">{</span><span class="n">kc</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">sweep</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;PC1-PC</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">baris</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">sweep</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dua hal terbaca dari tabel tersebut. Pertama, hasilnya konsisten:
+k terbaik tetap 2 berapa pun jumlah komponen yang dipakai, dan cluster
+terkecil tetap berisi satu daerah. Kedua, silhouette justru <strong>lebih
+tinggi</strong> saat komponen sedikit dan menurun saat komponen ditambah sampai
+37. Kenaikan itu bukan tanda cluster yang lebih baik: cluster yang
+terbentuk tetap satu daerah pencilan. Penurunan silhouette saat
+komponen ditambah konsisten dengan gejala umum pada dimensi tinggi,
+yaitu jarak antar titik makin seragam dan komponen belakang (yang nyaris
+hanya berisi derau, lihat scree plot) ikut menambah jarak. Kesimpulannya, memakai
+seluruh 37 komponen tidak menambah kualitas pengelompokan; ia hanya
+memberi hasil yang setara dengan memakai semua fitur (dibuktikan pada
+Bagian 8).</p>
+</section>
+</section>
+<section id="implementasi-di-knime-pca-37-komponen-k-means">
+<h2>7. Implementasi di KNIME: PCA 37 Komponen + K-Means<a class="headerlink" href="#implementasi-di-knime-pca-37-komponen-k-means" title="Link to this heading">#</a></h2>
+<p>Bagian ini adalah tempat mengerjakan Bagian 6 memakai <strong>KNIME Analytics
+Platform</strong>, agar hasil Python dapat dibandingkan langsung dengan KNIME.
+Nama node mengacu pada KNIME 5.x; letak atau nama opsi pada versi lain
+bisa sedikit berbeda, jadi gunakan kolom pencarian pada <em>Node Repository</em>
+untuk menemukan node yang dimaksud.</p>
+<section id="gambaran-alur-kerja">
+<h3>7.1 Gambaran Alur Kerja<a class="headerlink" href="#gambaran-alur-kerja" title="Link to this heading">#</a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>CSV Reader
+   -&gt; Column Filter                (buang id)
+   -&gt; Low Variance Filter          (buang fitur konstan)
+   -&gt; Normalizer                   (z-score)
+   -&gt; PCA                          (37 dimensi)
+   -&gt; Counting Loop Start          (9 putaran)
+   -&gt; Math Formula (Variable)      (k = putaran + 2)
+   -&gt; k-Means                      (k dari flow variable)
+   -&gt; Silhouette Coefficient
+   -&gt; Loop End                     (Add iteration column)
+   -&gt; Table View                   (baca silhouette tiap k)
+
+Setelah k terbaik dipilih (cabang terpisah dari titik keluaran PCA):
+PCA -&gt; k-Means (k tetap) -&gt; Color Manager -&gt; Scatter Plot
+                         -&gt; GroupBy (hitung ukuran cluster)
+                         -&gt; Sorter -&gt; CSV Writer
+</pre></div>
+</div>
+<p>Alur ini dibuat <strong>satu kali untuk NO2</strong>, lalu disalin untuk CO dan SO2
+dengan mengganti berkas pada CSV Reader.</p>
+</section>
+<section id="langkah-demi-langkah">
+<h3>7.2 Langkah Demi Langkah<a class="headerlink" href="#langkah-demi-langkah" title="Link to this heading">#</a></h3>
+<p><strong>Langkah 1. Baca data (CSV Reader).</strong>
+Tambahkan node <strong>CSV Reader</strong>, arahkan ke <code class="docutils literal notranslate"><span class="pre">ekstraksi_fitur_no2.csv</span></code>.
+Pastikan opsi <em>Has column header</em> aktif dan pemisah kolom adalah koma.
+Klik kanan node, pilih <em>Output table</em> dan periksa: <strong>37 baris x 71
+kolom</strong>; <code class="docutils literal notranslate"><span class="pre">id</span></code> bertipe angka bulat, <code class="docutils literal notranslate"><span class="pre">nama</span></code> dan <code class="docutils literal notranslate"><span class="pre">daerah</span></code> bertipe string, 68
+kolom sisanya bertipe angka desimal (Number/double).</p>
+<p><strong>Langkah 2. Buang kolom <code class="docutils literal notranslate"><span class="pre">id</span></code> (Column Filter).</strong>
+Sambungkan <strong>Column Filter</strong>, pada bagian <em>Exclude</em> pindahkan <code class="docutils literal notranslate"><span class="pre">id</span></code>.
+<code class="docutils literal notranslate"><span class="pre">id</span></code> adalah nomor baris, bukan fitur; bila tertinggal, ia ikut
+distandardisasi dan ikut dihitung dalam jarak K-Means, sehingga hasilnya
+salah. Kolom <code class="docutils literal notranslate"><span class="pre">nama</span></code> dan <code class="docutils literal notranslate"><span class="pre">daerah</span></code> boleh tetap ada karena bertipe string
+dan otomatis diabaikan oleh node numerik; keduanya berguna untuk
+membaca hasil akhir.</p>
+<p><strong>Langkah 3. Buang fitur konstan (Low Variance Filter).</strong>
+Sambungkan <strong>Low Variance Filter</strong>, atur <em>Variance upper bound</em> = <code class="docutils literal notranslate"><span class="pre">0</span></code>
+dan pilih semua kolom numerik. Node ini membuang fitur yang nilainya sama
+di semua baris. Hasil yang diharapkan mengikuti Bagian 4: <strong>66 kolom
+numerik untuk NO2 dan SO2, 65 untuk CO</strong> (ditambah <code class="docutils literal notranslate"><span class="pre">nama</span></code> dan <code class="docutils literal notranslate"><span class="pre">daerah</span></code>).</p>
+<p><strong>Langkah 4. Standardisasi (Normalizer).</strong>
+Sambungkan <strong>Normalizer</strong>, pilih mode <strong>Z-Score Normalization
+(Gaussian)</strong> dan sertakan seluruh kolom numerik. Setelah ini, tiap
+kolom bermean 0 dan simpangan baku 1. KNIME memakai simpangan baku
+sampel (dibagi n - 1), sedangkan <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> Python dibagi n. Selisihnya
+konstan untuk semua kolom sehingga <strong>tidak mengubah hasil clustering
+maupun silhouette</strong>; hanya nilai varians mentah yang berbeda sedikit.</p>
+<p><strong>Langkah 5. Reduksi dimensi (PCA).</strong>
+Sambungkan node <strong>PCA</strong> (Node Repository: <em>Analytics &gt; Mining &gt; PCA</em>).
+Atur jumlah dimensi tujuan menjadi <code class="docutils literal notranslate"><span class="pre">37</span></code> (kolom pengaturan <em>Target
+dimensions</em> atau <em>Dimensions to reduce to</em>) dan aktifkan opsi
+<em>Replace original data columns</em> agar hanya kolom komponen yang
+tersisa. Node PCA tidak menstandardisasi sendiri, itulah sebabnya
+Langkah 4 wajib dilakukan sebelumnya.</p>
+<p>Hal yang perlu diperhatikan pada hasil PCA:</p>
+<ul class="simple">
+<li><p>Kolom keluaran diberi nama <strong><code class="docutils literal notranslate"><span class="pre">PCA</span> <span class="pre">dimension</span> <span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">PCA</span> <span class="pre">dimension</span> <span class="pre">1</span></code>,
+dan seterusnya, dimulai dari 0</strong>. Jadi <code class="docutils literal notranslate"><span class="pre">PCA</span> <span class="pre">dimension</span> <span class="pre">0</span></code> setara dengan
+PC1 di Python. Periksa nama kolom sebenarnya pada <em>Output table</em>.</p></li>
+<li><p>Tanda (plus atau minus) suatu komponen boleh berbeda dari Python.
+Itu wajar dan tidak memengaruhi jarak antar titik.</p></li>
+<li><p>Komponen terakhir (<code class="docutils literal notranslate"><span class="pre">PCA</span> <span class="pre">dimension</span> <span class="pre">36</span></code>) hampir berisi nol karena data
+hanya berdimensi 36, sama seperti PC37 di Bagian 6.1. Bila node
+memberi peringatan atau galat pada 37 dimensi, turunkan menjadi 36;
+hasil clustering tidak berubah karena komponen ke-37 tidak membawa
+informasi.</p></li>
+<li><p>Untuk memeriksa proporsi varians, sambungkan <strong>Statistics</strong> ke keluaran
+data PCA dan bandingkan <em>proporsi</em> (varians tiap komponen dibagi total)
+dengan kolom <code class="docutils literal notranslate"><span class="pre">PC1</span> <span class="pre">(%)</span></code> dan seterusnya pada tabel Bagian 6.1. Jangan
+membandingkan nilai varians mentah karena beda penyebut (n vs n - 1).</p></li>
+</ul>
+<p><strong>Langkah 6. Buat perulangan untuk k = 2 sampai 10.</strong>
+Sambungkan <strong>Counting Loop Start</strong> dan atur <em>Number of loops</em> = <code class="docutils literal notranslate"><span class="pre">9</span></code>
+(variabel <code class="docutils literal notranslate"><span class="pre">currentIteration</span></code> dimulai dari 0). Sambungkan
+<strong>Math Formula (Variable)</strong> dengan ekspresi
+<code class="docutils literal notranslate"><span class="pre">$${IcurrentIteration}$$</span> <span class="pre">+</span> <span class="pre">2</span></code> dan namai variabel keluarannya <code class="docutils literal notranslate"><span class="pre">k</span></code>; pastikan
+tipenya integer (aktifkan opsi konversi ke integer bila tersedia).
+Bila perulangan terasa rumit, alternatifnya adalah menyalin node
+k-Means dan Silhouette Coefficient sebanyak 9 kali dan mengisi k = 2
+sampai 10 secara manual.</p>
+<p><strong>Langkah 7. Jalankan K-Means (k-Means).</strong>
+Sambungkan node <strong>k-Means</strong> (<em>Analytics &gt; Mining &gt; Clustering</em>) dan
+atur:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Pengaturan</p></th>
+<th class="head"><p>Nilai</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Number of clusters</p></td>
+<td><p>Hubungkan ke flow variable <code class="docutils literal notranslate"><span class="pre">k</span></code> (klik ikon variabel di samping isian, atau lewat tab <em>Flow Variables</em>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Initialization</p></td>
+<td><p><em>Random initialization</em> dengan <em>Use static random seed</em> dicentang (mis. 42)</p></td>
+</tr>
+<tr class="row-even"><td><p>Max. number of iterations</p></td>
+<td><p>99 (bawaan)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Columns to use</p></td>
+<td><p>Mode <em>Wildcard/Regex</em>, pola <code class="docutils literal notranslate"><span class="pre">PCA</span> <span class="pre">dimension*</span></code>, agar hanya kolom PCA yang dipakai</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Keluaran pertama berisi seluruh kolom masukan ditambah kolom <strong><code class="docutils literal notranslate"><span class="pre">Cluster</span></code></strong>
+(nilai <code class="docutils literal notranslate"><span class="pre">cluster_0</span></code>, <code class="docutils literal notranslate"><span class="pre">cluster_1</span></code>, dan seterusnya).</p>
+<p><strong>Langkah 8. Hitung silhouette (Silhouette Coefficient).</strong>
+Sambungkan <strong>Silhouette Coefficient</strong>, pilih kolom <code class="docutils literal notranslate"><span class="pre">Cluster</span></code> sebagai
+kolom cluster dan kolom <code class="docutils literal notranslate"><span class="pre">PCA</span> <span class="pre">dimension*</span></code> sebagai kolom data (jarak
+Euclidean). Node ini mengeluarkan koefisien silhouette per cluster dan
+nilai keseluruhan; yang dibandingkan dengan Python adalah <strong>nilai
+keseluruhan</strong>. Bila node ini tidak tersedia pada instalasi Anda, pasang
+lewat <em>File &gt; Install KNIME Extensions</em>, atau hitung silhouette dengan
+node <strong>Python Script</strong> memakai <code class="docutils literal notranslate"><span class="pre">silhouette_score</span></code> dari scikit-learn.</p>
+<p><strong>Langkah 9. Kumpulkan hasil semua k (Loop End).</strong>
+Sambungkan <strong>Loop End</strong> dan aktifkan <em>Add iteration column</em>. Kolom
+iterasi dimulai dari 0, sehingga <strong>k = iterasi + 2</strong>. Buka <em>Output
+table</em> dan catat silhouette keseluruhan tiap k pada tabel isian Bagian 7.3.</p>
+<p>KNIME tidak memberikan WSS, Calinski-Harabasz, maupun Davies-Bouldin
+secara langsung pada node k-Means. Untuk KNIME, cukup gunakan
+<strong>silhouette ditambah ukuran cluster</strong> sebagai dasar memilih k;
+ukuran lain sudah dihitung pada Python (Bagian 6.2).</p>
+<p><strong>Langkah 10. Lihat ukuran cluster dan sebaran (untuk k terbaik).</strong>
+Buat cabang baru dari keluaran PCA: node <strong>k-Means</strong> dengan <code class="docutils literal notranslate"><span class="pre">k</span></code> diisi
+langsung (tanpa loop) sesuai k terbaik, lalu:</p>
+<ol class="arabic simple">
+<li><p><strong>GroupBy</strong>: kelompokkan berdasarkan <code class="docutils literal notranslate"><span class="pre">Cluster</span></code> dengan agregasi
+<em>Count</em>. Hasilnya harus sama dengan kolom “Ukuran cluster” pada tabel
+ringkasan Bagian 6.3 (mis. 36 dan 1 pada Skenario A).</p></li>
+<li><p><strong>Color Manager</strong> (warna berdasar <code class="docutils literal notranslate"><span class="pre">Cluster</span></code>), lalu <strong>Scatter Plot</strong>
+dengan sumbu X = <code class="docutils literal notranslate"><span class="pre">PCA</span> <span class="pre">dimension</span> <span class="pre">0</span></code> dan sumbu Y = <code class="docutils literal notranslate"><span class="pre">PCA</span> <span class="pre">dimension</span> <span class="pre">1</span></code>.
+Bentuk sebarannya harus mirip plot PC1 vs PC2 pada Bagian 6.3.</p></li>
+</ol>
+<p><strong>Langkah 11. Ekspor keanggotaan cluster.</strong>
+Sambungkan <strong>Sorter</strong> (urut <code class="docutils literal notranslate"><span class="pre">Cluster</span></code>) lalu <strong>CSV Writer</strong> dan simpan
+sebagai <code class="docutils literal notranslate"><span class="pre">hasil_knime_no2_pca37.csv</span></code> (kolom <code class="docutils literal notranslate"><span class="pre">nama</span></code>, <code class="docutils literal notranslate"><span class="pre">daerah</span></code>, <code class="docutils literal notranslate"><span class="pre">Cluster</span></code>).</p>
+<p><strong>Langkah 12. Ulangi untuk CO dan SO2.</strong>
+Salin seluruh cabang, ganti berkas pada CSV Reader ke
+<code class="docutils literal notranslate"><span class="pre">ekstraksi_fitur_co.csv</span></code> dan <code class="docutils literal notranslate"><span class="pre">ekstraksi_fitur_so2.csv</span></code>.</p>
+</section>
+<section id="catatan-agar-hasil-knime-cocok-dengan-python">
+<h3>7.3 Catatan agar Hasil KNIME Cocok dengan Python<a class="headerlink" href="#catatan-agar-hasil-knime-cocok-dengan-python" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>K-Means KNIME hanya satu kali inisialisasi</strong>, sedangkan Python di sini
+memilih yang terbaik dari 50 inisialisasi. Pada k besar, KNIME bisa
+berhenti di solusi lokal yang berbeda. Cocokkan pada k kecil (2 sampai 5)
+atau ganti <em>static random seed</em> beberapa kali dan ambil hasil yang
+paling sering muncul.</p></li>
+<li><p><strong>Nomor cluster boleh tertukar</strong> (<code class="docutils literal notranslate"><span class="pre">cluster_0</span></code> di KNIME belum tentu 0 di
+Python). Yang dibandingkan adalah <em>ukuran cluster</em> dan <em>siapa yang
+sekelompok</em>, bukan nomornya.</p></li>
+<li><p>Pada Skenario A, hasil yang benar adalah satu cluster berisi satu
+daerah saja (Dewi Geizya). Bila KNIME menghasilkan pembagian lain
+pada k = 2, periksa lagi Langkah 2 (<code class="docutils literal notranslate"><span class="pre">id</span></code> sudah dibuang?) dan
+Langkah 4 (sudah dinormalisasi sebelum PCA?).</p></li>
+</ul>
+</section>
+<section id="tempat-hasil-implementasi-knime-isi-setelah-dijalankan">
+<h3>7.4 Tempat Hasil Implementasi KNIME (Isi Setelah Dijalankan)<a class="headerlink" href="#tempat-hasil-implementasi-knime-isi-setelah-dijalankan" title="Link to this heading">#</a></h3>
+<p>Tempelkan tangkapan layar alur kerja dan hasilnya di sini, lalu isi tabel
+pembanding. Hapus tanda komentar <code class="docutils literal notranslate"><span class="pre">&lt;!--</span> <span class="pre">--&gt;</span></code> pada baris gambar setelah
+berkasnya tersedia di folder buku.</p>
+<!-- ![Workflow KNIME PCA 37 + K-Means](knime_workflow_pca37.png) -->
+<!-- ![Silhouette per k di KNIME (NO2)](knime_silhouette_no2_pca37.png) -->
+<!-- ![Scatter PCA dimension 0 vs 1 (NO2)](knime_scatter_no2_pca37.png) -->
+<p>Tabel pembanding silhouette (isi kolom KNIME dari <em>Output table</em> Loop End;
+kolom Python diambil dari tabel acuan Bagian 6.2):</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Polutan</p></th>
+<th class="head text-center"><p>k</p></th>
+<th class="head text-center"><p>Silhouette Python</p></th>
+<th class="head text-center"><p>Silhouette KNIME</p></th>
+<th class="head text-center"><p>Ukuran cluster KNIME</p></th>
+<th class="head text-center"><p>Cocok?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NO2</p></td>
+<td class="text-center"><p>2</p></td>
+<td class="text-center"><p>0.745</p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>CO</p></td>
+<td class="text-center"><p>2</p></td>
+<td class="text-center"><p>0.795</p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+</tr>
+<tr class="row-even"><td><p>SO2</p></td>
+<td class="text-center"><p>2</p></td>
+<td class="text-center"><p>0.789</p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="analisis-2-k-means-pada-fitur-asli-68-fitur-tanpa-pca">
+<h2>8. Analisis 2: K-Means pada Fitur Asli (68 Fitur) Tanpa PCA<a class="headerlink" href="#analisis-2-k-means-pada-fitur-asli-68-fitur-tanpa-pca" title="Link to this heading">#</a></h2>
+<p>Analisis yang sama diulang pada data z-score <strong>tanpa PCA</strong>, yaitu memakai
+seluruh fitur asli (68 kolom, atau 66 dan 65 kolom setelah fitur konstan
+dibuang pada Bagian 4). Cara evaluasinya identik dengan Bagian 6.2.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">EVAL_A2</span><span class="p">,</span> <span class="n">BEST_A2</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+    <span class="n">EVAL_A2</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluasi_k</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">BEST_A2</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">gambar_evaluasi</span><span class="p">(</span><span class="n">EVAL_A2</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> - fitur asli (z-score)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> (fitur asli, z-score) ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">EVAL_A2</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tabel_ringkasan</span><span class="p">(</span><span class="n">EVAL_A2</span><span class="p">,</span> <span class="n">BEST_A2</span><span class="p">,</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">},</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="mengapa-hasilnya-sama-dengan-pca-37">
+<h3>8.1 Mengapa Hasilnya Sama dengan PCA 37?<a class="headerlink" href="#mengapa-hasilnya-sama-dengan-pca-37" title="Link to this heading">#</a></h3>
+<p>Hasil pada fitur asli hampir identik dengan hasil PC1 sampai PC37. Ini
+bukan kebetulan, melainkan konsekuensi matematis:</p>
+<ol class="arabic simple">
+<li><p>Karena data dipusatkan, 37 baris hanya membentang ruang berdimensi
+36. Seluruh baris berada di ruang yang sama dengan yang dibentuk oleh
+komponen komponen utama PCA.</p></li>
+<li><p>PCA tanpa <em>whitening</em> hanyalah <strong>rotasi</strong> ke sumbu sumbu baru. Bila
+semua komponen yang membawa varians dipertahankan (di sini PC1 sampai
+PC36, dan PC37 bervarians nol), <strong>jarak Euclidean antar baris tidak
+berubah</strong>.</p></li>
+<li><p>Fungsi tujuan K-Means (WSS) sepenuhnya ditentukan oleh jarak Euclidean
+antar titik. Jarak sama berarti solusi optimum yang sama.</p></li>
+</ol>
+<p>Sel berikut membuktikannya secara numerik.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">baris</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">PCA_A</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">BEST_A2</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+    <span class="n">lab_z</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span><span class="p">)</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="n">lab_p</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span><span class="p">)</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+    <span class="n">baris</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;Polutan&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">,</span>
+        <span class="s2">&quot;Selisih maks. jarak antar baris (Z vs PCA)&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pdist</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span> <span class="o">-</span> <span class="n">pdist</span><span class="p">(</span><span class="n">P</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+        <span class="s2">&quot;k terbaik (PCA 37)&quot;</span><span class="p">:</span> <span class="n">BEST_A1</span><span class="p">[</span><span class="n">p</span><span class="p">],</span>
+        <span class="s2">&quot;k terbaik (fitur asli)&quot;</span><span class="p">:</span> <span class="n">BEST_A2</span><span class="p">[</span><span class="n">p</span><span class="p">],</span>
+        <span class="s2">&quot;ARI label pada k terbaik&quot;</span><span class="p">:</span> <span class="n">adjusted_rand_score</span><span class="p">(</span><span class="n">lab_z</span><span class="p">,</span> <span class="n">lab_p</span><span class="p">),</span>
+        <span class="s2">&quot;Selisih silhouette maks. (k=2..10)&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">EVAL_A1</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="s2">&quot;Silhouette&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">EVAL_A2</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="s2">&quot;Silhouette&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+    <span class="p">})</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">baris</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Polutan&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Selisih jarak berada pada orde galat pembulatan (sekitar 1e-14 atau
+lebih kecil), sehingga kedua ruang koordinat dapat dianggap sama. Pada
+k kecil, silhouette kedua analisis sama persis. Perbedaan kecil yang
+dapat muncul pada k besar (pada eksekusi ini: WSS dan silhouette CO pada
+k = 10) <strong>bukan</strong> berasal
+dari PCA, melainkan dari sifat acak K-Means: galat pembulatan yang
+sangat kecil mengubah pemilihan pusat awal, sehingga K-Means dapat
+berakhir di solusi lokal yang sedikit berbeda. Fakta ini sendiri
+menandakan solusi pada k besar tidak stabil.</p>
+<p><strong>Implikasinya.</strong> Pada data ini (37 baris), meminta PCA sebanyak 37
+komponen tidak menghasilkan reduksi yang berarti, sehingga hasilnya sama
+dengan memakai semua fitur. PCA baru mengubah hasil bila jumlah
+komponen dipangkas (mis. cukup 90 sampai 95 persen varians, yaitu sekitar
+5 sampai 10 komponen pada Skenario A; lihat tabel Bagian 6.1) atau bila
+memakai <em>whitening</em>.</p>
+</section>
+</section>
+<section id="implementasi-di-knime-k-means-pada-fitur-asli-tanpa-pca">
+<h2>9. Implementasi di KNIME: K-Means pada Fitur Asli (Tanpa PCA)<a class="headerlink" href="#implementasi-di-knime-k-means-pada-fitur-asli-tanpa-pca" title="Link to this heading">#</a></h2>
+<p>Alurnya sama dengan Bagian 7, hanya <strong>tanpa node PCA</strong>. K-Means langsung
+memakai seluruh kolom numerik yang sudah dinormalisasi.</p>
+<section id="id1">
+<h3>9.1 Gambaran Alur Kerja<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>CSV Reader
+   -&gt; Column Filter                (buang id)
+   -&gt; Low Variance Filter          (buang fitur konstan)
+   -&gt; Normalizer                   (z-score)
+   -&gt; Counting Loop Start          (9 putaran)
+   -&gt; Math Formula (Variable)      (k = putaran + 2)
+   -&gt; k-Means                      (semua kolom numerik)
+   -&gt; Silhouette Coefficient
+   -&gt; Loop End                     (Add iteration column)
+   -&gt; Table View
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>9.2 Langkah Demi Langkah<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>Langkah 1 sampai 4 <strong>sama persis</strong> dengan Bagian 7.2 (CSV Reader,
+Column Filter untuk membuang <code class="docutils literal notranslate"><span class="pre">id</span></code>, Low Variance Filter, Normalizer
+z-score). Kemudian:</p>
+<p><strong>Langkah 5. Lewati PCA.</strong> Sambungkan keluaran Normalizer langsung ke
+Counting Loop Start.</p>
+<p><strong>Langkah 6. Perulangan k.</strong> Sama dengan Langkah 6 pada Bagian 7.2
+(Counting Loop Start dengan 9 putaran, lalu Math Formula (Variable)
+<code class="docutils literal notranslate"><span class="pre">$${IcurrentIteration}$$</span> <span class="pre">+</span> <span class="pre">2</span></code> menjadi variabel <code class="docutils literal notranslate"><span class="pre">k</span></code>).</p>
+<p><strong>Langkah 7. k-Means.</strong> Pengaturannya sama dengan Bagian 7.2 kecuali
+<em>Columns to use</em>: pilih <strong>seluruh kolom numerik hasil normalisasi</strong> (66
+kolom untuk NO2 dan SO2, 65 untuk CO). Pastikan <code class="docutils literal notranslate"><span class="pre">id</span></code> tidak ikut.</p>
+<p><strong>Langkah 8 sampai 12.</strong> Silhouette Coefficient, Loop End, pemilihan k
+terbaik, Scatter Plot, GroupBy, dan ekspor CSV dikerjakan seperti pada
+Bagian 7.2. Perbedaannya hanya pada Scatter Plot: karena tidak ada
+kolom PCA, tambahkan node <strong>PCA</strong> terpisah pada cabang visualisasi
+(2 dimensi sudah cukup) atau gunakan dua fitur pilihan sebagai sumbu.
+Simpan hasil ekspor sebagai <code class="docutils literal notranslate"><span class="pre">hasil_knime_no2_fitur_asli.csv</span></code>.</p>
+</section>
+<section id="membuktikan-kesamaan-dengan-versi-pca-di-knime">
+<h3>9.3 Membuktikan Kesamaan dengan Versi PCA (di KNIME)<a class="headerlink" href="#membuktikan-kesamaan-dengan-versi-pca-di-knime" title="Link to this heading">#</a></h3>
+<p>Untuk membuktikan bahwa versi 68 fitur dan versi PCA 37 menghasilkan
+pengelompokan yang sama, cocokkan keanggotaan cluster keduanya:</p>
+<ol class="arabic simple">
+<li><p>Baca <code class="docutils literal notranslate"><span class="pre">hasil_knime_no2_pca37.csv</span></code> dan <code class="docutils literal notranslate"><span class="pre">hasil_knime_no2_fitur_asli.csv</span></code>
+memakai dua node <strong>CSV Reader</strong>.</p></li>
+<li><p>Sambungkan keduanya ke node <strong>Joiner</strong> dengan kunci gabung <code class="docutils literal notranslate"><span class="pre">nama</span></code>
+(bila ada nama ganda, tambahkan <code class="docutils literal notranslate"><span class="pre">daerah</span></code> sebagai kunci kedua). Ubah
+nama kolom <code class="docutils literal notranslate"><span class="pre">Cluster</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">Cluster_PCA</span></code> dan <code class="docutils literal notranslate"><span class="pre">Cluster_Asli</span></code> (lewat
+tab <em>Column Selection</em> Joiner atau node <strong>Column Rename</strong>).</p></li>
+<li><p>Sambungkan <strong>Crosstab</strong> (atau <strong>Pivoting</strong>) dengan <code class="docutils literal notranslate"><span class="pre">Cluster_PCA</span></code> sebagai
+baris dan <code class="docutils literal notranslate"><span class="pre">Cluster_Asli</span></code> sebagai kolom.</p></li>
+<li><p>Hasil yang benar: <strong>setiap baris dan setiap kolom hanya memiliki satu
+sel bernilai tidak nol</strong>. Nomor cluster boleh tertukar, tetapi jumlah
+anggotanya harus sama.</p></li>
+</ol>
+</section>
+<section id="id3">
+<h3>9.4 Tempat Hasil Implementasi KNIME (Isi Setelah Dijalankan)<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<!-- ![Workflow KNIME 68 fitur](knime_workflow_fitur_asli.png) -->
+<!-- ![Silhouette per k di KNIME (68 fitur, NO2)](knime_silhouette_no2_fitur_asli.png) -->
+<!-- ![Crosstab PCA vs fitur asli](knime_crosstab_pca_vs_asli.png) -->
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Polutan</p></th>
+<th class="head text-center"><p>k</p></th>
+<th class="head text-center"><p>Silhouette Python</p></th>
+<th class="head text-center"><p>Silhouette KNIME (68 fitur)</p></th>
+<th class="head text-center"><p>Crosstab diagonal murni?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NO2</p></td>
+<td class="text-center"><p>2</p></td>
+<td class="text-center"><p>0.745</p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>CO</p></td>
+<td class="text-center"><p>2</p></td>
+<td class="text-center"><p>0.795</p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+</tr>
+<tr class="row-even"><td><p>SO2</p></td>
+<td class="text-center"><p>2</p></td>
+<td class="text-center"><p>0.789</p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="analisis-sensitivitas-skenario-b-tanpa-baris-tidak-konsisten">
+<h2>10. Analisis Sensitivitas: Skenario B (Tanpa Baris Tidak Konsisten)<a class="headerlink" href="#analisis-sensitivitas-skenario-b-tanpa-baris-tidak-konsisten" title="Link to this heading">#</a></h2>
+<p>Karena hasil Skenario A didominasi oleh baris yang bermasalah, analisis
+diulang setelah baris yang ditandai pada Bagian 3 dikeluarkan: Dewi
+Geizya pada ketiga polutan, serta Muhammad Zaidan Nabil Rafi pada CO dan
+SO2. Jumlah baris menjadi 36 (NO2) dan 35 (CO, SO2), sehingga jumlah
+komponen PCA maksimum turun menjadi 36 dan 35 (batas 37 tidak lagi
+tercapai). Karena hasil PCA dengan semua komponen sama dengan fitur asli
+(Bagian 8.1), K-Means langsung dijalankan pada data z-score; PCA dipakai
+hanya untuk plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">siapkan</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">keluarkan</span><span class="p">[</span><span class="n">p</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">}</span>
+<span class="n">PCA_B</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">jalankan_pca</span><span class="p">(</span><span class="n">B</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">}</span>
+
+<span class="n">EVAL_B</span><span class="p">,</span> <span class="n">BEST_B</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+    <span class="n">EVAL_B</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">evaluasi_k</span><span class="p">(</span><span class="n">B</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">BEST_B</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">gambar_evaluasi</span><span class="p">(</span><span class="n">EVAL_B</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> - Skenario B (n=</span><span class="si">{</span><span class="n">B</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">B</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> fitur)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2"> (Skenario B) ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">EVAL_B</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tabel_ringkasan</span><span class="p">(</span><span class="n">EVAL_B</span><span class="p">,</span> <span class="n">BEST_B</span><span class="p">,</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">B</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">},</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">B</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gambar_scatter</span><span class="p">(</span><span class="n">PCA_B</span><span class="p">,</span> <span class="n">BEST_B</span><span class="p">,</span> <span class="s2">&quot;Skenario B: posisi tiap daerah pada PC1 vs PC2 (warna = cluster)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Berikut anggota tiap cluster pada k terbaik. Cluster besar tidak
+diuraikan; daftar lengkap disimpan ke <code class="docutils literal notranslate"><span class="pre">hasil_kmeans_python_skenario_B.csv</span></code>
+untuk dibandingkan dengan hasil KNIME.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">baris</span><span class="p">,</span> <span class="n">semua</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">:</span>
+    <span class="n">meta</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">BEST_B</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+    <span class="n">lab</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span><span class="p">)</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">tmp</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Polutan&quot;</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+    <span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lab</span>
+    <span class="n">semua</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">lab</span><span class="p">)):</span>
+        <span class="n">anggota</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;daerah&quot;</span><span class="p">][</span><span class="n">lab</span> <span class="o">==</span> <span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">baris</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;Polutan&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">,</span>
+            <span class="s2">&quot;Cluster&quot;</span><span class="p">:</span> <span class="n">c</span><span class="p">,</span>
+            <span class="s2">&quot;Jumlah&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">anggota</span><span class="p">),</span>
+            <span class="s2">&quot;Daerah&quot;</span><span class="p">:</span> <span class="s2">&quot;; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">anggota</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">anggota</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">9</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">anggota</span><span class="p">)</span><span class="si">}</span><span class="s2"> daerah, lihat CSV)&quot;</span><span class="p">,</span>
+        <span class="p">})</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">semua</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;hasil_kmeans_python_skenario_B.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">baris</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s2">&quot;Polutan&quot;</span><span class="p">,</span> <span class="s2">&quot;Cluster&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Cara membaca hasil Skenario B.</strong></p>
+<ul class="simple">
+<li><p><strong>NO2</strong>: k terbaik = 2 dengan silhouette sekitar 0.33 (tergolong
+lemah), ukuran cluster 30 dan 6. Untuk k &gt;= 3 silhouette turun ke
+kisaran 0.15 sampai 0.18, yaitu tidak ada struktur berarti.</p></li>
+<li><p><strong>CO</strong>: k terbaik = 2 dengan silhouette sekitar 0.49 (batas atas
+“lemah”), tetapi cluster kecilnya hanya berisi dua daerah, Marshella
+Aulia Putri (Kalianget, Sumenep) dan Robbaniyah Umdatun Ni’mah (Cerme,
+Gresik). Keduanya adalah dua daerah dengan deret data paling pendek pada CO
+(rasio panjang 0.55 untuk Marshella pada tabel Bagian 3, dan sekitar
+0.72 untuk Robbaniyah, sedikit di atas ambang pencatatan), sehingga
+pemisahan ini patut dicurigai sebagai efek jumlah data valid, bukan
+perbedaan kualitas udara. Untuk k &gt;= 3 silhouette hanya sekitar 0.22
+ke bawah.</p></li>
+<li><p><strong>SO2</strong>: k terbaik = 3 dengan silhouette sekitar 0.25 (tepat di batas
+“tidak ada struktur berarti”), ukuran cluster 23, 9, dan 3.</p></li>
+<li><p>Plot PC1 vs PC2 memperlihatkan sebaran yang cenderung kontinu tanpa
+celah antar kelompok yang jelas.</p></li>
+<li><p>Ukuran lain tidak selalu sepakat dengan silhouette: pada SO2,
+Calinski-Harabasz tertinggi di k = 6 dan Davies-Bouldin terendah di
+k = 7; pada NO2, Davies-Bouldin terendah di k = 10 (lihat tabel per k
+di atas). Tidak ada satu k yang unggul secara meyakinkan.</p></li>
+<li><p>Stabilitas (ARI) pada k terbaik berkisar 0.60 sampai 0.73: keanggotaan
+cluster cukup berubah bila 20 persen data dibuang, jadi hasilnya
+bersifat indikatif saja.</p></li>
+<li><p>Sebagai pengamatan yang perlu diuji lebih lanjut (bukan kesimpulan):
+lima dari enam anggota cluster kecil NO2 (Manyar, Gresik Kota, Cerme,
+Menganti, Asemrowo) berada di kawasan Gresik dan Surabaya yang padat
+industri, ditambah Kamal (Bangkalan). Dengan silhouette hanya 0.33,
+dugaan ini hanya layak dijadikan hipotesis untuk analisis berikutnya.</p></li>
+</ul>
+<section id="catatan-knime-untuk-skenario-b">
+<h3>10.1 Catatan KNIME untuk Skenario B<a class="headerlink" href="#catatan-knime-untuk-skenario-b" title="Link to this heading">#</a></h3>
+<p>Tambahkan node <strong>Row Filter</strong> tepat setelah <strong>CSV Reader</strong> (sebelum Column
+Filter) pada alur Bagian 7 atau 9:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Polutan</p></th>
+<th class="head"><p>Baris yang dikeluarkan (kolom <code class="docutils literal notranslate"><span class="pre">nama</span></code>)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NO2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Dewi</span> <span class="pre">Geizya</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>CO</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Dewi</span> <span class="pre">Geizya</span></code> dan <code class="docutils literal notranslate"><span class="pre">Muhammad</span> <span class="pre">Zaidan</span> <span class="pre">Nabil</span> <span class="pre">Rafi</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>SO2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Dewi</span> <span class="pre">Geizya</span></code> dan <code class="docutils literal notranslate"><span class="pre">Muhammad</span> <span class="pre">Zaidan</span> <span class="pre">Nabil</span> <span class="pre">Rafi</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Pada dialog Row Filter, pilih <strong>Exclude rows by attribute value</strong>, kolom
+<code class="docutils literal notranslate"><span class="pre">nama</span></code>, dan aktifkan <em>use pattern matching</em> dengan nama persis sebagai
+pola. Untuk CO dan SO2 gunakan dua Row Filter berurutan (satu per nama).
+Setelah itu periksa jumlah baris: <strong>36 untuk NO2 dan 35 untuk CO dan
+SO2</strong>. Pada node PCA (bila dipakai) atur dimensi tujuan menjadi 36 (NO2)
+atau 35 (CO, SO2). Sisa langkahnya sama dengan Bagian 7.2.</p>
+<!-- ![Workflow KNIME Skenario B](knime_workflow_skenario_b.png) -->
+</section>
+</section>
+<section id="kesimpulan">
+<h2>11. Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">teks_hasil</span><span class="p">(</span><span class="n">eval_d</span><span class="p">,</span> <span class="n">best_d</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">best_d</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;k=</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">, silhouette=</span><span class="si">{</span><span class="n">eval_d</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Silhouette&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;A: PCA 37 komponen&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">teks_hasil</span><span class="p">(</span><span class="n">EVAL_A1</span><span class="p">,</span> <span class="n">BEST_A1</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">},</span>
+    <span class="s2">&quot;A: 68 fitur asli&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">teks_hasil</span><span class="p">(</span><span class="n">EVAL_A2</span><span class="p">,</span> <span class="n">BEST_A2</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">},</span>
+    <span class="s2">&quot;B: tanpa baris tidak konsisten&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">teks_hasil</span><span class="p">(</span><span class="n">EVAL_B</span><span class="p">,</span> <span class="n">BEST_B</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">POLUTAN</span><span class="p">},</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Jumlah cluster terbaik.</strong> Pada data apa adanya (Skenario A) k terbaik
+adalah 2 untuk NO2, CO, dan SO2, baik memakai PC1 sampai PC37 maupun 68
+fitur asli. Namun cluster kedua hanya berisi satu daerah (Dewi Geizya)
+yang skala datanya menyimpang jutaan kali lipat, sehingga k = 2 di sini
+mendeteksi <strong>data yang bermasalah, bukan kelompok daerah</strong>. Setelah baris
+bermasalah dikeluarkan (Skenario B), k terbaik adalah 2 untuk NO2 dan CO,
+dan 3 untuk SO2.</p>
+<p><strong>PCA 37 komponen versus 68 fitur.</strong> Untuk 37 baris, PC1 sampai PC37
+menyimpan 100% varians (PC37 bervarians nol), sehingga hasilnya
+setara dengan memakai semua fitur. PCA 37 komponen tidak memperbaiki
+maupun memperburuk kualitas cluster; ia hanya memutar sumbu.</p>
+<p><strong>Seberapa baik data ini dikelompokkan.</strong> Kurang baik. Silhouette pada
+Skenario A tampak tinggi (0.75 sampai 0.80) hanya karena satu pencilan.
+Pada Skenario B silhouette turun ke 0.33 (NO2), 0.49 (CO, dengan cluster
+kecil berisi dua daerah berderet pendek), dan 0.25 (SO2): struktur lemah
+sampai hampir tidak ada, dan stabilitas antar subsampel sedang saja.
+Secara umum, daerah daerah pada data ini membentuk sebaran yang kontinu
+dan bukan kelompok yang tegas, sehingga label cluster sebaiknya
+diperlakukan sebagai ringkasan deskriptif, bukan pembagian alami.</p>
+<p><strong>Tindak lanjut yang disarankan.</strong></p>
+<ol class="arabic simple">
+<li><p>Ekstrak ulang data Dewi Geizya (periksa satuan) dan Muhammad Zaidan
+Nabil Rafi pada CO dan SO2 (pastikan sinyal di-reindex ke 366 hari
+seperti pada Data Understanding), lalu ulangi analisis ini.</p></li>
+<li><p>Fitur yang bergantung pada panjang deret (<code class="docutils literal notranslate"><span class="pre">abs_energy</span></code>, <code class="docutils literal notranslate"><span class="pre">auc</span></code>,
+<code class="docutils literal notranslate"><span class="pre">distance</span></code>, <code class="docutils literal notranslate"><span class="pre">calc_centroid</span></code>, <code class="docutils literal notranslate"><span class="pre">ecdf_percentile_count</span></code>, dan sejenisnya)
+membuat deret pendek tampak berbeda. Pertimbangkan
+menyeragamkan panjang deret, atau mengecualikan fitur tersebut,
+sebelum clustering.</p></li>
+<li><p>Coba PCA dengan komponen yang lebih sedikit (90 sampai 95 persen
+varians) atau <em>whitening</em>, karena 37 komponen tidak mengurangi
+dimensi sama sekali pada data ini.</p></li>
+<li><p>Gabungkan ketiga polutan (204 fitur per daerah) setelah nama daerah
+dinormalkan, dan bandingkan dengan algoritma lain yang tahan
+pencilan (mis. hierarchical clustering atau DBSCAN).</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="3-data-understanding-bangkalan.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data Understanding - Kabupaten Bangkalan</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pertanyaan-yang-dijawab-dan-rencana-analisis">1. Pertanyaan yang Dijawab dan Rencana Analisis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-yang-dipakai">2. Data yang Dipakai</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-kualitas-data-sebelum-clustering">3. Pemeriksaan Kualitas Data Sebelum Clustering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#persiapan-data-fitur-konstan-dan-standardisasi">4. Persiapan Data: Fitur Konstan dan Standardisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-menentukan-jumlah-cluster-k-terbaik">5. Cara Menentukan Jumlah Cluster (k) Terbaik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-1-pca-37-komponen-lalu-k-means-skenario-a">6. Analisis 1: PCA 37 Komponen lalu K-Means (Skenario A)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-dimensi-menjadi-37-komponen-pc1-sampai-pc37">6.1 Reduksi Dimensi menjadi 37 Komponen (PC1 sampai PC37)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-jumlah-cluster-terbaik-pada-pc1-sampai-pc37">6.2 Menentukan Jumlah Cluster Terbaik pada PC1 sampai PC37</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seberapa-baik-data-ini-dikelompokkan">6.3 Seberapa Baik Data Ini Dikelompokkan?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-di-knime-pca-37-komponen-k-means">7. Implementasi di KNIME: PCA 37 Komponen + K-Means</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gambaran-alur-kerja">7.1 Gambaran Alur Kerja</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-demi-langkah">7.2 Langkah Demi Langkah</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catatan-agar-hasil-knime-cocok-dengan-python">7.3 Catatan agar Hasil KNIME Cocok dengan Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tempat-hasil-implementasi-knime-isi-setelah-dijalankan">7.4 Tempat Hasil Implementasi KNIME (Isi Setelah Dijalankan)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-2-k-means-pada-fitur-asli-68-fitur-tanpa-pca">8. Analisis 2: K-Means pada Fitur Asli (68 Fitur) Tanpa PCA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mengapa-hasilnya-sama-dengan-pca-37">8.1 Mengapa Hasilnya Sama dengan PCA 37?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-di-knime-k-means-pada-fitur-asli-tanpa-pca">9. Implementasi di KNIME: K-Means pada Fitur Asli (Tanpa PCA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">9.1 Gambaran Alur Kerja</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">9.2 Langkah Demi Langkah</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuktikan-kesamaan-dengan-versi-pca-di-knime">9.3 Membuktikan Kesamaan dengan Versi PCA (di KNIME)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">9.4 Tempat Hasil Implementasi KNIME (Isi Setelah Dijalankan)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-sensitivitas-skenario-b-tanpa-baris-tidak-konsisten">10. Analisis Sensitivitas: Skenario B (Tanpa Baris Tidak Konsisten)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catatan-knime-untuk-skenario-b">10.1 Catatan KNIME untuk Skenario B</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">11. Kesimpulan</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rifqi Fairurrafi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
