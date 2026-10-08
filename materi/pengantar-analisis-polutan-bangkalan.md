@@ -39,7 +39,7 @@ Notebook yang menghubungkan ke server openEO Copernicus Data Space,
 menarik data Sentinel-5P L2 untuk wilayah Bangkalan per polutan (dipecah
 menjadi 4 bagian 3 bulanan), melakukan agregasi temporal (harian) dan
 spasial (rata rata dalam polygon AOI asli Bangkalan), lalu menggabungkan
-hasilnya menjadi satu tabel CSV: `data_polutan_bangkalan.csv`.
+hasilnya menjadi satu tabel CSV: `data/csv/data_polutan_bangkalan.csv`.
 
 ### 2. [Business Understanding](./2-business-understanding-bangkalan.md)
 
@@ -73,7 +73,7 @@ flowchart LR
    memerlukan login Copernicus Data Space Ecosystem. Proses ini memakan
    waktu cukup lama karena data diambil bertahap per 3 bulan untuk
    menghindari ketidakstabilan pada backend openEO.
-3. Muat `data_polutan_bangkalan.csv` ke PostgreSQL, lalu jalankan workflow
+3. Muat `data/csv/data_polutan_bangkalan.csv` ke PostgreSQL, lalu jalankan workflow
    KNIME (PostgreSQL Connector, DB Table Selector, DB Reader, Statistics,
    Line Plot) untuk menghasilkan statistik deskriptif dan visualisasi
    time series.

@@ -88,9 +88,10 @@ pd.set_option("display.width", 200)
 def cari_file(nama_file):
     # mencoba beberapa lokasi umum agar sel ini aman dijalankan dari
     # folder notebook maupun dari root proyek
-    for basis in ["", "data/", "../data/", "../", "../../data/"]:
-        if os.path.exists(basis + nama_file):
-            return basis + nama_file
+    for basis in ["../data/csv/", "data/csv/", "", "data/", "../data/", "../", "../../data/"]:
+        target = os.path.join(basis, nama_file) if basis else nama_file
+        if os.path.exists(target):
+            return target
     raise FileNotFoundError(nama_file)
 
 
@@ -546,7 +547,7 @@ dengan mengganti berkas pada CSV Reader.
 ### 7.2 Langkah Demi Langkah
 
 **Langkah 1. Baca data (CSV Reader).**
-Tambahkan node **CSV Reader**, arahkan ke `ekstraksi_fitur_no2.csv`.
+Tambahkan node **CSV Reader**, arahkan ke `data/csv/ekstraksi_fitur_no2.csv` (atau `ekstraksi_fitur_no2.csv`).
 Pastikan opsi *Has column header* aktif dan pemisah kolom adalah koma.
 Klik kanan node, pilih *Output table* dan periksa: **37 baris x 71
 kolom**; `id` bertipe angka bulat, `nama` dan `daerah` bertipe string, 68
@@ -903,7 +904,8 @@ for p in POLUTAN:
             "Daerah": "; ".join(anggota) if len(anggota) <= 9 else f"({len(anggota)} daerah, lihat CSV)",
         })
 
-pd.concat(semua, ignore_index=True).to_csv("hasil_kmeans_python_skenario_B.csv", index=False)
+out_b = "../data/csv/hasil_kmeans_python_skenario_B.csv" if os.path.exists("../data/csv") else "hasil_kmeans_python_skenario_B.csv"
+pd.concat(semua, ignore_index=True).to_csv(out_b, index=False)
 pd.DataFrame(baris).set_index(["Polutan", "Cluster"])
 ```
 

@@ -217,7 +217,7 @@ struktur/contoh format):
 | CH4 | ... | 1875.483347360375 | 31.127873701991152 | 1799.2550048828125 | 1939.2427571614585 | 243 |
 
 
-![Statistics Polutan Bangkalan](Statistics_Polutan_Bangkalan.png)
+![Statistics Polutan Bangkalan](images/Statistics_Polutan_Bangkalan.png)
 
 ## 8. Visualisasi Time Series
 
@@ -239,16 +239,16 @@ bahan visual utama pada bagian Data Understanding untuk melihat pola awal
 sebelum data diproses lebih lanjut pada tugas berikutnya.
 
 Line Plot NO2:
-![LinePlot NO2](LinePlot_NO2_Bangkalan.png)
+![LinePlot NO2](images/LinePlot_NO2_Bangkalan.png)
 
 Line Plot CO: 
-![LinePlot CO](LinePlot_CO_Bangkalan.png)
+![LinePlot CO](images/LinePlot_CO_Bangkalan.png)
 
 Line PLot SO2:
-![LinePlot SO2](LinePlot_SO2_Bangkalan.png)
+![LinePlot SO2](images/LinePlot_SO2_Bangkalan.png)
 
 Line Plot CH4: 
-![LinePlot CH4](LinePlot_CH4_Bangkalan.png)
+![LinePlot CH4](images/LinePlot_CH4_Bangkalan.png)
 
 ### 8.1 Visualisasi Tambahan Menggunakan Library Python
 
@@ -262,7 +262,7 @@ Jupyter Book ini.
 import matplotlib.pyplot as plt
 import pandas as pd
 
-df_kab = pd.read_csv("data_polutan_bangkalan.csv", parse_dates=["date"])
+df_kab = pd.read_csv("../data/csv/data_polutan_bangkalan.csv", parse_dates=["date"])
 
 fig, axes = plt.subplots(4, 1, figsize=(11, 12))
 
@@ -367,9 +367,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 files = {
-    "NO2": ("NO2-Bangkalan.csv", "#9467bd"),
-    "CO": ("CO-Bangkalan.csv", "#ff7f0e"),
-    "SO2": ("SO2-Bangkalan.csv", "#2ca02c"),
+    "NO2": ("../data/csv/NO2-Bangkalan.csv", "#9467bd"),
+    "CO": ("../data/csv/CO-Bangkalan.csv", "#ff7f0e"),
+    "SO2": ("../data/csv/SO2-Bangkalan.csv", "#2ca02c"),
 }
 
 fig, axes = plt.subplots(3, 1, figsize=(11, 9))
@@ -1095,9 +1095,9 @@ sebagai pembanding akhir terhadap tabel statis pada Bagian 12.1:
 
 ```{code-cell}
 files_long = {
-    "NO2": "NO2_Bangkalan_TSFEL_fixed_long.csv",
-    "CO": "CO_Bangkalan_TSFEL_fixed_long.csv",
-    "SO2": "SO2_Bangkalan_TSFEL_fixed_long.csv",
+    "NO2": "../data/csv/NO2_Bangkalan_TSFEL_fixed_long.csv",
+    "CO": "../data/csv/CO_Bangkalan_TSFEL_fixed_long.csv",
+    "SO2": "../data/csv/SO2_Bangkalan_TSFEL_fixed_long.csv",
 }
 
 rows = []
