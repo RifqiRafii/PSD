@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_b85ed1c9de01db5a42dfbc62383861af {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_b85ed1c9de01db5a42dfbc62383861af" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_b85ed1c9de01db5a42dfbc62383861af = L.map(
+                "map_b85ed1c9de01db5a42dfbc62383861af",
+                {
+                    center: [-7.3, 112.5],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 8,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_3ce177cfe18d5ac924798a6ccd9e5c86 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_3ce177cfe18d5ac924798a6ccd9e5c86.addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+            var circle_marker_490ac10927b78ea94cc7521d21d38dbb = L.circleMarker(
+                [-7.116, 112.597],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_a544c77e95ee4bc55919d814ea90bcfe = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0a78e6529e9527302ab8021dd771fa5c = $(`<div id="html_0a78e6529e9527302ab8021dd771fa5c" style="width: 100.0%; height: 100.0%;">     <b>Okan Syailendra wahyudi</b><br>     Daerah: Manyar<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.116, Lon: 112.597     </div>`)[0];
+                popup_a544c77e95ee4bc55919d814ea90bcfe.setContent(html_0a78e6529e9527302ab8021dd771fa5c);
+            
+        
+
+        circle_marker_490ac10927b78ea94cc7521d21d38dbb.bindPopup(popup_a544c77e95ee4bc55919d814ea90bcfe)
+        ;
+
+        
+    
+    
+            circle_marker_490ac10927b78ea94cc7521d21d38dbb.bindTooltip(
+                `<div>
+                     Manyar (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d485473a6f69a0f0ce4c42856b36bc11 = L.circleMarker(
+                [-7.199, 112.189],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_08ac34bead3872aeed2fca1a715e8485 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8dc8bfda13f693f4af258ae6113dbc41 = $(`<div id="html_8dc8bfda13f693f4af258ae6113dbc41" style="width: 100.0%; height: 100.0%;">     <b>Triswanti Jannatul Ma'wa</b><br>     Daerah: Kedungpring Lamongan<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.199, Lon: 112.189     </div>`)[0];
+                popup_08ac34bead3872aeed2fca1a715e8485.setContent(html_8dc8bfda13f693f4af258ae6113dbc41);
+            
+        
+
+        circle_marker_d485473a6f69a0f0ce4c42856b36bc11.bindPopup(popup_08ac34bead3872aeed2fca1a715e8485)
+        ;
+
+        
+    
+    
+            circle_marker_d485473a6f69a0f0ce4c42856b36bc11.bindTooltip(
+                `<div>
+                     Kedungpring Lamongan (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_643b454af3ba0e46a5cf566d596d4c78 = L.circleMarker(
+                [-7.165, 112.723],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_3c215cb4d0a5029d756100edcf6867f4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3dbc6e3a5715879d8979541fc290d71f = $(`<div id="html_3dbc6e3a5715879d8979541fc290d71f" style="width: 100.0%; height: 100.0%;">     <b>Laila Maghfiroh</b><br>     Daerah: Kamal, Bangkalan<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.165, Lon: 112.723     </div>`)[0];
+                popup_3c215cb4d0a5029d756100edcf6867f4.setContent(html_3dbc6e3a5715879d8979541fc290d71f);
+            
+        
+
+        circle_marker_643b454af3ba0e46a5cf566d596d4c78.bindPopup(popup_3c215cb4d0a5029d756100edcf6867f4)
+        ;
+
+        
+    
+    
+            circle_marker_643b454af3ba0e46a5cf566d596d4c78.bindTooltip(
+                `<div>
+                     Kamal, Bangkalan (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2c4558ac3e7c33abaae60845f213bb8d = L.circleMarker(
+                [-7.262, 112.235],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_d8867bff160487383d352e6e13c86abb = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_061394fe826f28a051d802d823eaeb4b = $(`<div id="html_061394fe826f28a051d802d823eaeb4b" style="width: 100.0%; height: 100.0%;">     <b>Dedy Nurohim</b><br>     Daerah: sambeng lamongan<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.262, Lon: 112.235     </div>`)[0];
+                popup_d8867bff160487383d352e6e13c86abb.setContent(html_061394fe826f28a051d802d823eaeb4b);
+            
+        
+
+        circle_marker_2c4558ac3e7c33abaae60845f213bb8d.bindPopup(popup_d8867bff160487383d352e6e13c86abb)
+        ;
+
+        
+    
+    
+            circle_marker_2c4558ac3e7c33abaae60845f213bb8d.bindTooltip(
+                `<div>
+                     sambeng lamongan (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_830c9668328fd170160b866198324355 = L.circleMarker(
+                [-7.156, 112.656],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_c04eed0cb0aac2753f82017733dd82d5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0334bf7d4855e40a6223831b2e3c8180 = $(`<div id="html_0334bf7d4855e40a6223831b2e3c8180" style="width: 100.0%; height: 100.0%;">     <b>Ahmad Syahrul Farihin</b><br>     Daerah: Gresik Kota, Gresik<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.156, Lon: 112.656     </div>`)[0];
+                popup_c04eed0cb0aac2753f82017733dd82d5.setContent(html_0334bf7d4855e40a6223831b2e3c8180);
+            
+        
+
+        circle_marker_830c9668328fd170160b866198324355.bindPopup(popup_c04eed0cb0aac2753f82017733dd82d5)
+        ;
+
+        
+    
+    
+            circle_marker_830c9668328fd170160b866198324355.bindTooltip(
+                `<div>
+                     Gresik Kota, Gresik (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cfda6a9de1c478fdac0d09a2b3269768 = L.circleMarker(
+                [-6.923, 113.565],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_eb8f86e55b184ca88be0509b3cbdff64 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c8442793a56bdc38dcba1c972b7064eb = $(`<div id="html_c8442793a56bdc38dcba1c972b7064eb" style="width: 100.0%; height: 100.0%;">     <b>Rian Renaldy</b><br>     Daerah: Waru, Pamekasan<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -6.923, Lon: 113.565     </div>`)[0];
+                popup_eb8f86e55b184ca88be0509b3cbdff64.setContent(html_c8442793a56bdc38dcba1c972b7064eb);
+            
+        
+
+        circle_marker_cfda6a9de1c478fdac0d09a2b3269768.bindPopup(popup_eb8f86e55b184ca88be0509b3cbdff64)
+        ;
+
+        
+    
+    
+            circle_marker_cfda6a9de1c478fdac0d09a2b3269768.bindTooltip(
+                `<div>
+                     Waru, Pamekasan (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0da72997e34601fdee38511eca9982dc = L.circleMarker(
+                [-7.045, 112.753],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_1457f7d0acf7a7a78b61e2d501f6af25 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bb8f2476234787dbd553a7c9838c4da7 = $(`<div id="html_bb8f2476234787dbd553a7c9838c4da7" style="width: 100.0%; height: 100.0%;">     <b>Moh Rafie Nazar J</b><br>     Daerah: Bangkalan Kota,Bangkalan<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.045, Lon: 112.753     </div>`)[0];
+                popup_1457f7d0acf7a7a78b61e2d501f6af25.setContent(html_bb8f2476234787dbd553a7c9838c4da7);
+            
+        
+
+        circle_marker_0da72997e34601fdee38511eca9982dc.bindPopup(popup_1457f7d0acf7a7a78b61e2d501f6af25)
+        ;
+
+        
+    
+    
+            circle_marker_0da72997e34601fdee38511eca9982dc.bindTooltip(
+                `<div>
+                     Bangkalan Kota,Bangkalan (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_68fd36625466be0fa0408f69df43c25f = L.circleMarker(
+                [4.135, 117.665],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_722b7c0a449bee589333663780ed0f82 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_768df8eb226b768d741b405cbd3b565e = $(`<div id="html_768df8eb226b768d741b405cbd3b565e" style="width: 100.0%; height: 100.0%;">     <b>Ainur Raftuzzaki</b><br>     Daerah: Nunukan<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: 4.135, Lon: 117.665     </div>`)[0];
+                popup_722b7c0a449bee589333663780ed0f82.setContent(html_768df8eb226b768d741b405cbd3b565e);
+            
+        
+
+        circle_marker_68fd36625466be0fa0408f69df43c25f.bindPopup(popup_722b7c0a449bee589333663780ed0f82)
+        ;
+
+        
+    
+    
+            circle_marker_68fd36625466be0fa0408f69df43c25f.bindTooltip(
+                `<div>
+                     Nunukan (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2b458c10ba59f26df9bc627d399a4747 = L.circleMarker(
+                [-7.165, 112.723],
+                {"bubblingMouseEvents": true, "color": "#ff7f0e", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff7f0e", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_d5ec0d8f89c2cc795cf6cc97b2ac3a7e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d84c0838354fc9a2055c9b523eff8806 = $(`<div id="html_d84c0838354fc9a2055c9b523eff8806" style="width: 100.0%; height: 100.0%;">     <b>Muhammad Zaidan Nabil Rafi</b><br>     Daerah: Kamal, Bangkalan<br>     Cluster: 1 (Cluster 1: Ekstrim / Outlier)<br>     Lat: -7.165, Lon: 112.723     </div>`)[0];
+                popup_d5ec0d8f89c2cc795cf6cc97b2ac3a7e.setContent(html_d84c0838354fc9a2055c9b523eff8806);
+            
+        
+
+        circle_marker_2b458c10ba59f26df9bc627d399a4747.bindPopup(popup_d5ec0d8f89c2cc795cf6cc97b2ac3a7e)
+        ;
+
+        
+    
+    
+            circle_marker_2b458c10ba59f26df9bc627d399a4747.bindTooltip(
+                `<div>
+                     Kamal, Bangkalan (Cluster 1)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b7288700d96570a83db2d5d44a577a93 = L.circleMarker(
+                [-7.221, 112.556],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_e0bc45199477d1526823ac972e55d461 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_28b345c199a824aa6620b10cb3f4715f = $(`<div id="html_28b345c199a824aa6620b10cb3f4715f" style="width: 100.0%; height: 100.0%;">     <b>Robbaniyah Umdatun Ni'mah</b><br>     Daerah: Cerme, Gresik<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.221, Lon: 112.556     </div>`)[0];
+                popup_e0bc45199477d1526823ac972e55d461.setContent(html_28b345c199a824aa6620b10cb3f4715f);
+            
+        
+
+        circle_marker_b7288700d96570a83db2d5d44a577a93.bindPopup(popup_e0bc45199477d1526823ac972e55d461)
+        ;
+
+        
+    
+    
+            circle_marker_b7288700d96570a83db2d5d44a577a93.bindTooltip(
+                `<div>
+                     Cerme, Gresik (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4bd0514bad9970c563e1ff6b8c062800 = L.circleMarker(
+                [-7.478, 111.666],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_f5aca50c1c7bcbd538d9403f43be33d9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fb58b7aaef842659d725d65ff4c63062 = $(`<div id="html_fb58b7aaef842659d725d65ff4c63062" style="width: 100.0%; height: 100.0%;">     <b>Magdalena Jovita Hatuopar</b><br>     Daerah: Pilangkenceng, Madiun<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.478, Lon: 111.666     </div>`)[0];
+                popup_f5aca50c1c7bcbd538d9403f43be33d9.setContent(html_fb58b7aaef842659d725d65ff4c63062);
+            
+        
+
+        circle_marker_4bd0514bad9970c563e1ff6b8c062800.bindPopup(popup_f5aca50c1c7bcbd538d9403f43be33d9)
+        ;
+
+        
+    
+    
+            circle_marker_4bd0514bad9970c563e1ff6b8c062800.bindTooltip(
+                `<div>
+                     Pilangkenceng, Madiun (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_89d69b127ba2badba562596cf8779cd8 = L.circleMarker(
+                [-7.016, 113.864],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_d43b6ad5fea52753237518b53a01f1ca = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_67c240dee75eb5f3fe882298440ee584 = $(`<div id="html_67c240dee75eb5f3fe882298440ee584" style="width: 100.0%; height: 100.0%;">     <b>Alifah Sayyidaturrhohma</b><br>     Daerah: Kota Sumenep, Sumenep<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.016, Lon: 113.864     </div>`)[0];
+                popup_d43b6ad5fea52753237518b53a01f1ca.setContent(html_67c240dee75eb5f3fe882298440ee584);
+            
+        
+
+        circle_marker_89d69b127ba2badba562596cf8779cd8.bindPopup(popup_d43b6ad5fea52753237518b53a01f1ca)
+        ;
+
+        
+    
+    
+            circle_marker_89d69b127ba2badba562596cf8779cd8.bindTooltip(
+                `<div>
+                     Kota Sumenep, Sumenep (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_757cbf2264c409fcbb24ec8531a8c1f8 = L.circleMarker(
+                [-7.247, 112.705],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_648a2743a7cad93d4859323a8a05dbe0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f18d4471f1a26a9cb0266cca34a4f92a = $(`<div id="html_f18d4471f1a26a9cb0266cca34a4f92a" style="width: 100.0%; height: 100.0%;">     <b>Riska Nana Nuril Fadilah</b><br>     Daerah: Asemrowo, Surabaya<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.247, Lon: 112.705     </div>`)[0];
+                popup_648a2743a7cad93d4859323a8a05dbe0.setContent(html_f18d4471f1a26a9cb0266cca34a4f92a);
+            
+        
+
+        circle_marker_757cbf2264c409fcbb24ec8531a8c1f8.bindPopup(popup_648a2743a7cad93d4859323a8a05dbe0)
+        ;
+
+        
+    
+    
+            circle_marker_757cbf2264c409fcbb24ec8531a8c1f8.bindTooltip(
+                `<div>
+                     Asemrowo, Surabaya (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_297c95ede82e2bdbd162bee7cdf63fd0 = L.circleMarker(
+                [-7.185, 113.115],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_b057891f3c2606765c1250f719ef0d4d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4e0743b0a9be7af8bddbe47076adff8a = $(`<div id="html_4e0743b0a9be7af8bddbe47076adff8a" style="width: 100.0%; height: 100.0%;">     <b>M. Hendrik Purwanto</b><br>     Daerah: Sreseh, Sampang<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.185, Lon: 113.115     </div>`)[0];
+                popup_b057891f3c2606765c1250f719ef0d4d.setContent(html_4e0743b0a9be7af8bddbe47076adff8a);
+            
+        
+
+        circle_marker_297c95ede82e2bdbd162bee7cdf63fd0.bindPopup(popup_b057891f3c2606765c1250f719ef0d4d)
+        ;
+
+        
+    
+    
+            circle_marker_297c95ede82e2bdbd162bee7cdf63fd0.bindTooltip(
+                `<div>
+                     Sreseh, Sampang (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4a6ba1cf6360ed853cb7d77bc167c576 = L.circleMarker(
+                [-7.452, 112.617],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_ece66b179bb60998ea58bbf50cfc0f12 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b1fdcfb42a50b71448b70eb5d842c464 = $(`<div id="html_b1fdcfb42a50b71448b70eb5d842c464" style="width: 100.0%; height: 100.0%;">     <b>Alghifari Amar Mukhasyafah</b><br>     Daerah: Wonoayu<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.452, Lon: 112.617     </div>`)[0];
+                popup_ece66b179bb60998ea58bbf50cfc0f12.setContent(html_b1fdcfb42a50b71448b70eb5d842c464);
+            
+        
+
+        circle_marker_4a6ba1cf6360ed853cb7d77bc167c576.bindPopup(popup_ece66b179bb60998ea58bbf50cfc0f12)
+        ;
+
+        
+    
+    
+            circle_marker_4a6ba1cf6360ed853cb7d77bc167c576.bindTooltip(
+                `<div>
+                     Wonoayu (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_925a6f06996aa3f0187cd2d3c1922b69 = L.circleMarker(
+                [-7.301, 112.738],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_2879aef4fa3be73b17ea7383099e107b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_cf13edb92cb699cac5c967ccca14fd6a = $(`<div id="html_cf13edb92cb699cac5c967ccca14fd6a" style="width: 100.0%; height: 100.0%;">     <b>Muhammad izzul Millah Aqil</b><br>     Daerah: Wonokromo, Surabaya<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.301, Lon: 112.738     </div>`)[0];
+                popup_2879aef4fa3be73b17ea7383099e107b.setContent(html_cf13edb92cb699cac5c967ccca14fd6a);
+            
+        
+
+        circle_marker_925a6f06996aa3f0187cd2d3c1922b69.bindPopup(popup_2879aef4fa3be73b17ea7383099e107b)
+        ;
+
+        
+    
+    
+            circle_marker_925a6f06996aa3f0187cd2d3c1922b69.bindTooltip(
+                `<div>
+                     Wonokromo, Surabaya (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9bf42815775e0f5fe4c810bc9aa4c9d2 = L.circleMarker(
+                [-7.168, 112.718],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_6002d8f061f8066f8cb3f68125efb97c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_46dc82db07b39a5a696a5ce522f4b475 = $(`<div id="html_46dc82db07b39a5a696a5ce522f4b475" style="width: 100.0%; height: 100.0%;">     <b>A.Choiril Anwar El-Asfihani Risydan</b><br>     Daerah: Banyu Ajuh, Perumnas, Kamal<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.168, Lon: 112.718     </div>`)[0];
+                popup_6002d8f061f8066f8cb3f68125efb97c.setContent(html_46dc82db07b39a5a696a5ce522f4b475);
+            
+        
+
+        circle_marker_9bf42815775e0f5fe4c810bc9aa4c9d2.bindPopup(popup_6002d8f061f8066f8cb3f68125efb97c)
+        ;
+
+        
+    
+    
+            circle_marker_9bf42815775e0f5fe4c810bc9aa4c9d2.bindTooltip(
+                `<div>
+                     Banyu Ajuh, Perumnas, Kamal (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ab76b7c172a5d03d23fb2e1b2bda56b3 = L.circleMarker(
+                [-7.279, 112.592],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_c61a56310b4c9cf2a299beb62f6756c4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_285b84a13f00f2901b1e026353b3bb08 = $(`<div id="html_285b84a13f00f2901b1e026353b3bb08" style="width: 100.0%; height: 100.0%;">     <b>Verdi Setyawan Ardiansyah Putra</b><br>     Daerah: Menganti Gresik<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.279, Lon: 112.592     </div>`)[0];
+                popup_c61a56310b4c9cf2a299beb62f6756c4.setContent(html_285b84a13f00f2901b1e026353b3bb08);
+            
+        
+
+        circle_marker_ab76b7c172a5d03d23fb2e1b2bda56b3.bindPopup(popup_c61a56310b4c9cf2a299beb62f6756c4)
+        ;
+
+        
+    
+    
+            circle_marker_ab76b7c172a5d03d23fb2e1b2bda56b3.bindTooltip(
+                `<div>
+                     Menganti Gresik (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e6fe2625915d163d717213c079412598 = L.circleMarker(
+                [-7.168, 112.782],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_61fe036ff1b202797869e7f4da33031e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_63aad3c85a8d3c589b7673213f44b6c0 = $(`<div id="html_63aad3c85a8d3c589b7673213f44b6c0" style="width: 100.0%; height: 100.0%;">     <b>Kurnia Maulinda Sari</b><br>     Daerah: Labang, Bangkalan<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.168, Lon: 112.782     </div>`)[0];
+                popup_61fe036ff1b202797869e7f4da33031e.setContent(html_63aad3c85a8d3c589b7673213f44b6c0);
+            
+        
+
+        circle_marker_e6fe2625915d163d717213c079412598.bindPopup(popup_61fe036ff1b202797869e7f4da33031e)
+        ;
+
+        
+    
+    
+            circle_marker_e6fe2625915d163d717213c079412598.bindTooltip(
+                `<div>
+                     Labang, Bangkalan (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f62a94e1b1b4a516b96f9c0cad98e614 = L.circleMarker(
+                [-7.054, 113.935],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_54f60ea606d072b922bf81ebaf665f1a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_972b14f32e605d538ff456e3e74bf101 = $(`<div id="html_972b14f32e605d538ff456e3e74bf101" style="width: 100.0%; height: 100.0%;">     <b>Marshella Aulia Putri</b><br>     Daerah: Kec. Kalianget, Sumenep<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.054, Lon: 113.935     </div>`)[0];
+                popup_54f60ea606d072b922bf81ebaf665f1a.setContent(html_972b14f32e605d538ff456e3e74bf101);
+            
+        
+
+        circle_marker_f62a94e1b1b4a516b96f9c0cad98e614.bindPopup(popup_54f60ea606d072b922bf81ebaf665f1a)
+        ;
+
+        
+    
+    
+            circle_marker_f62a94e1b1b4a516b96f9c0cad98e614.bindTooltip(
+                `<div>
+                     Kec. Kalianget, Sumenep (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e916ce6b40e207db3725f30b1ce861be = L.circleMarker(
+                [-7.045, 112.753],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_d5e9be24fa9e6347b1470e23d4489737 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2a42499d783ab2d69d4a48683aa9d671 = $(`<div id="html_2a42499d783ab2d69d4a48683aa9d671" style="width: 100.0%; height: 100.0%;">     <b>Rifqi Fairurrafi</b><br>     Daerah: Kec. Bangkalan, Kab. Bangkalan<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.045, Lon: 112.753     </div>`)[0];
+                popup_d5e9be24fa9e6347b1470e23d4489737.setContent(html_2a42499d783ab2d69d4a48683aa9d671);
+            
+        
+
+        circle_marker_e916ce6b40e207db3725f30b1ce861be.bindPopup(popup_d5e9be24fa9e6347b1470e23d4489737)
+        ;
+
+        
+    
+    
+            circle_marker_e916ce6b40e207db3725f30b1ce861be.bindTooltip(
+                `<div>
+                     Kec. Bangkalan, Kab. Bangkalan (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1fa0da7fc08f13f72b803048a4f931f7 = L.circleMarker(
+                [-6.882, 111.902],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_d85f565bd3c2cb1b569b05658c124ead = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_43312e33aa0d1736befbec44675ce4bb = $(`<div id="html_43312e33aa0d1736befbec44675ce4bb" style="width: 100.0%; height: 100.0%;">     <b>Nurhabibatul Umah</b><br>     Daerah: Kerek, Tuban<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -6.882, Lon: 111.902     </div>`)[0];
+                popup_d85f565bd3c2cb1b569b05658c124ead.setContent(html_43312e33aa0d1736befbec44675ce4bb);
+            
+        
+
+        circle_marker_1fa0da7fc08f13f72b803048a4f931f7.bindPopup(popup_d85f565bd3c2cb1b569b05658c124ead)
+        ;
+
+        
+    
+    
+            circle_marker_1fa0da7fc08f13f72b803048a4f931f7.bindTooltip(
+                `<div>
+                     Kerek, Tuban (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_887c87951f6faceb5b5f7da5938b9471 = L.circleMarker(
+                [-7.098, 112.215],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_cf3ce914e466bbd184260da5e851df5f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_892bee79fb271fbfb2b562a9ed5a862e = $(`<div id="html_892bee79fb271fbfb2b562a9ed5a862e" style="width: 100.0%; height: 100.0%;">     <b>Mochammad Zaenal Abidin</b><br>     Daerah: Widang, Tuban<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.098, Lon: 112.215     </div>`)[0];
+                popup_cf3ce914e466bbd184260da5e851df5f.setContent(html_892bee79fb271fbfb2b562a9ed5a862e);
+            
+        
+
+        circle_marker_887c87951f6faceb5b5f7da5938b9471.bindPopup(popup_cf3ce914e466bbd184260da5e851df5f)
+        ;
+
+        
+    
+    
+            circle_marker_887c87951f6faceb5b5f7da5938b9471.bindTooltip(
+                `<div>
+                     Widang, Tuban (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6969a3ce509122a200c55395a617d357 = L.circleMarker(
+                [1.482, 124.848],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_999a9282ae4523966dda547d3214de7a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2f5cc083b5bcd6afa72777127673871a = $(`<div id="html_2f5cc083b5bcd6afa72777127673871a" style="width: 100.0%; height: 100.0%;">     <b>Rachelia Andini Tendean</b><br>     Daerah: Tikala, Manado<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: 1.482, Lon: 124.848     </div>`)[0];
+                popup_999a9282ae4523966dda547d3214de7a.setContent(html_2f5cc083b5bcd6afa72777127673871a);
+            
+        
+
+        circle_marker_6969a3ce509122a200c55395a617d357.bindPopup(popup_999a9282ae4523966dda547d3214de7a)
+        ;
+
+        
+    
+    
+            circle_marker_6969a3ce509122a200c55395a617d357.bindTooltip(
+                `<div>
+                     Tikala, Manado (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a68c653ec947e9c3a1e7c534a66986ad = L.circleMarker(
+                [-6.877, 112.338],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_4d131fa6af850903d046694b84ce0686 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6ad749a252b216584ec3dc03ca37a45a = $(`<div id="html_6ad749a252b216584ec3dc03ca37a45a" style="width: 100.0%; height: 100.0%;">     <b>Ahmad Dafi Zidni Alfarisi</b><br>     Daerah: Paciran, Lamongan<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -6.877, Lon: 112.338     </div>`)[0];
+                popup_4d131fa6af850903d046694b84ce0686.setContent(html_6ad749a252b216584ec3dc03ca37a45a);
+            
+        
+
+        circle_marker_a68c653ec947e9c3a1e7c534a66986ad.bindPopup(popup_4d131fa6af850903d046694b84ce0686)
+        ;
+
+        
+    
+    
+            circle_marker_a68c653ec947e9c3a1e7c534a66986ad.bindTooltip(
+                `<div>
+                     Paciran, Lamongan (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_739e1d789d37f3564ce9e455431e3e19 = L.circleMarker(
+                [-7.382, 111.233],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_57f36dfa6f9c246f4e36df5fa1d3cb74 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_41e4855b178ab3a98ec3ec766f7fb26e = $(`<div id="html_41e4855b178ab3a98ec3ec766f7fb26e" style="width: 100.0%; height: 100.0%;">     <b>Deo Candra Saputra</b><br>     Daerah: Widodaren, Ngawi<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.382, Lon: 111.233     </div>`)[0];
+                popup_57f36dfa6f9c246f4e36df5fa1d3cb74.setContent(html_41e4855b178ab3a98ec3ec766f7fb26e);
+            
+        
+
+        circle_marker_739e1d789d37f3564ce9e455431e3e19.bindPopup(popup_57f36dfa6f9c246f4e36df5fa1d3cb74)
+        ;
+
+        
+    
+    
+            circle_marker_739e1d789d37f3564ce9e455431e3e19.bindTooltip(
+                `<div>
+                     Widodaren, Ngawi (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6634267bdfa6b9d9b9db55d9af8db4a5 = L.circleMarker(
+                [-7.108, 112.721],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_c215b4b1dde4c7cc5bd19fbb386f8448 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8d91bacd973b86644b0103db51f3952f = $(`<div id="html_8d91bacd973b86644b0103db51f3952f" style="width: 100.0%; height: 100.0%;">     <b>Lailatul Hasanah</b><br>     Daerah: Socah, Bangkalan<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.108, Lon: 112.721     </div>`)[0];
+                popup_c215b4b1dde4c7cc5bd19fbb386f8448.setContent(html_8d91bacd973b86644b0103db51f3952f);
+            
+        
+
+        circle_marker_6634267bdfa6b9d9b9db55d9af8db4a5.bindPopup(popup_c215b4b1dde4c7cc5bd19fbb386f8448)
+        ;
+
+        
+    
+    
+            circle_marker_6634267bdfa6b9d9b9db55d9af8db4a5.bindTooltip(
+                `<div>
+                     Socah, Bangkalan (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1f94e4d208c0dabffe93b37b80c7f892 = L.circleMarker(
+                [-7.085, 112.898],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_da497ef58b45fcb9d7c7ee4dd03b2145 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fe6f5848fd1a95dad212732830f99a32 = $(`<div id="html_fe6f5848fd1a95dad212732830f99a32" style="width: 100.0%; height: 100.0%;">     <b>Mohammad Aziz Huzaini</b><br>     Daerah: Tanah Merah, Bangkalan<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.085, Lon: 112.898     </div>`)[0];
+                popup_da497ef58b45fcb9d7c7ee4dd03b2145.setContent(html_fe6f5848fd1a95dad212732830f99a32);
+            
+        
+
+        circle_marker_1f94e4d208c0dabffe93b37b80c7f892.bindPopup(popup_da497ef58b45fcb9d7c7ee4dd03b2145)
+        ;
+
+        
+    
+    
+            circle_marker_1f94e4d208c0dabffe93b37b80c7f892.bindTooltip(
+                `<div>
+                     Tanah Merah, Bangkalan (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_52eebb9789128b0af2bb6cd711409d1a = L.circleMarker(
+                [-6.998, 112.518],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_a535b9517740bc4128d973df8acbc9fb = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ac5eeb4db23c1cc4c4d480a01c181571 = $(`<div id="html_ac5eeb4db23c1cc4c4d480a01c181571" style="width: 100.0%; height: 100.0%;">     <b>Fathul Aziz Saifuddin</b><br>     Daerah: Dukun, Gresik<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -6.998, Lon: 112.518     </div>`)[0];
+                popup_a535b9517740bc4128d973df8acbc9fb.setContent(html_ac5eeb4db23c1cc4c4d480a01c181571);
+            
+        
+
+        circle_marker_52eebb9789128b0af2bb6cd711409d1a.bindPopup(popup_a535b9517740bc4128d973df8acbc9fb)
+        ;
+
+        
+    
+    
+            circle_marker_52eebb9789128b0af2bb6cd711409d1a.bindTooltip(
+                `<div>
+                     Dukun, Gresik (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_83cdfcf39eae975bf83648b1c8e41a3b = L.circleMarker(
+                [-7.155, 112.868],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_db6d1273e233062e0448177b516f5f7d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2b68f2952349165c192d6d20a0634f36 = $(`<div id="html_2b68f2952349165c192d6d20a0634f36" style="width: 100.0%; height: 100.0%;">     <b>M. Fatihul Umam</b><br>     Daerah: Kwanyar, Bangkalan<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.155, Lon: 112.868     </div>`)[0];
+                popup_db6d1273e233062e0448177b516f5f7d.setContent(html_2b68f2952349165c192d6d20a0634f36);
+            
+        
+
+        circle_marker_83cdfcf39eae975bf83648b1c8e41a3b.bindPopup(popup_db6d1273e233062e0448177b516f5f7d)
+        ;
+
+        
+    
+    
+            circle_marker_83cdfcf39eae975bf83648b1c8e41a3b.bindTooltip(
+                `<div>
+                     Kwanyar, Bangkalan (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_00c7412ba66a482f7f8ea60af7975fde = L.circleMarker(
+                [-7.558, 112.766],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_7b1f280b9975467d06ebf1bccc9f77ff = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fa2fb2a24a5f3fef5446d368bb0998f6 = $(`<div id="html_fa2fb2a24a5f3fef5446d368bb0998f6" style="width: 100.0%; height: 100.0%;">     <b>Rahardian Ananta</b><br>     Daerah: jabon , Sidoarjo<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.558, Lon: 112.766     </div>`)[0];
+                popup_7b1f280b9975467d06ebf1bccc9f77ff.setContent(html_fa2fb2a24a5f3fef5446d368bb0998f6);
+            
+        
+
+        circle_marker_00c7412ba66a482f7f8ea60af7975fde.bindPopup(popup_7b1f280b9975467d06ebf1bccc9f77ff)
+        ;
+
+        
+    
+    
+            circle_marker_00c7412ba66a482f7f8ea60af7975fde.bindTooltip(
+                `<div>
+                     jabon , Sidoarjo (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_221d356ce639fba2be7b4baf94e2417e = L.circleMarker(
+                [-7.608, 112.062],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_8b8002b02182dfebf87d53924cd47d32 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a1d447d1a92ae92540ff5ff45d7d39cc = $(`<div id="html_a1d447d1a92ae92540ff5ff45d7d39cc" style="width: 100.0%; height: 100.0%;">     <b>Muhammad Ali Murtadho</b><br>     Daerah: Baron Nganjuk<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.608, Lon: 112.062     </div>`)[0];
+                popup_8b8002b02182dfebf87d53924cd47d32.setContent(html_a1d447d1a92ae92540ff5ff45d7d39cc);
+            
+        
+
+        circle_marker_221d356ce639fba2be7b4baf94e2417e.bindPopup(popup_8b8002b02182dfebf87d53924cd47d32)
+        ;
+
+        
+    
+    
+            circle_marker_221d356ce639fba2be7b4baf94e2417e.bindTooltip(
+                `<div>
+                     Baron Nganjuk (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fe177b37967788834efed0025e7ce38d = L.circleMarker(
+                [-7.155, 112.868],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_00b0085b4c96f174e0d5014e07cc073c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1f7e1f803b76ea2a3c9eb483401cc8e0 = $(`<div id="html_1f7e1f803b76ea2a3c9eb483401cc8e0" style="width: 100.0%; height: 100.0%;">     <b>Fahdimas akmal</b><br>     Daerah: Kwanyar, Bangkalan<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.155, Lon: 112.868     </div>`)[0];
+                popup_00b0085b4c96f174e0d5014e07cc073c.setContent(html_1f7e1f803b76ea2a3c9eb483401cc8e0);
+            
+        
+
+        circle_marker_fe177b37967788834efed0025e7ce38d.bindPopup(popup_00b0085b4c96f174e0d5014e07cc073c)
+        ;
+
+        
+    
+    
+            circle_marker_fe177b37967788834efed0025e7ce38d.bindTooltip(
+                `<div>
+                     Kwanyar, Bangkalan (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4a1872e1e2d94a2de784017377d095f1 = L.circleMarker(
+                [-7.595, 112.095],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1f77b4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_eba0f96e6237b12e21d1177202e8ddff = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1c0959f607ddc396593fd814d309c6ac = $(`<div id="html_1c0959f607ddc396593fd814d309c6ac" style="width: 100.0%; height: 100.0%;">     <b>AHMAD MAULANA ISHAQ</b><br>     Daerah: Kertosono, Ngajuk<br>     Cluster: 0 (Cluster 0: Moderat / Campuran)<br>     Lat: -7.595, Lon: 112.095     </div>`)[0];
+                popup_eba0f96e6237b12e21d1177202e8ddff.setContent(html_1c0959f607ddc396593fd814d309c6ac);
+            
+        
+
+        circle_marker_4a1872e1e2d94a2de784017377d095f1.bindPopup(popup_eba0f96e6237b12e21d1177202e8ddff)
+        ;
+
+        
+    
+    
+            circle_marker_4a1872e1e2d94a2de784017377d095f1.bindTooltip(
+                `<div>
+                     Kertosono, Ngajuk (Cluster 0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b230016adc0a0d7185fc7e6c3227bd89 = L.circleMarker(
+                [-6.932, 106.918],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_dce48368c6a901ca83fada470a9b3db4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b7292b6e449d1632bfbeadfc85b70ce2 = $(`<div id="html_b7292b6e449d1632bfbeadfc85b70ce2" style="width: 100.0%; height: 100.0%;">     <b>Fathan Ruhul Alam</b><br>     Daerah: Warudoyong, Kota Sukabumi<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -6.932, Lon: 106.918     </div>`)[0];
+                popup_dce48368c6a901ca83fada470a9b3db4.setContent(html_b7292b6e449d1632bfbeadfc85b70ce2);
+            
+        
+
+        circle_marker_b230016adc0a0d7185fc7e6c3227bd89.bindPopup(popup_dce48368c6a901ca83fada470a9b3db4)
+        ;
+
+        
+    
+    
+            circle_marker_b230016adc0a0d7185fc7e6c3227bd89.bindTooltip(
+                `<div>
+                     Warudoyong, Kota Sukabumi (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_82bf9fa0a2af52b3f045ca4fc5246f26 = L.circleMarker(
+                [-7.585, 112.285],
+                {"bubblingMouseEvents": true, "color": "#2ca02c", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2ca02c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+    
+        var popup_bd59b436bf205ddf267a8b9172b570d7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_dd56e2fee89fc1259c4124e997716b20 = $(`<div id="html_dd56e2fee89fc1259c4124e997716b20" style="width: 100.0%; height: 100.0%;">     <b>Muhammad Isa</b><br>     Daerah: Bandung, Jogoroto, Jombang<br>     Cluster: 2 (Cluster 2: Rendah / Bersih)<br>     Lat: -7.585, Lon: 112.285     </div>`)[0];
+                popup_bd59b436bf205ddf267a8b9172b570d7.setContent(html_dd56e2fee89fc1259c4124e997716b20);
+            
+        
+
+        circle_marker_82bf9fa0a2af52b3f045ca4fc5246f26.bindPopup(popup_bd59b436bf205ddf267a8b9172b570d7)
+        ;
+
+        
+    
+    
+            circle_marker_82bf9fa0a2af52b3f045ca4fc5246f26.bindTooltip(
+                `<div>
+                     Bandung, Jogoroto, Jombang (Cluster 2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            tile_layer_3ce177cfe18d5ac924798a6ccd9e5c86.addTo(map_b85ed1c9de01db5a42dfbc62383861af);
+        
+</script>
+</html>
