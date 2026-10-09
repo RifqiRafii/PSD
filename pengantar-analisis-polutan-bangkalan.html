@@ -187,9 +187,10 @@
 <li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data-kecamatan.html">Ekstraksi Data Polutan - Kecamatan Bangkalan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="2-preprocessing-ekstraksi-fitur_TSFEL.html">Preprocessing dan Ekstraksi 68 Fitur TSFEL - Tiga Polutan Kecamatan Bangkalan</a></li>
 
+
 <li class="toctree-l2"><a class="reference internal" href="2-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="4-modeling-kmeans-clustering.html">Modeling - K-Means Clustering pada Fitur TSFEL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-modeling-kmeans-clustering.html">Modeling - K-Means Clustering pada Gabungan 3 Polutan (204 Fitur TSFEL) &amp; Analisis Multi-Dimensi (203, 74, 37)</a></li>
 </ul>
 </details></li>
 </ul>
@@ -432,7 +433,7 @@ dikerjakan sebagai bagian dari tugas terpisah.</p>
 menarik data Sentinel-5P L2 untuk wilayah Bangkalan per polutan (dipecah
 menjadi 4 bagian 3 bulanan), melakukan agregasi temporal (harian) dan
 spasial (rata rata dalam polygon AOI asli Bangkalan), lalu menggabungkan
-hasilnya menjadi satu tabel CSV: <code class="docutils literal notranslate"><span class="pre">data_polutan_bangkalan.csv</span></code>.</p>
+hasilnya menjadi satu tabel CSV: <code class="docutils literal notranslate"><span class="pre">data/csv/data_polutan_bangkalan.csv</span></code>.</p>
 </section>
 <section id="business-understanding">
 <h3>2. <a class="reference internal" href="2-business-understanding-bangkalan.html"><span class="std std-doc">Business Understanding</span></a><a class="headerlink" href="#business-understanding" title="Link to this heading">#</a></h3>
@@ -461,7 +462,7 @@ Selector, DB Reader, Statistics, dan Line Plot).</p>
 memerlukan login Copernicus Data Space Ecosystem. Proses ini memakan
 waktu cukup lama karena data diambil bertahap per 3 bulan untuk
 menghindari ketidakstabilan pada backend openEO.</p></li>
-<li><p>Muat <code class="docutils literal notranslate"><span class="pre">data_polutan_bangkalan.csv</span></code> ke PostgreSQL, lalu jalankan workflow
+<li><p>Muat <code class="docutils literal notranslate"><span class="pre">data/csv/data_polutan_bangkalan.csv</span></code> ke PostgreSQL, lalu jalankan workflow
 KNIME (PostgreSQL Connector, DB Table Selector, DB Reader, Statistics,
 Line Plot) untuk menghasilkan statistik deskriptif dan visualisasi
 time series.</p></li>

@@ -26,14 +26,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-import json
-import os
-import time
-
-import numpy as np
-import openeo
-import pandas as pd
-import xarray as xr
-
+['DATE_CHUNKS = make_date_chunks(START_DATE, END_DATE, chunk_months=6)', 'print(f"Dibagi menjadi {len(DATE_CHUNKS)} bagian per polutan:")', 'for i, (s, e) in enumerate(DATE_CHUNKS, start=1):', '    print(f"  Bagian {i}: {s} sampai {e}")', '']
+...
+['        time.sleep(15)', '', 'print()', 'for pollutant, paths in nc_paths_by_pollutant.items():', '    print(f"{pollutant}: berhasil {len(paths)} dari {len(DATE_CHUNKS)} bagian")']
 -------------------
 
