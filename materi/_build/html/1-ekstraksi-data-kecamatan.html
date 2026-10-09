@@ -185,9 +185,10 @@
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Ekstraksi Data Polutan - Kecamatan Bangkalan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="2-preprocessing-ekstraksi-fitur_TSFEL.html">Preprocessing dan Ekstraksi 68 Fitur TSFEL - Tiga Polutan Kecamatan Bangkalan</a></li>
 
+
 <li class="toctree-l2"><a class="reference internal" href="2-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="4-modeling-kmeans-clustering.html">Modeling - K-Means Clustering pada Fitur TSFEL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-modeling-kmeans-clustering.html">Modeling - K-Means Clustering pada Gabungan 3 Polutan (204 Fitur TSFEL) &amp; Analisis Multi-Dimensi (203, 74, 37)</a></li>
 </ul>
 </details></li>
 </ul>
@@ -414,7 +415,7 @@ document.write(`
 <li><p>Tiga polutan diekstrak: <strong>NO2</strong>, <strong>CO</strong>, dan <strong>SO2</strong>.</p></li>
 </ul>
 <p>Keluaran notebook ini adalah tiga file CSV dengan pola penamaan
-<code class="docutils literal notranslate"><span class="pre">&lt;POLUTAN&gt;-Bangkalan.csv</span></code>, untuk diproses pada notebook TSFEL berikutnya.</p>
+<code class="docutils literal notranslate"><span class="pre">../data/csv/&lt;POLUTAN&gt;-Bangkalan.csv</span></code>, untuk diproses pada notebook TSFEL berikutnya.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
@@ -471,9 +472,10 @@ sehingga risiko kena rate limit backend jauh lebih rendah.</p>
 <span class="n">KECAMATAN_NAME</span> <span class="o">=</span> <span class="s2">&quot;Bangkalan&quot;</span>
 
 <span class="n">NC_DIR</span> <span class="o">=</span> <span class="s2">&quot;../data/nc/&quot;</span>
-<span class="n">OUTPUT_DIR</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span>
+<span class="n">OUTPUT_DIR</span> <span class="o">=</span> <span class="s2">&quot;../data/csv/&quot;</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">NC_DIR</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">OUTPUT_DIR</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bounding box Kecamatan Bangkalan:&quot;</span><span class="p">,</span> <span class="n">kecamatan_bbox</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Polutan yang diekstrak:&quot;</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">POLLUTANTS</span><span class="p">))</span>
@@ -664,132 +666,21 @@ backend. Setiap bagian dijalankan untuk <strong>NO2</strong>, <strong>CO</strong
   Bagian 3: 2026-08-28 sampai 2026-08-31
 
 === Ekstraksi NO2 ===
-0:00:00 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: send &#39;start&#39;
-0:00:04 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: queued (progress 0%)
-0:00:09 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: queued (progress 0%)
-0:00:16 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: queued (progress 0%)
-0:00:24 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: queued (progress 0%)
-0:00:34 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: queued (progress 0%)
-0:00:46 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: queued (progress 0%)
-0:01:02 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: running (progress N/A)
-0:01:21 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: running (progress N/A)
-0:01:46 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: running (progress N/A)
-0:02:16 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: running (progress N/A)
-0:02:53 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: running (progress N/A)
-0:03:40 Job &#39;j-2609181617234243b1febbe85f96368b&#39;: finished (progress 100%)
-[NO2][bagian1] Selesai -&gt; ../data/nc/NO2_Bangkalan_bagian1.nc
-0:00:00 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: send &#39;start&#39;
-0:00:03 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: queued (progress 0%)
-0:00:08 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: queued (progress 0%)
-0:00:15 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: queued (progress 0%)
-0:00:23 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: queued (progress 0%)
-0:00:33 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: queued (progress 0%)
-0:00:45 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: running (progress N/A)
-0:01:01 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: running (progress N/A)
-0:01:20 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: running (progress N/A)
-0:01:45 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: running (progress N/A)
-0:02:15 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: running (progress N/A)
-0:02:52 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: running (progress N/A)
-0:03:39 Job &#39;j-26091816213047eaa01c92460c524ff6&#39;: finished (progress 100%)
-[NO2][bagian2] Selesai -&gt; ../data/nc/NO2_Bangkalan_bagian2.nc
-0:00:00 Job &#39;j-2609181625334586a6191b3560b29772&#39;: send &#39;start&#39;
-0:00:03 Job &#39;j-2609181625334586a6191b3560b29772&#39;: queued (progress 0%)
-0:00:09 Job &#39;j-2609181625334586a6191b3560b29772&#39;: queued (progress 0%)
-0:00:15 Job &#39;j-2609181625334586a6191b3560b29772&#39;: queued (progress 0%)
-0:00:24 Job &#39;j-2609181625334586a6191b3560b29772&#39;: queued (progress 0%)
-0:00:34 Job &#39;j-2609181625334586a6191b3560b29772&#39;: queued (progress 0%)
-0:00:46 Job &#39;j-2609181625334586a6191b3560b29772&#39;: running (progress N/A)
-0:01:02 Job &#39;j-2609181625334586a6191b3560b29772&#39;: running (progress N/A)
-0:01:21 Job &#39;j-2609181625334586a6191b3560b29772&#39;: running (progress N/A)
-0:01:46 Job &#39;j-2609181625334586a6191b3560b29772&#39;: running (progress N/A)
-0:02:16 Job &#39;j-2609181625334586a6191b3560b29772&#39;: finished (progress 100%)
-[NO2][bagian3] Selesai -&gt; ../data/nc/NO2_Bangkalan_bagian3.nc
-
-=== Ekstraksi CO ===
-0:00:00 Job &#39;j-2609181628074af68db4eb08eed33567&#39;: send &#39;start&#39;
-0:00:03 Job &#39;j-2609181628074af68db4eb08eed33567&#39;: queued (progress 0%)
-0:00:09 Job &#39;j-2609181628074af68db4eb08eed33567&#39;: queued (progress 0%)
-0:00:15 Job &#39;j-2609181628074af68db4eb08eed33567&#39;: queued (progress 0%)
-0:00:23 Job &#39;j-2609181628074af68db4eb08eed33567&#39;: queued (progress 0%)
-0:00:33 Job &#39;j-2609181628074af68db4eb08eed33567&#39;: queued (progress 0%)
-0:00:46 Job &#39;j-2609181628074af68db4eb08eed33567&#39;: queued (progress 0%)
-0:01:01 Job &#39;j-2609181628074af68db4eb08eed33567&#39;: queued (progress 0%)
-0:01:21 Job &#39;j-2609181628074af68db4eb08eed33567&#39;: running (progress N/A)
-0:01:45 Job &#39;j-2609181628074af68db4eb08eed33567&#39;: running (progress N/A)
-0:02:15 Job &#39;j-2609181628074af68db4eb08eed33567&#39;: running (progress N/A)
-0:02:52 Job &#39;j-2609181628074af68db4eb08eed33567&#39;: finished (progress 100%)
-[CO][bagian1] Selesai -&gt; ../data/nc/CO_Bangkalan_bagian1.nc
-0:00:00 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: send &#39;start&#39;
-0:00:03 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: queued (progress 0%)
-0:00:09 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: queued (progress 0%)
-0:00:15 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: queued (progress 0%)
-0:00:23 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: queued (progress 0%)
-0:00:33 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: queued (progress 0%)
-0:00:46 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: queued (progress 0%)
-0:01:01 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: running (progress N/A)
-0:01:21 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: running (progress N/A)
-0:01:45 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: running (progress N/A)
-0:02:15 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: running (progress N/A)
-0:02:53 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: running (progress N/A)
-0:03:40 Job &#39;j-2609181631244e07a3a9dda947bc56a2&#39;: finished (progress 100%)
-[CO][bagian2] Selesai -&gt; ../data/nc/CO_Bangkalan_bagian2.nc
-0:00:00 Job &#39;j-260918163528445fa34c5cc70550394e&#39;: send &#39;start&#39;
-0:00:03 Job &#39;j-260918163528445fa34c5cc70550394e&#39;: queued (progress 0%)
-0:00:09 Job &#39;j-260918163528445fa34c5cc70550394e&#39;: queued (progress 0%)
-0:00:16 Job &#39;j-260918163528445fa34c5cc70550394e&#39;: queued (progress 0%)
-0:00:24 Job &#39;j-260918163528445fa34c5cc70550394e&#39;: queued (progress 0%)
-0:00:34 Job &#39;j-260918163528445fa34c5cc70550394e&#39;: queued (progress 0%)
-0:00:47 Job &#39;j-260918163528445fa34c5cc70550394e&#39;: running (progress N/A)
-0:01:02 Job &#39;j-260918163528445fa34c5cc70550394e&#39;: running (progress N/A)
-0:01:22 Job &#39;j-260918163528445fa34c5cc70550394e&#39;: running (progress N/A)
-0:01:46 Job &#39;j-260918163528445fa34c5cc70550394e&#39;: running (progress N/A)
-0:02:16 Job &#39;j-260918163528445fa34c5cc70550394e&#39;: finished (progress 100%)
-[CO][bagian3] Selesai -&gt; ../data/nc/CO_Bangkalan_bagian3.nc
-
-=== Ekstraksi SO2 ===
-0:00:00 Job &#39;j-260918163803446ba965918042c17cfe&#39;: send &#39;start&#39;
-0:00:04 Job &#39;j-260918163803446ba965918042c17cfe&#39;: queued (progress 0%)
-0:00:09 Job &#39;j-260918163803446ba965918042c17cfe&#39;: queued (progress 0%)
-0:00:16 Job &#39;j-260918163803446ba965918042c17cfe&#39;: queued (progress 0%)
-0:00:24 Job &#39;j-260918163803446ba965918042c17cfe&#39;: queued (progress 0%)
-0:00:34 Job &#39;j-260918163803446ba965918042c17cfe&#39;: queued (progress 0%)
-0:00:47 Job &#39;j-260918163803446ba965918042c17cfe&#39;: queued (progress 0%)
-0:01:02 Job &#39;j-260918163803446ba965918042c17cfe&#39;: queued (progress 0%)
-0:01:22 Job &#39;j-260918163803446ba965918042c17cfe&#39;: running (progress N/A)
-0:01:46 Job &#39;j-260918163803446ba965918042c17cfe&#39;: running (progress N/A)
-0:02:16 Job &#39;j-260918163803446ba965918042c17cfe&#39;: finished (progress 100%)
-[SO2][bagian1] Selesai -&gt; ../data/nc/SO2_Bangkalan_bagian1.nc
-0:00:00 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: send &#39;start&#39;
-0:00:04 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: queued (progress 0%)
-0:00:09 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: queued (progress 0%)
-0:00:16 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: queued (progress 0%)
-0:00:24 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: queued (progress 0%)
-0:00:34 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: queued (progress 0%)
-0:00:47 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: queued (progress 0%)
-0:01:02 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: queued (progress 0%)
-0:01:21 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: queued (progress 0%)
-0:01:46 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: running (progress N/A)
-0:02:16 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: running (progress N/A)
-0:02:53 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: running (progress N/A)
-0:03:40 Job &#39;j-2609181640444a1d86b3c3109a2d39f1&#39;: finished (progress 100%)
-[SO2][bagian2] Selesai -&gt; ../data/nc/SO2_Bangkalan_bagian2.nc
-0:00:00 Job &#39;j-26091816444749a9ad4a80fde21ce1a2&#39;: send &#39;start&#39;
-0:00:03 Job &#39;j-26091816444749a9ad4a80fde21ce1a2&#39;: queued (progress 0%)
-0:00:08 Job &#39;j-26091816444749a9ad4a80fde21ce1a2&#39;: queued (progress 0%)
-0:00:15 Job &#39;j-26091816444749a9ad4a80fde21ce1a2&#39;: queued (progress 0%)
-0:00:23 Job &#39;j-26091816444749a9ad4a80fde21ce1a2&#39;: queued (progress 0%)
-0:00:33 Job &#39;j-26091816444749a9ad4a80fde21ce1a2&#39;: running (progress N/A)
-0:00:46 Job &#39;j-26091816444749a9ad4a80fde21ce1a2&#39;: running (progress N/A)
-0:01:01 Job &#39;j-26091816444749a9ad4a80fde21ce1a2&#39;: running (progress N/A)
-0:01:21 Job &#39;j-26091816444749a9ad4a80fde21ce1a2&#39;: running (progress N/A)
-0:01:45 Job &#39;j-26091816444749a9ad4a80fde21ce1a2&#39;: running (progress N/A)
-0:02:15 Job &#39;j-26091816444749a9ad4a80fde21ce1a2&#39;: running (progress N/A)
-0:02:53 Job &#39;j-26091816444749a9ad4a80fde21ce1a2&#39;: finished (progress 100%)
-[SO2][bagian3] Selesai -&gt; ../data/nc/SO2_Bangkalan_bagian3.nc
-
-NO2: berhasil 3 dari 3 bagian
-CO: berhasil 3 dari 3 bagian
-SO2: berhasil 3 dari 3 bagian
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00 Job &#39;j-261009125316459e87509d9f137b7cec&#39;: send &#39;start&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:03 Job &#39;j-261009125316459e87509d9f137b7cec&#39;: queued (progress 0%)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:08 Job &#39;j-261009125316459e87509d9f137b7cec&#39;: queued (progress 0%)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:15 Job &#39;j-261009125316459e87509d9f137b7cec&#39;: queued (progress 0%)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:23 Job &#39;j-261009125316459e87509d9f137b7cec&#39;: queued (progress 0%)
 </pre></div>
 </div>
 </div>
@@ -1088,9 +979,9 @@ Disimpan -&gt; .\SO2-Bangkalan.csv
 <h2>Selesai<a class="headerlink" href="#selesai" title="Link to this heading">#</a></h2>
 <p>Tiga file berikut sudah siap dipakai pada notebook preprocessing TSFEL:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">NO2-Bangkalan.csv</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CO-Bangkalan.csv</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SO2-Bangkalan.csv</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">../data/csv/NO2-Bangkalan.csv</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">../data/csv/CO-Bangkalan.csv</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">../data/csv/SO2-Bangkalan.csv</span></code></p></li>
 </ul>
 <p>Masing-masing akan dibersihkan, diimputasi, dan diekstraksi menjadi 68 fitur TSFEL.</p>
 </section>
