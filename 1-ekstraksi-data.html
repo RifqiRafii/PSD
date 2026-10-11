@@ -191,6 +191,14 @@
 <li class="toctree-l2"><a class="reference internal" href="4-modeling-kmeans-clustering.html">Modeling - K-Means Clustering pada Gabungan 3 Polutan (204 Fitur TSFEL) &amp; Analisis Multi-Dimensi (203, 74, 37)</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="uts-pengantar-lulc-kebijakan.html">UTS SIG: Data Understanding &amp; Kebijakan LULC Jawa Timur</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi_Tutupan_Lahan_Multikelas_Jatim.html">Klasifikasi Tutupan Lahan Multikelas Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="klasifikasi_lulc_jatim.html">Klasifikasi Penggunaan dan Penutup Lahan Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-band-sentinel2a-ekstraksi-fitur.html">UTS SIG: Karakteristik Band Sentinel-2A &amp; Ekstraksi Fitur Spektral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-koleksi-data-dan-pemodelan-ml.html">UTS SIG: Koleksi Data, Eksperimen Machine Learning &amp; Evaluasi Akurasi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-visualisasi-spasial-dan-kebijakan.html">UTS SIG: Visualisasi Spasial Google Satelit WMS, Deployment Streamlit &amp; Kebijakan Tata Ruang</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -569,14 +577,6 @@ persegi.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Konfigurasi siap.
-Bounding box (kasar, dari polygon): {&#39;west&#39;: 112.673424, &#39;east&#39;: 113.147812, &#39;south&#39;: -7.212882, &#39;north&#39;: -6.879476}
-Jumlah titik polygon AOI: 147
-Polutan yang akan diekstraksi: [&#39;NO2&#39;, &#39;CO&#39;, &#39;SO2&#39;, &#39;CH4&#39;]
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="autentikasi-ke-copernicus-data-space-device-code-flow">
@@ -601,12 +601,6 @@ sehingga kamu tidak perlu login ulang setiap kali menjalankan notebook.</p>
 <span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">authenticate_oidc</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Berhasil terhubung dan terautentikasi ke:&quot;</span><span class="p">,</span> <span class="n">BACKEND_URL</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Authenticated using refresh token.
-Berhasil terhubung dan terautentikasi ke: openeo.dataspace.copernicus.eu
 </pre></div>
 </div>
 </div>
@@ -820,23 +814,6 @@ proses agregasi apa pun dilakukan.</p>
 <span class="c1"># koleksi), bukan pada langkah agregasi. Jika grid mentah ini justru</span>
 <span class="c1"># menunjukkan banyak piksel valid dan bervariasi, artinya masalah baru muncul</span>
 <span class="c1"># pada langkah aggregate_temporal_period atau aggregate_spatial berikutnya.</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00 Job &#39;j-2610091252314a1e982514953740e07a&#39;: send &#39;start&#39;
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:03 Job &#39;j-2610091252314a1e982514953740e07a&#39;: queued (progress 0%)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:09 Job &#39;j-2610091252314a1e982514953740e07a&#39;: queued (progress 0%)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:15 Job &#39;j-2610091252314a1e982514953740e07a&#39;: queued (progress 0%)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:23 Job &#39;j-2610091252314a1e982514953740e07a&#39;: queued (progress 0%)
 </pre></div>
 </div>
 </div>

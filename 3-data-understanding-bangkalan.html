@@ -193,6 +193,14 @@
 <li class="toctree-l2"><a class="reference internal" href="4-modeling-kmeans-clustering.html">Modeling - K-Means Clustering pada Gabungan 3 Polutan (204 Fitur TSFEL) &amp; Analisis Multi-Dimensi (203, 74, 37)</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="uts-pengantar-lulc-kebijakan.html">UTS SIG: Data Understanding &amp; Kebijakan LULC Jawa Timur</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi_Tutupan_Lahan_Multikelas_Jatim.html">Klasifikasi Tutupan Lahan Multikelas Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="klasifikasi_lulc_jatim.html">Klasifikasi Penggunaan dan Penutup Lahan Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-band-sentinel2a-ekstraksi-fitur.html">UTS SIG: Karakteristik Band Sentinel-2A &amp; Ekstraksi Fitur Spektral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-koleksi-data-dan-pemodelan-ml.html">UTS SIG: Koleksi Data, Eksperimen Machine Learning &amp; Evaluasi Akurasi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-visualisasi-spasial-dan-kebijakan.html">UTS SIG: Visualisasi Spasial Google Satelit WMS, Deployment Streamlit &amp; Kebijakan Tata Ruang</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -831,7 +839,7 @@ Jupyter Book ini.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">df_kab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/csv/data_polutan_bangkalan.csv&quot;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">])</span>
@@ -861,9 +869,6 @@ Jupyter Book ini.</p>
 </div>
 </div>
 </details>
-<div class="cell_output docutils container">
-<img alt="_images/f6152dd9e61a582a177754ff8a7322adf41e25a12394c04dd7bf42ba9ee3aee8.png" src="_images/f6152dd9e61a582a177754ff8a7322adf41e25a12394c04dd7bf42ba9ee3aee8.png" />
-</div>
 </div>
 <p>Dari grafik di atas terlihat NO2, CO, dan SO2 punya cakupan data yang
 relatif baik (masing masing sekitar 85-95% hari terisi), sementara CH4
@@ -1004,7 +1009,7 @@ sebagaimana sudah dibahas pada Bagian 9.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">files</span> <span class="o">=</span> <span class="p">{</span>
@@ -1030,9 +1035,6 @@ sebagaimana sudah dibahas pada Bagian 9.</p>
 </div>
 </div>
 </details>
-<div class="cell_output docutils container">
-<img alt="_images/fc31f78df3da3736d2d97a6c9e19ee314aef7e173498e6031807e851f121228b.png" src="_images/fc31f78df3da3736d2d97a6c9e19ee314aef7e173498e6031807e851f121228b.png" />
-</div>
 </div>
 <p>Rata rata NO2 di Kecamatan Bangkalan (2.95e-05) sedikit lebih tinggi
 dibanding rata rata NO2 pada data kabupaten (2.30e-05), yang masuk akal
@@ -1958,7 +1960,7 @@ saat buku ini dijalankan/dibangun, sehingga angkanya bisa dipercaya
 dan dapat ditelusuri ulang langkah demi langkah.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># Sinyal ilustrasi 10 hari (bukan data asli -- dibuat kecil agar</span>
@@ -1971,59 +1973,11 @@ dan dapat ditelusuri ulang langkah demi langkah.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>t</th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>x</th>
-      <td>2.0</td>
-      <td>-1.0</td>
-      <td>3.0</td>
-      <td>-2.0</td>
-      <td>-3.0</td>
-      <td>1.0</td>
-      <td>4.0</td>
-      <td>-1.0</td>
-      <td>-2.0</td>
-      <td>3.0</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>Nilai-nilai dasar yang dipakai berulang kali pada fitur di bawah:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_x</span><span class="p">,</span> <span class="n">median_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mean_x</span><span class="p">,</span> <span class="n">median_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="n">std_x</span><span class="p">,</span> <span class="n">var_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
 <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># selisih berurutan x[i+1]-x[i]</span>
 
@@ -2036,22 +1990,12 @@ dan dapat ditelusuri ulang langkah demi langkah.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>N            = 10
-mean(x)      = 0.4
-median(x)    = 0.0
-var(x)       = 5.639999999999999
-std(x)       = 2.3749
-d = diff(x)  = [-3.  4. -5. -1.  4.  3. -5. -1.  5.]
-</pre></div>
-</div>
-</div>
 </div>
 <section id="id1">
 <h4>Domain Statistical (21 fitur)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q1</span><span class="p">,</span> <span class="n">q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q1</span><span class="p">,</span> <span class="n">q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
 <span class="n">p20</span><span class="p">,</span> <span class="n">p80</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
 
 <span class="c1"># entropy &amp; hist_mode: ilustratif memakai 5 bin histogram. Jumlah bin</span>
@@ -2096,148 +2040,6 @@ d = diff(x)  = [-3.  4. -5. -1.  4.  3. -5. -1.  5.]
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Fitur</th>
-      <th>Hasil</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>abs_energy</td>
-      <td>58.0000</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>average_power</td>
-      <td>5.8000</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>calc_max</td>
-      <td>4.0000</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>calc_mean</td>
-      <td>0.4000</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>calc_median</td>
-      <td>0.0000</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>calc_min</td>
-      <td>-3.0000</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>calc_std</td>
-      <td>2.3749</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>calc_var</td>
-      <td>5.6400</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>ecdf (proporsi x&lt;=1)</td>
-      <td>0.6000</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>ecdf_percentile (p20)</td>
-      <td>-2.0000</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>ecdf_percentile (p80)</td>
-      <td>3.0000</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>ecdf_percentile_count (&lt;=p20)</td>
-      <td>3.0000</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>ecdf_percentile_count (&lt;=p80)</td>
-      <td>9.0000</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>ecdf_slope</td>
-      <td>8.3333</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>entropy (ilustratif, 5 bin)</td>
-      <td>2.1710</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>hist_mode (ilustratif, 5 bin)</td>
-      <td>-2.3000</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>interq_range</td>
-      <td>4.5000</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>kurtosis</td>
-      <td>-1.5108</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>mean_abs_deviation</td>
-      <td>2.2000</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>median_abs_deviation</td>
-      <td>2.0000</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>pk_pk_distance</td>
-      <td>7.0000</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>rms</td>
-      <td>2.4083</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>skewness</td>
-      <td>0.1021</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <blockquote>
 <div><p>Catatan untuk <code class="docutils literal notranslate"><span class="pre">entropy</span></code> dan <code class="docutils literal notranslate"><span class="pre">hist_mode</span></code>: jumlah bin histogram yang
@@ -2252,7 +2054,7 @@ periksa parameter <code class="docutils literal notranslate"><span class="pre">n
 <h4>Domain Temporal (15 fitur)<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># auc: aturan trapesium</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># auc: aturan trapesium</span>
 <span class="n">auc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
 
 <span class="c1"># autocorr: lag pertama saat ACF turun di bawah 1/e</span>
@@ -2307,108 +2109,6 @@ periksa parameter <code class="docutils literal notranslate"><span class="pre">n
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Fitur</th>
-      <th>Hasil</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>auc</td>
-      <td>1.5</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>autocorr (lag)</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>calc_centroid</td>
-      <td>4.727273</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>distance</td>
-      <td>32.696252</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>lempel_ziv</td>
-      <td>lihat Bagian 12.5</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>mean_abs_diff</td>
-      <td>3.444444</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>mean_diff</td>
-      <td>0.111111</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>median_abs_diff</td>
-      <td>4.0</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>median_diff</td>
-      <td>-1.0</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>negative_turning</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>neighbourhood_peaks (ilustratif, n=1)</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>positive_turning</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>slope</td>
-      <td>0.024242</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>sum_abs_diff</td>
-      <td>31.0</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>zero_cross</td>
-      <td>lihat Bagian 12.5</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <blockquote>
 <div><p>Domain <strong>Spectral</strong> (26 fitur) dan <strong>Fractal</strong> (6 fitur) tidak
@@ -2421,7 +2121,7 @@ statis):</p>
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_demo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>  <span class="c1"># satu gelombang penuh, 4 titik</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_demo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>  <span class="c1"># satu gelombang penuh, 4 titik</span>
 <span class="n">freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_demo</span><span class="p">),</span> <span class="n">d</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>      <span class="c1"># d=1 hari antar sampel</span>
 <span class="n">magnitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">x_demo</span><span class="p">))</span>
 
@@ -2431,48 +2131,6 @@ statis):</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>frekuensi (siklus/hari)</th>
-      <th>magnitudo FFT</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.00</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.25</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.50</td>
-      <td>0.0</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">spectral_centroid</span></code> pada sinyal 4 titik ini adalah rata-rata seluruh
 frekuensi hasil FFT, dibobot oleh magnitudonya — persis seperti
@@ -2502,7 +2160,7 @@ Secara formal, untuk sinyal <span class="math notranslate nohighlight">\(x = (x_
 proporsi/rasio</strong> — lihat perbaikan pada Bagian 12.2.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pairs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
 <span class="n">products</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">]</span>
 <span class="n">changed_sign</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">products</span><span class="p">]</span>
 
@@ -2521,101 +2179,6 @@ proporsi/rasio</strong> — lihat perbaikan pada Bagian 12.2.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>zero_cross(x) = 6
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>x_i</th>
-      <th>x_i+1</th>
-      <th>x_i * x_i+1</th>
-      <th>berganti tanda?</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2.0</td>
-      <td>-1.0</td>
-      <td>-2.0</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>-1.0</td>
-      <td>3.0</td>
-      <td>-3.0</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3.0</td>
-      <td>-2.0</td>
-      <td>-6.0</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>-2.0</td>
-      <td>-3.0</td>
-      <td>6.0</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>-3.0</td>
-      <td>1.0</td>
-      <td>-3.0</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>1.0</td>
-      <td>4.0</td>
-      <td>4.0</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>4.0</td>
-      <td>-1.0</td>
-      <td>-4.0</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>-1.0</td>
-      <td>-2.0</td>
-      <td>2.0</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>-2.0</td>
-      <td>3.0</td>
-      <td>-6.0</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p><strong>Mengapa hasil ini konsisten dengan data asli Bangkalan (Bagian
 12.1)?</strong> NO2 dan CO memiliki <code class="docutils literal notranslate"><span class="pre">zero_cross</span> <span class="pre">=</span> <span class="pre">0</span></code> karena keduanya adalah
@@ -2641,7 +2204,7 @@ sudah dibaca, (3) <strong>normalisasi</strong>: jumlah frasa <span class="math n
 string <span class="math notranslate nohighlight">\(n\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">lz76_complexity</span><span class="p">(</span><span class="n">binary_string</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">lz76_complexity</span><span class="p">(</span><span class="n">binary_string</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Algoritma penguraian bertahap LZ76 (Kaspar &amp; Schuster, 1987),</span>
 <span class="sd">    dijalankan langsung -- bukan angka yang diketik manual -- supaya</span>
 <span class="sd">    tiap frasa yang ditemukan bisa dilacak persis.&quot;&quot;&quot;</span>
@@ -2701,23 +2264,6 @@ string <span class="math notranslate nohighlight">\(n\)</span>.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>median(x) = 0.0
-string biner = 1010011001
-
-frasa baru #1: &#39;1&#39;
-frasa baru #2: &#39;0&#39;
-frasa baru #3: &#39;100&#39;
-frasa baru #4: &#39;11&#39;
-frasa baru #5: &#39;001&#39;
-
-jumlah frasa c(n) = 5
-gabungan frasa    = 1010011001  (cocok dengan string asli: True)
-
-lempel_ziv(x) = c(n)/n = 5/10 = 0.5
-</pre></div>
-</div>
-</div>
 </div>
 <p>Penguraian bertahap di atas dijalankan langsung dari kode (bukan
 ditelusuri di kepala), dan hasilnya menunjukkan frasa yang ditemukan
@@ -2749,7 +2295,7 @@ menjalankan pustaka aslinya dan menampilkan hasil pembandingannya di
 sini.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">tsfel</span>
 
     <span class="n">zc_tsfel</span> <span class="o">=</span> <span class="n">tsfel</span><span class="o">.</span><span class="n">feature_extraction</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">zero_cross</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -2782,7 +2328,7 @@ serta <code class="docutils literal notranslate"><span class="pre">lempel_ziv</s
 sebagai pembanding akhir terhadap tabel statis pada Bagian 12.1:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">files_long</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">files_long</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;NO2&quot;</span><span class="p">:</span> <span class="s2">&quot;../data/csv/NO2_Bangkalan_TSFEL_fixed_long.csv&quot;</span><span class="p">,</span>
     <span class="s2">&quot;CO&quot;</span><span class="p">:</span> <span class="s2">&quot;../data/csv/CO_Bangkalan_TSFEL_fixed_long.csv&quot;</span><span class="p">,</span>
     <span class="s2">&quot;SO2&quot;</span><span class="p">:</span> <span class="s2">&quot;../data/csv/SO2_Bangkalan_TSFEL_fixed_long.csv&quot;</span><span class="p">,</span>
@@ -2806,31 +2352,6 @@ sebagai pembanding akhir terhadap tabel statis pada Bagian 12.1:</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 </section>
 </section>

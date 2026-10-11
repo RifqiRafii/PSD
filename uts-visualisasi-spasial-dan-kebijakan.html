@@ -1,0 +1,686 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>UTS SIG: Visualisasi Spasial Google Satelit WMS, Deployment Streamlit &amp; Kebijakan Tata Ruang &#8212; Proyek Sains Data</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'uts-visualisasi-spasial-dan-kebijakan';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="UTS SIG: Koleksi Data, Eksperimen Machine Learning &amp; Evaluasi Akurasi" href="uts-koleksi-data-dan-pemodelan-ml.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Proyek Sains Data - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Proyek Sains Data - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Proyek Sains Data
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="pengantar-analisis-polutan-bangkalan.html">Pengantar Analisis Polutan Kabupaten Bangkalan</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data.html">Ekstraksi Data Kualitas Udara - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data-kecamatan.html">Ekstraksi Data Polutan - Kecamatan Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-preprocessing-ekstraksi-fitur_TSFEL.html">Preprocessing dan Ekstraksi 68 Fitur TSFEL - Tiga Polutan Kecamatan Bangkalan</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="2-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-modeling-kmeans-clustering.html">Modeling - K-Means Clustering pada Gabungan 3 Polutan (204 Fitur TSFEL) &amp; Analisis Multi-Dimensi (203, 74, 37)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="uts-pengantar-lulc-kebijakan.html">UTS SIG: Data Understanding &amp; Kebijakan LULC Jawa Timur</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi_Tutupan_Lahan_Multikelas_Jatim.html">Klasifikasi Tutupan Lahan Multikelas Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="klasifikasi_lulc_jatim.html">Klasifikasi Penggunaan dan Penutup Lahan Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-band-sentinel2a-ekstraksi-fitur.html">UTS SIG: Karakteristik Band Sentinel-2A &amp; Ekstraksi Fitur Spektral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-koleksi-data-dan-pemodelan-ml.html">UTS SIG: Koleksi Data, Eksperimen Machine Learning &amp; Evaluasi Akurasi</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">UTS SIG: Visualisasi Spasial Google Satelit WMS, Deployment Streamlit &amp; Kebijakan Tata Ruang</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Futs-visualisasi-spasial-dan-kebijakan.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/uts-visualisasi-spasial-dan-kebijakan.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>UTS SIG: Visualisasi Spasial Google Satelit WMS, Deployment Streamlit & Kebijakan Tata Ruang</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#peta-interaktif-klasifikasi-lulc-berbasis-wms-satelit-google-maps">1. Peta Interaktif Klasifikasi LULC Berbasis WMS Satelit Google Maps</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tampilan-peta-interaktif-terintegrasi">Tampilan Peta Interaktif Terintegrasi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment-sistem-informasi-geografis-ke-streamlit">2. Deployment Sistem Informasi Geografis ke Streamlit</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitur-unggulan-aplikasi-streamlit">2.1 Fitur Unggulan Aplikasi Streamlit</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-menjalankan-aplikasi-streamlit-secara-mandiri">2.2 Cara Menjalankan Aplikasi Streamlit Secara Mandiri</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-kebijakan-tata-ruang-implikasi-spasial-di-jawa-timur">3. Analisis Kebijakan Tata Ruang &amp; Implikasi Spasial di Jawa Timur</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kebijakan-pengendalian-alih-fungsi-lahan-sawah-dilindungi-lsd-lp2b">3.1 Kebijakan Pengendalian Alih Fungsi Lahan Sawah Dilindungi (LSD / LP2B)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kebijakan-restorasi-sabuk-hijau-mangrove-pesisir-jawa-timur">3.2 Kebijakan Restorasi Sabuk Hijau Mangrove Pesisir Jawa Timur</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kebijakan-perlindungan-sempadan-danau-vulkanik-ranu-alami">3.3 Kebijakan Perlindungan Sempadan Danau Vulkanik &amp; Ranu Alami</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-akhir">4. Kesimpulan Akhir</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uts-sig-visualisasi-spasial-google-satelit-wms-deployment-streamlit-kebijakan-tata-ruang">
+<h1>UTS SIG: Visualisasi Spasial Google Satelit WMS, Deployment Streamlit &amp; Kebijakan Tata Ruang<a class="headerlink" href="#uts-sig-visualisasi-spasial-google-satelit-wms-deployment-streamlit-kebijakan-tata-ruang" title="Link to this heading">#</a></h1>
+<p>Bab ini mendokumentasikan implementasi kartografi digital interaktif menggunakan <strong>Leaflet &amp; Folium</strong> dengan integrasi <strong>Tile/WMS Satelit Google Maps</strong>, arsitektur penyebaran sistem ke aplikasi web interaktif <strong>Streamlit</strong>, serta formulasi arahan kebijakan tata ruang wilayah di Jawa Timur.</p>
+<hr class="docutils" />
+<section id="peta-interaktif-klasifikasi-lulc-berbasis-wms-satelit-google-maps">
+<h2>1. Peta Interaktif Klasifikasi LULC Berbasis WMS Satelit Google Maps<a class="headerlink" href="#peta-interaktif-klasifikasi-lulc-berbasis-wms-satelit-google-maps" title="Link to this heading">#</a></h2>
+<p>Sesuai ketentuan penugasan: <em>“menampilkan hasil klasifikasi menggunakan : wms satelit google maps menggunakan leaflet atau folium”</em>, sistem ini menghasilkan peta web interaktif komprehensif.</p>
+<p>Peta dilengkapi dengan kemampuan:</p>
+<ol class="arabic simple">
+<li><p><strong>Multi-Basemap Layer WMS:</strong></p>
+<ul class="simple">
+<li><p><strong>Google Maps Satellite WMS:</strong> <code class="docutils literal notranslate"><span class="pre">https://mt1.google.com/vt/lyrs=s&amp;x={x}&amp;y={y}&amp;z={z}</span></code> (Citra satelit resolusi tinggi asli dari Google).</p></li>
+<li><p><strong>Google Maps Hybrid WMS:</strong> <code class="docutils literal notranslate"><span class="pre">https://mt1.google.com/vt/lyrs=y&amp;x={x}&amp;y={y}&amp;z={z}</span></code> (Citra satelit dengan overlay label jalan dan toponimi wilayah).</p></li>
+<li><p><strong>Google Maps Roadmap:</strong> Peta jalan konvensional.</p></li>
+<li><p><strong>OpenStreetMap &amp; CartoDB:</strong> Peta jalan dan kanvas gelap untuk analisis visual kontras.</p></li>
+</ul>
+</li>
+<li><p><strong>Layer Control Interaktif:</strong> Pengguna dapat mencentang atau menyembunyikan lapisan kelas spesifik (<em>Sawah, Bangunan, Mangrove, Lahan Hijau, Laut, Danau/Ranu</em>).</p></li>
+<li><p><strong>Popup Radiometrik Spasial:</strong> Klik pada setiap titik sampel menampilkan dialog interaktif berisi koordinat, nama kabupaten/kota, nilai spektral (NDVI, NDWI, MNDWI, NDBI, BSI, CMRI), dan landasan hukum perlindungan zonasi.</p></li>
+<li><p><strong>Delineasi Poligon Kawasan Konservasi &amp; Sempadan:</strong></p>
+<ul class="simple">
+<li><p>Poligon Sempadan Perlindungan Hidrologis Ranu Grati Pasuruan (Zona 50m).</p></li>
+<li><p>Poligon Kawasan Konservasi Sabuk Hijau Mangrove Wonorejo Surabaya.</p></li>
+<li><p>Poligon Zona Inti Ekosistem Danau Dataran Tinggi Ranu Kumbolo TNBTS.</p></li>
+</ul>
+</li>
+</ol>
+<section id="tampilan-peta-interaktif-terintegrasi">
+<h3>Tampilan Peta Interaktif Terintegrasi<a class="headerlink" href="#tampilan-peta-interaktif-terintegrasi" title="Link to this heading">#</a></h3>
+<p>Peta interaktif HTML yang telah dibuat dapat diakses langsung pada lembar web statis ini:</p>
+<div style="border: 2px solid #cbd5e1; border-radius: 10px; overflow: hidden; margin: 20px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    <iframe src="peta_lulc_jawa_timur.html" width="100%" height="600px" style="border: none;"></iframe>
+</div><blockquote>
+<div><p><strong>Catatan Penggunaan Peta:</strong>
+Anda dapat memperbesar (<em>zoom-in</em>), memperkecil (<em>zoom-out</em>), menggeser (<em>pan</em>), menggunakan tombol <em>Fullscreen</em> di pojok kiri atas, serta mengganti basemap ke Google Satellite atau Google Hybrid melalui menu lapisan di pojok kanan atas.</p>
+</div></blockquote>
+</section>
+</section>
+<hr class="docutils" />
+<section id="deployment-sistem-informasi-geografis-ke-streamlit">
+<h2>2. Deployment Sistem Informasi Geografis ke Streamlit<a class="headerlink" href="#deployment-sistem-informasi-geografis-ke-streamlit" title="Link to this heading">#</a></h2>
+<p>Aplikasi Sistem Informasi Geografis interaktif telah selesai dibangun menggunakan kerangka kerja <strong>Streamlit</strong> dan disimpan pada file <code class="docutils literal notranslate"><span class="pre">streamlit_app.py</span></code> serta entry point <code class="docutils literal notranslate"><span class="pre">app.py</span></code>.</p>
+<section id="fitur-unggulan-aplikasi-streamlit">
+<h3>2.1 Fitur Unggulan Aplikasi Streamlit<a class="headerlink" href="#fitur-unggulan-aplikasi-streamlit" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Dashboard Eksekutif Modern:</strong> Antarmuka responsif dengan tipografi modern, indikator metrik kartu, dan desain bertema spasial profesional.</p></li>
+<li><p><strong>Eksplorasi Data Tabular &amp; Visual:</strong> Grafik distribusi kelas, boxplot perbandingan indeks spektral interaktif, dan penampil tabel dataset.</p></li>
+<li><p><strong>Dashboard Evaluasi Model:</strong> Menampilkan tabel performa 7 model Machine Learning, heatmap confusion matrix interaktif, serta diagram batang kepentingan fitur (<em>feature importance</em>).</p></li>
+<li><p><strong>Peta Satelit Google Terintegrasi:</strong> Embed langsung visualisasi spasial peta Folium dengan seluruh lapisan layer control.</p></li>
+<li><p><strong>Simulator Prediksi Spektral Real-Time:</strong></p>
+<ul class="simple">
+<li><p>Menyediakan formulir masukan numerik untuk 10 band Sentinel-2A.</p></li>
+<li><p>Tersedia template preset lokasi Jawa Timur (<em>Wonorejo Surabaya, Ranu Grati Pasuruan, Sawah Lamongan, Pusat Kota Surabaya, Bromo/Tahura, Selat Madura</em>).</p></li>
+<li><p>Menghitung seluruh indeks spektral secara otomatis dan memprediksi kelas tutupan lahan beserta tingkat keyakinan probabilitas model.</p></li>
+<li><p>Menampilkan rekomendasi kebijakan tata ruang otomatis berdasarkan hasil prediksi.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="cara-menjalankan-aplikasi-streamlit-secara-mandiri">
+<h3>2.2 Cara Menjalankan Aplikasi Streamlit Secara Mandiri<a class="headerlink" href="#cara-menjalankan-aplikasi-streamlit-secara-mandiri" title="Link to this heading">#</a></h3>
+<p>Untuk menjalankan aplikasi ini di komputer lokal, buka terminal PowerShell dan jalankan perintah berikut:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># 1. Pindah ke direktori proyek</span>
+<span class="nb">cd </span><span class="n">d</span><span class="p">:\</span><span class="n">laragon</span><span class="p">\</span><span class="n">www</span><span class="p">\</span><span class="n">PSD</span>
+
+<span class="c"># 2. Jalankan aplikasi Streamlit menggunakan virtual environment</span>
+<span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-m</span> <span class="n">streamlit</span> <span class="n">run</span> <span class="n">app</span><span class="p">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Atau cukup <strong>klik ganda (double-click)</strong> pada berkas:
+<code class="docutils literal notranslate"><span class="pre">run_streamlit.bat</span></code></p>
+<p>Aplikasi akan otomatis terbuka pada peramban web di alamat: <code class="docutils literal notranslate"><span class="pre">http://localhost:8501</span></code>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="analisis-kebijakan-tata-ruang-implikasi-spasial-di-jawa-timur">
+<h2>3. Analisis Kebijakan Tata Ruang &amp; Implikasi Spasial di Jawa Timur<a class="headerlink" href="#analisis-kebijakan-tata-ruang-implikasi-spasial-di-jawa-timur" title="Link to this heading">#</a></h2>
+<p>Hasil klasifikasi tutupan lahan berbasis satelit Sentinel-2A ini bukan sekadar luaran teknis algoritma, melainkan instrumen ilmiah untuk evaluasi pelaksanaan <strong>Rencana Tata Ruang Wilayah (RTRW) Provinsi Jawa Timur (Perda No. 10 Tahun 2023)</strong>:</p>
+<section id="kebijakan-pengendalian-alih-fungsi-lahan-sawah-dilindungi-lsd-lp2b">
+<h3>3.1 Kebijakan Pengendalian Alih Fungsi Lahan Sawah Dilindungi (LSD / LP2B)<a class="headerlink" href="#kebijakan-pengendalian-alih-fungsi-lahan-sawah-dilindungi-lsd-lp2b" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Kondisi Eksisting:</strong> Sawah irigasi teknis di sepanjang koridor Sungai Brantas dan Bengawan Solo (Lamongan, Mojokerto, Sidoarjo) memiliki kerentanan alih fungsi yang sangat tinggi menjadi kawasan industri pergudangan dan perumahan.</p></li>
+<li><p><strong>Instrumen Kebijakan:</strong> UU No. 41 Tahun 2009 tentang Perlindungan Lahan Pertanian Pangan Berkelanjutan dan Kepmen ATR/BPN No. 1589/2021 tentang Penetapan Peta Lahan Sawah Dilindungi.</p></li>
+<li><p><strong>Rekomendasi Spasial:</strong></p>
+<ol class="arabic simple">
+<li><p>Integrasi peta klasifikasi LULC bulanan menggunakan indeks <strong>NDVI (<span class="math notranslate nohighlight">\(&gt;0.50\)</span>)</strong> dan <strong>SAVI</strong> dengan peta LSD ATR/BPN.</p></li>
+<li><p>Apabila terdeteksi kenaikan nilai <strong>NDBI (positif)</strong> dan <strong>BSI (tanah uruk)</strong> pada poligon LSD, sistem otomatis menerbitkan <em>Surat Peringatan Dini Pelanggaran Tata Ruang</em>.</p></li>
+<li><p>Moratorium penerbitan izin Persetujuan Kesesuaian Kegiatan Pemanfaatan Ruang (PKKPR) untuk kegiatan non-pertanian pada zona LP2B.</p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="kebijakan-restorasi-sabuk-hijau-mangrove-pesisir-jawa-timur">
+<h3>3.2 Kebijakan Restorasi Sabuk Hijau Mangrove Pesisir Jawa Timur<a class="headerlink" href="#kebijakan-restorasi-sabuk-hijau-mangrove-pesisir-jawa-timur" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Kondisi Eksisting:</strong> Kawasan pesisir Pantai Timur Surabaya (Pamurbaya) dan Ujungpangkah Gresik menghadapi tekanan konversi lahan menjadi tambak udang intensif dan permukiman pesisir liar.</p></li>
+<li><p><strong>Instrumen Kebijakan:</strong> Perpres No. 73 Tahun 2012 tentang Strategi Nasional Pengelolaan Ekosistem Mangrove dan Perda RZWP-3-K Jawa Timur.</p></li>
+<li><p><strong>Rekomendasi Spasial:</strong></p>
+<ol class="arabic simple">
+<li><p>Indeks <strong>CMRI (<span class="math notranslate nohighlight">\(\text{NDVI} - \text{NDWI}\)</span>)</strong> terbukti menjadi pembeda paling akurat bagi tutupan mangrove (<span class="math notranslate nohighlight">\(+0.40 \text{ s/d } +0.75\)</span>).</p></li>
+<li><p>Pemerintah Daerah wajib menetapkan garis sempadan pantai sekurang-kurangnya 100 meter dari titik pasang tertinggi air laut dan mempertahankan sabuk hijau mangrove selebar <span class="math notranslate nohighlight">\(130 \times \text{rata-rata pasang surut}\)</span>.</p></li>
+<li><p>Mengalokasikan dana bagi hasil atau skema perdagangan karbon (<em>carbon credit</em>) untuk memberdayakan kelompok tani hutan mangrove Wonorejo dan Ujungpangkah.</p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="kebijakan-perlindungan-sempadan-danau-vulkanik-ranu-alami">
+<h3>3.3 Kebijakan Perlindungan Sempadan Danau Vulkanik &amp; Ranu Alami<a class="headerlink" href="#kebijakan-perlindungan-sempadan-danau-vulkanik-ranu-alami" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Kondisi Eksisting:</strong> Danau alami di Jawa Timur (Ranu Grati, Ranu Klakah, Ranu Kumbolo) mengalami ancaman okupasi bangunan semipermanen di sempadan danau serta penurunan kualitas air akibat keramba jaring apung (KJA) berlebih.</p></li>
+<li><p><strong>Instrumen Kebijakan:</strong> Permen PUPR No. 28/PRT/M/2015 tentang Garis Sempadan Sungai dan Sempadan Danau.</p></li>
+<li><p><strong>Rekomendasi Spasial:</strong></p>
+<ol class="arabic simple">
+<li><p>Delineasi zona sempadan danau selebar <strong>minimum 50 meter</strong> dari tepi titik pasang tertinggi danau/ranu alami.</p></li>
+<li><p>Model Machine Learning membuktikan bahwa perairan danau tawar memiliki profil reflektansi spektral yang berbeda dari laut terbuka (fitur MNDWI dan B3 Green).</p></li>
+<li><p>Penertiban bangunan yang memiliki nilai NDBI positif di dalam radius sempadan 50 meter danau.</p></li>
+<li><p>Pembatasan luasan keramba jaring apung maksimal 10% dari luas total permukaan air danau guna mencegah fenomena eutrofikasi dan kematian massal ikan.</p></li>
+</ol>
+</li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="kesimpulan-akhir">
+<h2>4. Kesimpulan Akhir<a class="headerlink" href="#kesimpulan-akhir" title="Link to this heading">#</a></h2>
+<p>Melalui integrasi data penginderaan jauh satelit <strong>Sentinel-2A MSI</strong>, rekayasa <strong>18 fitur spektral</strong>, evaluasi <strong>7 algoritma Machine Learning</strong>, visualisasi kartografi <strong>Google Satellite WMS Leaflet</strong>, deployment <strong>Streamlit</strong>, serta integrasi dokumentasi web statis <strong>Jupyter Book</strong>, proyek Ujian Tengah Semester (UTS) ini telah berhasil menyelesaikan seluruh target capaian:</p>
+<ol class="arabic simple">
+<li><p>Memberikan <em>Data Understanding</em> mendalam mengenai dinamika LULC di Jawa Timur serta acuan standar klasifikasi nasional resmi (SNI 7645 / BIG).</p></li>
+<li><p>Menguraikan karakteristik 13 saluran band Sentinel-2A dan perumusan matematis lengkap indeks spektral (NDVI, NDWI, MNDWI, NDBI, BSI, SAVI, NDRE, CMRI).</p></li>
+<li><p>Melakukan eksperimen dengan 2.100 titik sampel spasial pada 6 kelas tutupan lahan dengan pemisahan 80% data latih (1.680 sampel) dan 20% data uji (420 sampel).</p></li>
+<li><p>Membuktikan bahwa algoritma <strong>Hist Gradient Boosting</strong> dan <strong>Random Forest</strong> menghasilkan akurasi tertinggi di atas <strong>99%</strong> dengan Cohen’s Kappa <strong>0.9914</strong>.</p></li>
+<li><p>Menyajikan visualisasi peta interaktif dengan layer WMS satelit Google Maps serta menyediakan antarmuka web interaktif berbasis Streamlit dan web statis portofolio.</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uts-koleksi-data-dan-pemodelan-ml.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">UTS SIG: Koleksi Data, Eksperimen Machine Learning &amp; Evaluasi Akurasi</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#peta-interaktif-klasifikasi-lulc-berbasis-wms-satelit-google-maps">1. Peta Interaktif Klasifikasi LULC Berbasis WMS Satelit Google Maps</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tampilan-peta-interaktif-terintegrasi">Tampilan Peta Interaktif Terintegrasi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment-sistem-informasi-geografis-ke-streamlit">2. Deployment Sistem Informasi Geografis ke Streamlit</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitur-unggulan-aplikasi-streamlit">2.1 Fitur Unggulan Aplikasi Streamlit</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-menjalankan-aplikasi-streamlit-secara-mandiri">2.2 Cara Menjalankan Aplikasi Streamlit Secara Mandiri</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-kebijakan-tata-ruang-implikasi-spasial-di-jawa-timur">3. Analisis Kebijakan Tata Ruang &amp; Implikasi Spasial di Jawa Timur</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kebijakan-pengendalian-alih-fungsi-lahan-sawah-dilindungi-lsd-lp2b">3.1 Kebijakan Pengendalian Alih Fungsi Lahan Sawah Dilindungi (LSD / LP2B)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kebijakan-restorasi-sabuk-hijau-mangrove-pesisir-jawa-timur">3.2 Kebijakan Restorasi Sabuk Hijau Mangrove Pesisir Jawa Timur</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kebijakan-perlindungan-sempadan-danau-vulkanik-ranu-alami">3.3 Kebijakan Perlindungan Sempadan Danau Vulkanik &amp; Ranu Alami</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-akhir">4. Kesimpulan Akhir</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rifqi Fairurrafi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

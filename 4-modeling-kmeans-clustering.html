@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '4-modeling-kmeans-clustering';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="UTS SIG: Data Understanding &amp; Kebijakan LULC Jawa Timur" href="uts-pengantar-lulc-kebijakan.html" />
     <link rel="prev" title="Data Understanding - Kabupaten Bangkalan" href="3-data-understanding-bangkalan.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -190,6 +191,14 @@
 <li class="toctree-l2"><a class="reference internal" href="2-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2"><a class="reference internal" href="3-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Modeling - K-Means Clustering pada Gabungan 3 Polutan (204 Fitur TSFEL) &amp; Analisis Multi-Dimensi (203, 74, 37)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="uts-pengantar-lulc-kebijakan.html">UTS SIG: Data Understanding &amp; Kebijakan LULC Jawa Timur</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi_Tutupan_Lahan_Multikelas_Jatim.html">Klasifikasi Tutupan Lahan Multikelas Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="klasifikasi_lulc_jatim.html">Klasifikasi Penggunaan dan Penutup Lahan Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-band-sentinel2a-ekstraksi-fitur.html">UTS SIG: Karakteristik Band Sentinel-2A &amp; Ekstraksi Fitur Spektral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-koleksi-data-dan-pemodelan-ml.html">UTS SIG: Koleksi Data, Eksperimen Machine Learning &amp; Evaluasi Akurasi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-visualisasi-spasial-dan-kebijakan.html">UTS SIG: Visualisasi Spasial Google Satelit WMS, Deployment Streamlit &amp; Kebijakan Tata Ruang</a></li>
 </ul>
 </details></li>
 </ul>
@@ -494,7 +503,7 @@ document.write(`
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">cari_file</span><span class="p">(</span><span class="n">nama_file</span><span class="p">):</span>
@@ -518,52 +527,6 @@ document.write(`
 </div>
 </div>
 </details>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Metode Imputasi</th>
-      <th>Jumlah Baris</th>
-      <th>Jumlah Kolom</th>
-      <th>Target Polutan</th>
-      <th>Nilai Hilang (NaN)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Linear Regression / Time-based</td>
-      <td>1</td>
-      <td>204</td>
-      <td>NO2, SO2, CO (68 x 3)</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Polynomial Interpolation (Order 2)</td>
-      <td>1</td>
-      <td>204</td>
-      <td>NO2, SO2, CO (68 x 3)</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 </section>
 <hr class="docutils" />
@@ -573,7 +536,7 @@ document.write(`
 <p>Normalisasi nama dilakukan agar pencocokan baris berjalan sempurna (misalnya standarisasi penulisan spasi nama), kemudian fitur diberi prefix polutan dan digabungkan menjadi satu tabel utuh <code class="docutils literal notranslate"><span class="pre">All-Pollutants-All-Regions-TSFEL.csv</span></code> (37 baris <span class="math notranslate nohighlight">\(\times\)</span> 204 kolom fitur numerik + 3 kolom metadata).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
@@ -614,58 +577,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Deskripsi</th>
-      <th>Nilai</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Jumlah Daerah (Baris)</td>
-      <td>37</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Kolom Metadata</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Fitur per Polutan</td>
-      <td>68</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Total Fitur Gabungan</td>
-      <td>204</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Total Kolom Dataset</td>
-      <td>207</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 </section>
 <hr class="docutils" />
@@ -695,7 +606,7 @@ document.write(`
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mengambil fitur numerik</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mengambil fitur numerik</span>
 <span class="n">X_raw</span> <span class="o">=</span> <span class="n">merged</span><span class="p">[</span><span class="n">feat_all</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">variances</span> <span class="o">=</span> <span class="n">X_raw</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
 
@@ -728,60 +639,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Tingkatan Dimensi</th>
-      <th>Jumlah Baris</th>
-      <th>Jumlah Kolom/Fitur</th>
-      <th>Metode</th>
-      <th>Variansi Kumulatif PCA</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Dimensi 203</td>
-      <td>37</td>
-      <td>203</td>
-      <td>Full Features (Z-Score)</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Dimensi 74</td>
-      <td>37</td>
-      <td>74</td>
-      <td>Variance Selection 74</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Dimensi 37 (PCA)</td>
-      <td>37</td>
-      <td>37</td>
-      <td>PCA 37 Components</td>
-      <td>100.00%</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 </section>
 </section>
@@ -796,7 +653,7 @@ document.write(`
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eval_rows</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eval_rows</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="n">datasets</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;Dimensi 203&quot;</span><span class="p">:</span> <span class="n">X_203_scaled</span><span class="p">,</span>
@@ -827,94 +684,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>Dimensi</th>
-      <th>Dimensi 203</th>
-      <th>Dimensi 37 (PCA)</th>
-      <th>Dimensi 74</th>
-    </tr>
-    <tr>
-      <th>k</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2</th>
-      <td>0.7702</td>
-      <td>0.7702</td>
-      <td>0.8397</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.6226</td>
-      <td>0.6226</td>
-      <td>0.7167</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.3726</td>
-      <td>0.3726</td>
-      <td>0.4317</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>0.1221</td>
-      <td>0.1221</td>
-      <td>0.1961</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0.1041</td>
-      <td>0.1041</td>
-      <td>0.1840</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>0.0957</td>
-      <td>0.0957</td>
-      <td>0.1856</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>0.0881</td>
-      <td>0.0881</td>
-      <td>0.1500</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>0.0617</td>
-      <td>0.0617</td>
-      <td>0.1494</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>0.0982</td>
-      <td>0.0982</td>
-      <td>0.1085</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <section id="visualisasi-perbandingan-evaluasi-multi-dimensi">
 <h3>Visualisasi Perbandingan Evaluasi Multi-Dimensi<a class="headerlink" href="#visualisasi-perbandingan-evaluasi-multi-dimensi" title="Link to this heading">#</a></h3>
@@ -955,7 +724,7 @@ document.write(`
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fitting K-Means k=3 pada Dimensi 37 (PCA)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fitting K-Means k=3 pada Dimensi 37 (PCA)</span>
 <span class="n">km_final</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">SEED</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">merged</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">km_final</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X_37_pca</span><span class="p">)</span>
 
@@ -974,52 +743,6 @@ document.write(`
 </div>
 </div>
 </details>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Cluster</th>
-      <th>Jumlah Daerah</th>
-      <th>Daftar Daerah (Sampel)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Cluster 0</td>
-      <td>35</td>
-      <td>Manyar, Kedungpring Lamongan, Kamal, Bangkalan...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Cluster 1</td>
-      <td>1</td>
-      <td>Kamal, Banyuajuh</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Cluster 2</td>
-      <td>1</td>
-      <td>Kamal, Bangkalan</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <section id="profil-karakteristik-tiap-segmen-segmentasi">
 <h3>Profil Karakteristik Tiap Segmen (Segmentasi):<a class="headerlink" href="#profil-karakteristik-tiap-segmen-segmentasi" title="Link to this heading">#</a></h3>
@@ -1182,6 +905,15 @@ document.write(`
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Data Understanding - Kabupaten Bangkalan</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="uts-pengantar-lulc-kebijakan.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">UTS SIG: Data Understanding &amp; Kebijakan LULC Jawa Timur</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

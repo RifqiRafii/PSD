@@ -1,0 +1,910 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>UTS SIG: Koleksi Data, Eksperimen Machine Learning &amp; Evaluasi Akurasi &#8212; Proyek Sains Data</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'uts-koleksi-data-dan-pemodelan-ml';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="UTS SIG: Visualisasi Spasial Google Satelit WMS, Deployment Streamlit &amp; Kebijakan Tata Ruang" href="uts-visualisasi-spasial-dan-kebijakan.html" />
+    <link rel="prev" title="UTS SIG: Karakteristik Band Sentinel-2A &amp; Ekstraksi Fitur Spektral" href="uts-band-sentinel2a-ekstraksi-fitur.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Proyek Sains Data - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Proyek Sains Data - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Proyek Sains Data
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="pengantar-analisis-polutan-bangkalan.html">Pengantar Analisis Polutan Kabupaten Bangkalan</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data.html">Ekstraksi Data Kualitas Udara - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data-kecamatan.html">Ekstraksi Data Polutan - Kecamatan Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-preprocessing-ekstraksi-fitur_TSFEL.html">Preprocessing dan Ekstraksi 68 Fitur TSFEL - Tiga Polutan Kecamatan Bangkalan</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="2-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-modeling-kmeans-clustering.html">Modeling - K-Means Clustering pada Gabungan 3 Polutan (204 Fitur TSFEL) &amp; Analisis Multi-Dimensi (203, 74, 37)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="uts-pengantar-lulc-kebijakan.html">UTS SIG: Data Understanding &amp; Kebijakan LULC Jawa Timur</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi_Tutupan_Lahan_Multikelas_Jatim.html">Klasifikasi Tutupan Lahan Multikelas Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="klasifikasi_lulc_jatim.html">Klasifikasi Penggunaan dan Penutup Lahan Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-band-sentinel2a-ekstraksi-fitur.html">UTS SIG: Karakteristik Band Sentinel-2A &amp; Ekstraksi Fitur Spektral</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">UTS SIG: Koleksi Data, Eksperimen Machine Learning &amp; Evaluasi Akurasi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-visualisasi-spasial-dan-kebijakan.html">UTS SIG: Visualisasi Spasial Google Satelit WMS, Deployment Streamlit &amp; Kebijakan Tata Ruang</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Futs-koleksi-data-dan-pemodelan-ml.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/uts-koleksi-data-dan-pemodelan-ml.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>UTS SIG: Koleksi Data, Eksperimen Machine Learning & Evaluasi Akurasi</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#koleksi-data-ground-truth-sentinel-2a-di-jawa-timur">1. Koleksi Data Ground-Truth Sentinel-2A di Jawa Timur</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pembagian-data-training-dan-testing-data-splitting">2. Pembagian Data Training dan Testing (<em>Data Splitting</em>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#komparasi-multi-model-machine-learning">3. Komparasi Multi-Model Machine Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix-model-terbaik">4. Confusion Matrix Model Terbaik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-tingkat-pengaruh-fitur-feature-importance">5. Analisis Tingkat Pengaruh Fitur (<em>Feature Importance</em>)</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uts-sig-koleksi-data-eksperimen-machine-learning-evaluasi-akurasi">
+<h1>UTS SIG: Koleksi Data, Eksperimen Machine Learning &amp; Evaluasi Akurasi<a class="headerlink" href="#uts-sig-koleksi-data-eksperimen-machine-learning-evaluasi-akurasi" title="Link to this heading">#</a></h1>
+<p>Bab ini menguraikan tahapan pengumpulan data sampling spasial (<em>data collection</em>), pembagian data latih dan uji (<em>train-test split</em>), komparasi multi-algoritma <em>Machine Learning</em>, hingga penentuan model dengan akurasi klasifikasi tertinggi.</p>
+<hr class="docutils" />
+<section id="koleksi-data-ground-truth-sentinel-2a-di-jawa-timur">
+<h2>1. Koleksi Data Ground-Truth Sentinel-2A di Jawa Timur<a class="headerlink" href="#koleksi-data-ground-truth-sentinel-2a-di-jawa-timur" title="Link to this heading">#</a></h2>
+<p>Dataset dibangun dengan mengambil sampel koordinat nyata di berbagai bentang alam representatif di Provinsi Jawa Timur. Untuk memastikan validitas statistik dan mencegah terjadinya <em>class imbalance bias</em>, diterapkan strategi <strong>Stratified Balanced Sampling</strong> dengan alokasi <strong>350 titik sampel per kelas</strong>.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="tabel-distribusi-sampel">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Distribusi Sampel Ground-Truth Berdasarkan 6 Kelas Tutupan Lahan</span><a class="headerlink" href="#tabel-distribusi-sampel" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Kode Kelas</p></th>
+<th class="head text-left"><p>Nama Kelas</p></th>
+<th class="head text-center"><p>Jumlah Total Sampel</p></th>
+<th class="head text-center"><p>Proporsi (%)</p></th>
+<th class="head text-left"><p>Wilayah Lokasi Pengambilan Sampel di Jawa Timur</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><strong>0</strong></p></td>
+<td class="text-left"><p><strong>Sawah</strong></p></td>
+<td class="text-center"><p>350</p></td>
+<td class="text-center"><p>16.67%</p></td>
+<td class="text-left"><p>Lamongan (Babat), Mojokerto, Sidoarjo, Jember (Balung), Bojonegoro, Ngawi</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><strong>1</strong></p></td>
+<td class="text-left"><p><strong>Bangunan</strong></p></td>
+<td class="text-center"><p>350</p></td>
+<td class="text-center"><p>16.67%</p></td>
+<td class="text-left"><p>Surabaya Pusat, Surabaya SIER, Malang Kota, Sidoarjo Kota, Gresik Industri</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><strong>2</strong></p></td>
+<td class="text-left"><p><strong>Mangrove</strong></p></td>
+<td class="text-center"><p>350</p></td>
+<td class="text-center"><p>16.67%</p></td>
+<td class="text-left"><p>Ekowisata Wonorejo Surabaya, Gunung Anyar, Ujungpangkah Gresik, Probolinggo</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><strong>3</strong></p></td>
+<td class="text-left"><p><strong>Lahan Hijau</strong></p></td>
+<td class="text-center"><p>350</p></td>
+<td class="text-center"><p>16.67%</p></td>
+<td class="text-left"><p>Tahura Raden Soerjo, Lereng Bromo Tengger, Semeru, Ijen Banyuwangi, Pujon</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><strong>4</strong></p></td>
+<td class="text-left"><p><strong>Perairan Terbuka (Laut)</strong></p></td>
+<td class="text-center"><p>350</p></td>
+<td class="text-center"><p>16.67%</p></td>
+<td class="text-left"><p>Selat Madura (Kamal-Surabaya), Laut Jawa (Tuban-Gresik), Samudera Hindia</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><strong>5</strong></p></td>
+<td class="text-left"><p><strong>Danau (Ranu-ranu)</strong></p></td>
+<td class="text-center"><p>350</p></td>
+<td class="text-center"><p>16.67%</p></td>
+<td class="text-left"><p>Ranu Grati Pasuruan, Ranu Klakah, Ranu Kumbolo, Ranu Pane, Waduk Sutami</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><strong>Total</strong></p></td>
+<td class="text-left"><p><strong>6 Kelas LULC</strong></p></td>
+<td class="text-center"><p><strong>2.100</strong></p></td>
+<td class="text-center"><p><strong>100.00%</strong></p></td>
+<td class="text-left"><p><strong>Provinsi Jawa Timur</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="pembagian-data-training-dan-testing-data-splitting">
+<h2>2. Pembagian Data Training dan Testing (<em>Data Splitting</em>)<a class="headerlink" href="#pembagian-data-training-dan-testing-data-splitting" title="Link to this heading">#</a></h2>
+<p>Dataset dipartisi menggunakan rasio standar <strong>80% Training Set</strong> dan <strong>20% Testing Set</strong> dengan teknik <em>Stratified Train-Test Split</em> menggunakan <code class="docutils literal notranslate"><span class="pre">random_state=42</span></code>. Hal ini menjamin bahwa proporsi setiap kelas pada data latih dan data uji tetap identik.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="tabel-split-data">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">Rincian Pembagian Data Training vs Testing</span><a class="headerlink" href="#tabel-split-data" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Kategori Data</p></th>
+<th class="head text-center"><p>Persentase</p></th>
+<th class="head text-center"><p>Jumlah Sampel Tiap Kelas (x6 Kelas)</p></th>
+<th class="head text-center"><p>Total Sampel Data</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Data Training (Latih)</strong></p></td>
+<td class="text-center"><p>80%</p></td>
+<td class="text-center"><p>280 sampel / kelas</p></td>
+<td class="text-center"><p><strong>1.680 Sampel</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Data Testing (Uji)</strong></p></td>
+<td class="text-center"><p>20%</p></td>
+<td class="text-center"><p>70 sampel / kelas</p></td>
+<td class="text-center"><p><strong>420 Sampel</strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Total Data Eksperimen</strong></p></td>
+<td class="text-center"><p><strong>100%</strong></p></td>
+<td class="text-center"><p><strong>350 sampel / kelas</strong></p></td>
+<td class="text-center"><p><strong>2.100 Sampel</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p><strong>Data Training (1.680 sampel):</strong> Digunakan untuk melatih parameter internal model klasifikasi.</p></li>
+<li><p><strong>Data Testing (420 sampel):</strong> Digunakan secara independen untuk menguji kemampuan generalisasi model terhadap data baru yang belum pernah dilihat sebelumnya.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="komparasi-multi-model-machine-learning">
+<h2>3. Komparasi Multi-Model Machine Learning<a class="headerlink" href="#komparasi-multi-model-machine-learning" title="Link to this heading">#</a></h2>
+<p>Sesuai instruksi tugas: <em>“gunakan model lain yang menghasilkan akurasi paling tinggi”</em>, dilakukan pengujian komparatif terhadap <strong>7 algoritma Machine Learning</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Random Forest Classifier (RF):</strong> Algoritma ensemble berbasis bagging dengan 200 pohon keputusan (<em>decision trees</em>).</p></li>
+<li><p><strong>Hist Gradient Boosting Classifier (HistGBM):</strong> Varian boosting cepat berbasis <em>histogram binning</em> dari scikit-learn (arsitektur serupa LightGBM).</p></li>
+<li><p><strong>Gradient Boosting Classifier (GBM):</strong> Boosting bertahap berbasis penurunan gradien (<em>gradient descent</em>).</p></li>
+<li><p><strong>XGBoost (Extreme Gradient Boosting):</strong> Boosting pohon keputusan dengan regularisasi L1/L2 ketat.</p></li>
+<li><p><strong>LightGBM:</strong> Algoritma boosting berbasis <em>leaf-wise tree growth</em>.</p></li>
+<li><p><strong>Support Vector Machine (SVM):</strong> Model pemisah berbasis hyperplane dengan kernel <em>Radial Basis Function (RBF)</em> dan standarisasi fitur.</p></li>
+<li><p><strong>K-Nearest Neighbors (KNN):</strong> Model berbasis jarak dengan pembobotan <em>inverse distance</em> (<span class="math notranslate nohighlight">\(k=5\)</span>).</p></li>
+</ol>
+<div class="pst-scrollable-table-container"><table class="table" id="tabel-komparasi-model">
+<caption><span class="caption-number">Table 5 </span><span class="caption-text">Hasil Komparasi Performa 7 Model Klasifikasi LULC Jawa Timur</span><a class="headerlink" href="#tabel-komparasi-model" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Peringkat</p></th>
+<th class="head text-left"><p>Algoritma Model</p></th>
+<th class="head text-center"><p>Overall Accuracy (OA)</p></th>
+<th class="head text-center"><p>Cohen’s Kappa (<span class="math notranslate nohighlight">\(\kappa\)</span>)</p></th>
+<th class="head text-center"><p>Macro F1-Score</p></th>
+<th class="head text-center"><p>Macro Precision</p></th>
+<th class="head text-center"><p>Macro Recall</p></th>
+<th class="head text-center"><p>Status Evaluasi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>🥇 <strong>1</strong></p></td>
+<td class="text-left"><p><strong>Hist Gradient Boosting</strong></p></td>
+<td class="text-center"><p><strong>99.29%</strong></p></td>
+<td class="text-center"><p><strong>0.9914</strong></p></td>
+<td class="text-center"><p><strong>0.9928</strong></p></td>
+<td class="text-center"><p><strong>0.9930</strong></p></td>
+<td class="text-center"><p><strong>0.9929</strong></p></td>
+<td class="text-center"><p>⭐ <strong>Model Terbaik</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>🥈 <strong>2</strong></p></td>
+<td class="text-left"><p><strong>Support Vector Machine (RBF)</strong></p></td>
+<td class="text-center"><p><strong>99.29%</strong></p></td>
+<td class="text-center"><p><strong>0.9914</strong></p></td>
+<td class="text-center"><p><strong>0.9929</strong></p></td>
+<td class="text-center"><p><strong>0.9931</strong></p></td>
+<td class="text-center"><p><strong>0.9929</strong></p></td>
+<td class="text-center"><p>Sangat Tinggi</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>🥉 <strong>3</strong></p></td>
+<td class="text-left"><p><strong>Random Forest Classifier</strong></p></td>
+<td class="text-center"><p><strong>99.05%</strong></p></td>
+<td class="text-center"><p><strong>0.9886</strong></p></td>
+<td class="text-center"><p><strong>0.9905</strong></p></td>
+<td class="text-center"><p><strong>0.9906</strong></p></td>
+<td class="text-center"><p><strong>0.9905</strong></p></td>
+<td class="text-center"><p>Sangat Andal &amp; Robust</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>4</p></td>
+<td class="text-left"><p><strong>XGBoost Classifier</strong></p></td>
+<td class="text-center"><p><strong>99.05%</strong></p></td>
+<td class="text-center"><p><strong>0.9886</strong></p></td>
+<td class="text-center"><p><strong>0.9905</strong></p></td>
+<td class="text-center"><p><strong>0.9906</strong></p></td>
+<td class="text-center"><p><strong>0.9905</strong></p></td>
+<td class="text-center"><p>Sangat Tinggi</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>5</p></td>
+<td class="text-left"><p><strong>LightGBM Classifier</strong></p></td>
+<td class="text-center"><p><strong>99.05%</strong></p></td>
+<td class="text-center"><p><strong>0.9886</strong></p></td>
+<td class="text-center"><p><strong>0.9905</strong></p></td>
+<td class="text-center"><p><strong>0.9907</strong></p></td>
+<td class="text-center"><p><strong>0.9905</strong></p></td>
+<td class="text-center"><p>Sangat Cepat</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>6</p></td>
+<td class="text-left"><p><strong>Gradient Boosting (GBM)</strong></p></td>
+<td class="text-center"><p><strong>98.81%</strong></p></td>
+<td class="text-center"><p><strong>0.9857</strong></p></td>
+<td class="text-center"><p><strong>0.9881</strong></p></td>
+<td class="text-center"><p><strong>0.9883</strong></p></td>
+<td class="text-center"><p><strong>0.9881</strong></p></td>
+<td class="text-center"><p>Tinggi</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>7</p></td>
+<td class="text-left"><p><strong>K-Nearest Neighbors (KNN)</strong></p></td>
+<td class="text-center"><p><strong>98.57%</strong></p></td>
+<td class="text-center"><p><strong>0.9829</strong></p></td>
+<td class="text-center"><p><strong>0.9857</strong></p></td>
+<td class="text-center"><p><strong>0.9861</strong></p></td>
+<td class="text-center"><p><strong>0.9857</strong></p></td>
+<td class="text-center"><p>Baseline Cukup Baik</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p><strong>Temuan Eksperimen:</strong>
+Model <strong>Hist Gradient Boosting</strong> dan <strong>Support Vector Machine (RBF)</strong> mencatatkan akurasi tertinggi sebesar <strong>99.29%</strong> dengan nilai <strong>Cohen’s Kappa 0.9914</strong> (kategori <em>Almost Perfect Agreement</em>). Random Forest dan XGBoost juga menunjukkan performa luar biasa dengan akurasi <strong>99.05%</strong>. Hist Gradient Boosting dipilih sebagai model produksi karena keunggulannya dalam waktu inferensi cepat dan ketahanan terhadap multikolinearitas antar band spektral.</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="confusion-matrix-model-terbaik">
+<h2>4. Confusion Matrix Model Terbaik<a class="headerlink" href="#confusion-matrix-model-terbaik" title="Link to this heading">#</a></h2>
+<p>Confusion matrix menunjukkan distribusi prediksi model terbaik (Hist Gradient Boosting) pada data uji independen (420 sampel testing):</p>
+<div class="pst-scrollable-table-container"><table class="table" id="tabel-confusion-matrix">
+<caption><span class="caption-number">Table 6 </span><span class="caption-text">Confusion Matrix Hasil Klasifikasi Data Testing (420 Sampel)</span><a class="headerlink" href="#tabel-confusion-matrix" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Kelas Sebenarnya \ Prediksi</p></th>
+<th class="head text-center"><p>Sawah</p></th>
+<th class="head text-center"><p>Bangunan</p></th>
+<th class="head text-center"><p>Mangrove</p></th>
+<th class="head text-center"><p>Lahan Hijau</p></th>
+<th class="head text-center"><p>Laut</p></th>
+<th class="head text-center"><p>Danau (Ranu)</p></th>
+<th class="head text-center"><p>Total Uji</p></th>
+<th class="head text-center"><p>Recall (%)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Sawah</strong></p></td>
+<td class="text-center"><p><strong>69</strong></p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>1</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>70</p></td>
+<td class="text-center"><p><strong>98.57%</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Bangunan</strong></p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p><strong>70</strong></p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>70</p></td>
+<td class="text-center"><p><strong>100.00%</strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Mangrove</strong></p></td>
+<td class="text-center"><p>1</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p><strong>69</strong></p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>70</p></td>
+<td class="text-center"><p><strong>98.57%</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Lahan Hijau</strong></p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>1</p></td>
+<td class="text-center"><p><strong>69</strong></p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>70</p></td>
+<td class="text-center"><p><strong>98.57%</strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Perairan Laut</strong></p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p><strong>70</strong></p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>70</p></td>
+<td class="text-center"><p><strong>100.00%</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Danau (Ranu)</strong></p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p><strong>70</strong></p></td>
+<td class="text-center"><p>70</p></td>
+<td class="text-center"><p><strong>100.00%</strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Total Prediksi</strong></p></td>
+<td class="text-center"><p>70</p></td>
+<td class="text-center"><p>70</p></td>
+<td class="text-center"><p>71</p></td>
+<td class="text-center"><p>69</p></td>
+<td class="text-center"><p>70</p></td>
+<td class="text-center"><p>70</p></td>
+<td class="text-center"><p>420</p></td>
+<td class="text-center"><p>-</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Precision (%)</strong></p></td>
+<td class="text-center"><p><strong>98.57%</strong></p></td>
+<td class="text-center"><p><strong>100.00%</strong></p></td>
+<td class="text-center"><p><strong>97.18%</strong></p></td>
+<td class="text-center"><p><strong>100.00%</strong></p></td>
+<td class="text-center"><p><strong>100.00%</strong></p></td>
+<td class="text-center"><p><strong>100.00%</strong></p></td>
+<td class="text-center"><p>-</p></td>
+<td class="text-center"><p><strong>OA: 99.29%</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="analisis-tingkat-pengaruh-fitur-feature-importance">
+<h2>5. Analisis Tingkat Pengaruh Fitur (<em>Feature Importance</em>)<a class="headerlink" href="#analisis-tingkat-pengaruh-fitur-feature-importance" title="Link to this heading">#</a></h2>
+<p>Melalui evaluasi bobot kepentingan fitur (<em>Gini Importance</em>) pada ensemble Random Forest, teridentifikasi fitur-fitur yang paling menentukan keberhasilan klasifikasi penutup lahan:</p>
+<div class="pst-scrollable-table-container"><table class="table" id="tabel-feature-importance">
+<caption><span class="caption-number">Table 7 </span><span class="caption-text">Peringkat 10 Fitur Paling Berpengaruh dalam Klasifikasi</span><a class="headerlink" href="#tabel-feature-importance" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Peringkat</p></th>
+<th class="head text-center"><p>Nama Fitur</p></th>
+<th class="head text-center"><p>Bobot Kepentingan Relatif</p></th>
+<th class="head text-left"><p>Peran Utama dalam Pembedaan Kelas</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>1</p></td>
+<td class="text-center"><p><strong>CMRI</strong></p></td>
+<td class="text-center"><p><strong>13.75%</strong></p></td>
+<td class="text-left"><p>Memisahkan hutan mangrove dari hutan darat dan sawah.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>2</p></td>
+<td class="text-center"><p><strong>B8 (NIR)</strong></p></td>
+<td class="text-center"><p><strong>12.40%</strong></p></td>
+<td class="text-left"><p>Membedakan seluruh kelas vegetasi dari tubuh air (laut dan danau).</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>3</p></td>
+<td class="text-center"><p><strong>NDBI</strong></p></td>
+<td class="text-center"><p><strong>11.20%</strong></p></td>
+<td class="text-left"><p>Membedakan kawasan terbangun (beton/atap) dari lahan terbuka dan vegetasi.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>4</p></td>
+<td class="text-center"><p><strong>B11 (SWIR1)</strong></p></td>
+<td class="text-center"><p><strong>10.15%</strong></p></td>
+<td class="text-left"><p>Mengukur kelembapan kanopi dan mendeteksi bahan bangunan buatan.</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>5</p></td>
+<td class="text-center"><p><strong>NDVI</strong></p></td>
+<td class="text-center"><p><strong>9.80%</strong></p></td>
+<td class="text-left"><p>Mengukur kerapatan biomassa hijau antara sawah, mangrove, dan hutan lebat.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>6</p></td>
+<td class="text-center"><p><strong>MNDWI</strong></p></td>
+<td class="text-center"><p><strong>8.90%</strong></p></td>
+<td class="text-left"><p>Memisahkan air danau tawar dan laut dari pantulan bising permukiman.</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>7</p></td>
+<td class="text-center"><p><strong>B3 (Green)</strong></p></td>
+<td class="text-center"><p><strong>7.50%</strong></p></td>
+<td class="text-left"><p>Membedakan perairan laut jernih dari danau vulkanik (Ranu) yang mengandung fitoplankton.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>8</p></td>
+<td class="text-center"><p><strong>SAVI</strong></p></td>
+<td class="text-center"><p><strong>6.90%</strong></p></td>
+<td class="text-left"><p>Mengoreksi pantulan tanah pada lahan persawahan yang jarang atau baru ditanami.</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>9</p></td>
+<td class="text-center"><p><strong>BSI</strong></p></td>
+<td class="text-center"><p><strong>6.40%</strong></p></td>
+<td class="text-left"><p>Mendeteksi tanah kering, lahan olahan sawah bera, dan singkapan batuan.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>10</p></td>
+<td class="text-center"><p><strong>NDRE</strong></p></td>
+<td class="text-center"><p><strong>5.20%</strong></p></td>
+<td class="text-left"><p>Mengukur klorofil kanopi lebat tanpa mengalami saturasi radiometrik.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uts-band-sentinel2a-ekstraksi-fitur.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">UTS SIG: Karakteristik Band Sentinel-2A &amp; Ekstraksi Fitur Spektral</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="uts-visualisasi-spasial-dan-kebijakan.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">UTS SIG: Visualisasi Spasial Google Satelit WMS, Deployment Streamlit &amp; Kebijakan Tata Ruang</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#koleksi-data-ground-truth-sentinel-2a-di-jawa-timur">1. Koleksi Data Ground-Truth Sentinel-2A di Jawa Timur</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pembagian-data-training-dan-testing-data-splitting">2. Pembagian Data Training dan Testing (<em>Data Splitting</em>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#komparasi-multi-model-machine-learning">3. Komparasi Multi-Model Machine Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix-model-terbaik">4. Confusion Matrix Model Terbaik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-tingkat-pengaruh-fitur-feature-importance">5. Analisis Tingkat Pengaruh Fitur (<em>Feature Importance</em>)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rifqi Fairurrafi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

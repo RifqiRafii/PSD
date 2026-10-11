@@ -1,0 +1,720 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>UTS SIG: Data Understanding &amp; Kebijakan LULC Jawa Timur &#8212; Proyek Sains Data</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'uts-pengantar-lulc-kebijakan';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Klasifikasi Tutupan Lahan Multikelas Jawa Timur menggunakan Sentinel-2A" href="Klasifikasi_Tutupan_Lahan_Multikelas_Jatim.html" />
+    <link rel="prev" title="Modeling - K-Means Clustering pada Gabungan 3 Polutan (204 Fitur TSFEL) &amp; Analisis Multi-Dimensi (203, 74, 37)" href="4-modeling-kmeans-clustering.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Proyek Sains Data - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Proyek Sains Data - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Proyek Sains Data
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="pengantar-analisis-polutan-bangkalan.html">Pengantar Analisis Polutan Kabupaten Bangkalan</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data.html">Ekstraksi Data Kualitas Udara - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1-ekstraksi-data-kecamatan.html">Ekstraksi Data Polutan - Kecamatan Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2-preprocessing-ekstraksi-fitur_TSFEL.html">Preprocessing dan Ekstraksi 68 Fitur TSFEL - Tiga Polutan Kecamatan Bangkalan</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="2-business-understanding-bangkalan.html">Business Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3-data-understanding-bangkalan.html">Data Understanding - Kabupaten Bangkalan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4-modeling-kmeans-clustering.html">Modeling - K-Means Clustering pada Gabungan 3 Polutan (204 Fitur TSFEL) &amp; Analisis Multi-Dimensi (203, 74, 37)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">UTS SIG: Data Understanding &amp; Kebijakan LULC Jawa Timur</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi_Tutupan_Lahan_Multikelas_Jatim.html">Klasifikasi Tutupan Lahan Multikelas Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="klasifikasi_lulc_jatim.html">Klasifikasi Penggunaan dan Penutup Lahan Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="klasifikasi_tutupan_lahan_6_kelas.html">Klasifikasi Tutupan Lahan 6 Kelas Menggunakan Sentinel-2 dan Random Forest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-band-sentinel2a-ekstraksi-fitur.html">UTS SIG: Karakteristik Band Sentinel-2A &amp; Ekstraksi Fitur Spektral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-koleksi-data-dan-pemodelan-ml.html">UTS SIG: Koleksi Data, Eksperimen Machine Learning &amp; Evaluasi Akurasi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-visualisasi-spasial-dan-kebijakan.html">UTS SIG: Visualisasi Spasial Google Satelit WMS, Deployment Streamlit &amp; Kebijakan Tata Ruang</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Futs-pengantar-lulc-kebijakan.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/uts-pengantar-lulc-kebijakan.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>UTS SIG: Data Understanding & Kebijakan LULC Jawa Timur</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding-latar-belakang-wilayah">1. Data Understanding &amp; Latar Belakang Wilayah</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tekanan-spasial-utama-di-jawa-timur">1.1 Tekanan Spasial Utama di Jawa Timur</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-analisis-land-use-and-land-cover-lulc">2. Tujuan Analisis Land Use and Land Cover (LULC)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acuan-klasifikasi-lahan-di-indonesia-bukan-sekadar-sawah-vs-non-sawah">3. Acuan Klasifikasi Lahan di Indonesia (Bukan Sekadar Sawah vs Non-Sawah)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standar-nasional-indonesia-sni-7645-2010-sni-7645-1-2014">3.1 Standar Nasional Indonesia (SNI 7645:2010 &amp; SNI 7645-1:2014)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regulasi-dan-kebijakan-tata-ruang-terkait-di-indonesia">3.2 Regulasi dan Kebijakan Tata Ruang Terkait di Indonesia</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definisi-6-kelas-tutupan-lahan-terpilih-di-jawa-timur">4. Definisi 6 Kelas Tutupan Lahan Terpilih di Jawa Timur</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uts-sig-data-understanding-kebijakan-lulc-jawa-timur">
+<h1>UTS SIG: Data Understanding &amp; Kebijakan LULC Jawa Timur<a class="headerlink" href="#uts-sig-data-understanding-kebijakan-lulc-jawa-timur" title="Link to this heading">#</a></h1>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Metadata Proyek</p></th>
+<th class="head text-left"><p>Informasi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Mata Kuliah</strong></p></td>
+<td class="text-left"><p>Proyek Sains Data (PSD) - Ujian Tengah Semester (UTS)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Topik Analisis</strong></p></td>
+<td class="text-left"><p>Sistem Informasi Geografis (SIG) Berbasis Analisis Spasial Penutup Lahan (<em>LULC</em>) dan Kebijakan Tata Ruang</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Wilayah Studi</strong></p></td>
+<td class="text-left"><p>Provinsi Jawa Timur</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Nama Penulis</strong></p></td>
+<td class="text-left"><p>Rifqi Fairurrafi</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>NIM</strong></p></td>
+<td class="text-left"><p>240411100201</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Kelas</strong></p></td>
+<td class="text-left"><p>IF5A</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<section id="data-understanding-latar-belakang-wilayah">
+<h2>1. Data Understanding &amp; Latar Belakang Wilayah<a class="headerlink" href="#data-understanding-latar-belakang-wilayah" title="Link to this heading">#</a></h2>
+<p>Provinsi Jawa Timur merupakan salah satu pusat gravitasi ekonomi, demografi, dan agrikultur terbesar di Indonesia. Dengan luas wilayah daratan mencapai lebih dari 47.800 km² yang mencakup 38 kabupaten/kota, dinamika pemanfaatan ruang di Jawa Timur berada dalam ketegangan konstan antara <strong>pertumbuhan ekonomi/industrialisasi</strong> dan <strong>pelestarian daya dukung lingkungan serta ketahanan pangan nasional</strong>.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="_images/logo.png"><img alt="_images/logo.png" src="_images/logo.png" style="width: 140px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Universitas Trunojoyo Madura - Program Studi Teknik Informatika</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="tekanan-spasial-utama-di-jawa-timur">
+<h3>1.1 Tekanan Spasial Utama di Jawa Timur<a class="headerlink" href="#tekanan-spasial-utama-di-jawa-timur" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Aglomerasi Perkotaan &amp; Industri Megapolitan Gerbangkertosusila:</strong>
+Koridor metropolitan yang menghubungkan Gresik, Bangkalan, Mojokerto, Surabaya, Sidoarjo, dan Lamongan mengalami ekspansi kawasan terbangun yang luar biasa cepat. Pembangunan infrastruktur strategis nasional (Jalan Tol Trans-Jawa, pelebaran kawasan pelabuhan, sentra logistik) memicu konversi lahan terbuka dan sawah produktif menjadi kawasan industri dan permukiman kedap air (<em>impervious surface</em>).</p></li>
+<li><p><strong>Keterancaman Lumbung Pangan Nasional (LSD / LP2B):</strong>
+Jawa Timur berkontribusi terhadap sekitar 17–18% produksi beras nasional. Sebagian besar sentra produksi padi berada di kawasan dataran aluvial Sungai Brantas dan Bengawan Solo (Lamongan, Bojonegoro, Ngawi, Sidoarjo, Mojokerto, dan Jember). Alih fungsi lahan sawah beririgasi teknis ke non-pertanian menjadi ancaman langsung terhadap ketahanan pangan nasional.</p></li>
+<li><p><strong>Kerentanan Ekosistem Pesisir &amp; Degradasi Mangrove:</strong>
+Garis pantai Jawa Timur membentang di pesisir utara (Laut Jawa), Selat Madura, dan pesisir selatan (Samudera Hindia). Hutan mangrove di kawasan Pantai Timur Surabaya (Wonorejo &amp; Gunung Anyar), Ujungpangkah Gresik, Probolinggo, dan Teluk Pangpang Banyuwangi berfungsi krusial sebagai sabuk hijau (<em>green belt</em>), penahan abrasi pantai, pencegah intrusi air asin ke air tanah perkotaan, serta penyerap karbon biru (<em>blue carbon</em>).</p></li>
+<li><p><strong>Kelestarian Hidrologis Danau Vulkanik &amp; Ranu:</strong>
+Jawa Timur memiliki formasi hidrologis danau vulkanik maar dan kaldera alami yang khas, yang secara lokal dikenal sebagai <strong>Ranu</strong> (misalnya Ranu Grati di Pasuruan; Ranu Klakah, Ranu Bedali, dan Ranu Pakis di Lumajang; serta Ranu Kumbolo dan Ranu Pane di lereng Gunung Semeru / Taman Nasional Bromo Tengger Semeru). Kawasan ini berfungsi sebagai cadangan air tawar vital, ekosistem akuatik tawar, dan pengendali tata air regional yang terancam oleh pencemaran limbah, sedimentasi, dan pelanggaran garis sempadan danau.</p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="tujuan-analisis-land-use-and-land-cover-lulc">
+<h2>2. Tujuan Analisis Land Use and Land Cover (LULC)<a class="headerlink" href="#tujuan-analisis-land-use-and-land-cover-lulc" title="Link to this heading">#</a></h2>
+<p>Analisis klasifikasi tutupan dan penggunaan lahan (<em>Land Use and Land Cover Classification</em>) dalam proyek ini bertujuan untuk:</p>
+<ol class="arabic simple">
+<li><p><strong>Delineasi Spasial Multi-Kelas Berbasis Spektral Objektif:</strong>
+Mengidentifikasi dan memetakan 6 kelas tutupan lahan representatif di Jawa Timur secara akurat dengan memanfaatkan data reflektansi fisik <em>Bottom-of-Atmosphere</em> (BOA) dari citra satelit <strong>Sentinel-2A MSI (MultiSpectral Instrument)</strong>.</p></li>
+<li><p><strong>Diskriminasi Spektral Tingkat Lanjut:</strong>
+Mengembangkan kombinasi fitur band spektral dan indeks vegetasi/air/bangunan (NDVI, NDWI, MNDWI, NDBI, BSI, SAVI, NDRE, CMRI) untuk memecahkan kelemahan klasifikasi tradisional yang sering mencampuradukkan sawah basah dengan perairan tawar, atau mangrove dengan hutan lebat daratan.</p></li>
+<li><p><strong>Eksperimen Pemodelan Machine Learning Multikelas:</strong>
+Membandingkan kinerja berbagai algoritma klasifikasi mutakhir (<em>Random Forest, Hist Gradient Boosting, Gradient Boosting, Support Vector Machine, K-Nearest Neighbors, XGBoost, LightGBM</em>) guna menemukan model dengan akurasi (<em>Overall Accuracy</em>) dan <em>Cohen’s Kappa</em> tertinggi (&gt;99%).</p></li>
+<li><p><strong>Visualisasi Kartografis Interaktif WMS Satelit:</strong>
+Menyajikan hasil klasifikasi dan titik sampel ground truth ke dalam peta geospasial interaktif berbasis web (Leaflet/Folium) yang menggunakan <em>Web Map Service</em> (WMS) Google Maps Satellite dan Hybrid Tiles.</p></li>
+<li><p><strong>Penyusunan Arahan Kebijakan Tata Ruang Berbasis Spasial:</strong>
+Menghubungkan hasil analisis LULC dengan instrumen hukum tata ruang di Indonesia (UU Tata Ruang, UU Perlindungan LP2B, Perpres Sabuk Hijau Mangrove, dan Permen PUPR Sempadan Danau) untuk mendukung pengambilan kebijakan berbasis data (<em>data-driven policy</em>).</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="acuan-klasifikasi-lahan-di-indonesia-bukan-sekadar-sawah-vs-non-sawah">
+<h2>3. Acuan Klasifikasi Lahan di Indonesia (Bukan Sekadar Sawah vs Non-Sawah)<a class="headerlink" href="#acuan-klasifikasi-lahan-di-indonesia-bukan-sekadar-sawah-vs-non-sawah" title="Link to this heading">#</a></h2>
+<p>Banyak kajian klasifikasi lahan sederhana hanya membagi tutupan menjadi biner (misalnya sawah vs non-sawah). Pendekatan tersebut tidak mencukupi untuk kebutuhan tata ruang wilayah yang kompleks. Dalam proyek ini, skema klasifikasi tutupan lahan mengacu pada standar nasional resmi yang berlaku di Republik Indonesia:</p>
+<section id="standar-nasional-indonesia-sni-7645-2010-sni-7645-1-2014">
+<h3>3.1 Standar Nasional Indonesia (SNI 7645:2010 &amp; SNI 7645-1:2014)<a class="headerlink" href="#standar-nasional-indonesia-sni-7645-2010-sni-7645-1-2014" title="Link to this heading">#</a></h3>
+<p>SNI 7645 yang diterbitkan oleh <strong>Badan Standardisasi Nasional (BSN)</strong> bekerjasama dengan <strong>Badan Informasi Geospasial (BIG)</strong> merupakan rujukan resmi nasional untuk <em>Klasifikasi Penutup Lahan</em>. Standar ini mengadaptasi metodologi internasional <em>Land Cover Classification System (LCCS)</em> dari FAO/UNEP.</p>
+<p>Berdasarkan SNI 7645, hierarki penutup lahan dibagi menjadi dua kategori utama:</p>
+<ol class="arabic simple">
+<li><p><strong>Daerah Bervegetasi (<em>Vegetated Area</em>):</strong></p>
+<ul class="simple">
+<li><p>Hutan Lahan Kering (Primer dan Sekunder)</p></li>
+<li><p>Hutan Mangrove (Bakau pesisir)</p></li>
+<li><p>Hutan Rawa</p></li>
+<li><p>Pertanian Lahan Basah (Sawah Irigasi, Sawah Tadah Hujan, Sawah Pasang Surut)</p></li>
+<li><p>Pertanian Lahan Kering (Tegalan/Ladang)</p></li>
+<li><p>Perkebunan (Kelapa sawit, karet, kopi, tebu)</p></li>
+</ul>
+</li>
+<li><p><strong>Daerah Tak Bervegetasi (<em>Non-Vegetated Area</em>):</strong></p>
+<ul class="simple">
+<li><p>Lahan Terbangun (Permukiman, Kawasan Industri, Infrastruktur Transportasi)</p></li>
+<li><p>Lahan Terbuka / Tanah Kosong (<em>Bare Land</em>)</p></li>
+<li><p>Tubuh Air Daratan (<em>Inland Water Body</em>: Danau alami/Ranu, Situ, Rawa tawar, Waduk/Bendungan)</p></li>
+<li><p>Tubuh Air Laut (<em>Marine Water</em>: Muara sungai, estuari, teluk, laut lepas)</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="regulasi-dan-kebijakan-tata-ruang-terkait-di-indonesia">
+<h3>3.2 Regulasi dan Kebijakan Tata Ruang Terkait di Indonesia<a class="headerlink" href="#regulasi-dan-kebijakan-tata-ruang-terkait-di-indonesia" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Peraturan Menteri ATR/BPN No. 14 Tahun 2021:</strong> Pedoman Penyusunan Rencana Tata Ruang Wilayah (RTRW) Provinsi dan Kabupaten/Kota, yang membagi ruang wilayah ke dalam <strong>Kawasan Lindung</strong> (resapan air, sempadan danau, kawasan lindung pesisir) dan <strong>Kawasan Budidaya</strong> (kawasan pertanian pangan, peruntukan industri, perumahan).</p></li>
+<li><p><strong>Undang-Undang No. 41 Tahun 2009 &amp; Kepmen ATR/BPN No. 1589/2021:</strong> Perlindungan Lahan Pertanian Pangan Berkelanjutan (LP2B) dan penetapan peta spasial Lahan Sawah Dilindungi (LSD) untuk mencegah konversi lahan persawahan irigasi teknis di Jawa Timur.</p></li>
+<li><p><strong>Peraturan Presiden No. 73 Tahun 2012:</strong> Strategi Nasional Pengelolaan Ekosistem Mangrove untuk mempertahankan keberadaan sabuk hijau pesisir.</p></li>
+<li><p><strong>Peraturan Menteri PUPR No. 28/PRT/M/2015:</strong> Penetapan Garis Sempadan Sungai dan Sempadan Danau, yang mewajibkan batas perlindungan fisik minimum <strong>50 meter</strong> dari tepi titik pasang tertinggi danau/ranu alami.</p></li>
+<li><p><strong>Peraturan Daerah Provinsi Jawa Timur No. 10 Tahun 2023:</strong> Rencana Tata Ruang Wilayah (RTRW) Provinsi Jawa Timur Tahun 2023–2043.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="definisi-6-kelas-tutupan-lahan-terpilih-di-jawa-timur">
+<h2>4. Definisi 6 Kelas Tutupan Lahan Terpilih di Jawa Timur<a class="headerlink" href="#definisi-6-kelas-tutupan-lahan-terpilih-di-jawa-timur" title="Link to this heading">#</a></h2>
+<p>Berdasarkan standar nasional di atas, sistem ini mendefinisikan 6 kelas tutupan lahan spasial di Jawa Timur:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Kode</p></th>
+<th class="head text-left"><p>Nama Kelas</p></th>
+<th class="head text-left"><p>Definisi Spasial &amp; Tipologi SNI</p></th>
+<th class="head text-left"><p>Sebaran Lokasi Representatif di Jawa Timur</p></th>
+<th class="head text-center"><p>Warna Standar</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><strong>0</strong></p></td>
+<td class="text-left"><p><strong>Sawah</strong></p></td>
+<td class="text-left"><p>Lahan pertanian pangan basah (sawah irigasi teknis/setengah teknis/tadah hujan) yang masuk zonasi LP2B/LSD.</p></td>
+<td class="text-left"><p>Lamongan, Mojokerto, Sidoarjo, Jember, Bojonegoro, Ngawi</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">#eab308</span></code> (Kuning Emas)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><strong>1</strong></p></td>
+<td class="text-left"><p><strong>Bangunan</strong></p></td>
+<td class="text-left"><p>Area terbangun kedap air (<em>impervious</em>), mencakup permukiman perkotaan, pergudangan, pabrik industri, jalan raya.</p></td>
+<td class="text-left"><p>Kota Surabaya, Kota Malang, Sidoarjo Kota, Gresik Industri</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">#ef4444</span></code> (Merah Urban)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><strong>2</strong></p></td>
+<td class="text-left"><p><strong>Mangrove</strong></p></td>
+<td class="text-left"><p>Komunitas vegetasi hutan bakau (<em>Avicennia, Rhizophora, Sonneratia</em>) di zona pasang surut pesisir dan muara sungai.</p></td>
+<td class="text-left"><p>Wonorejo Surabaya, Ujungpangkah Gresik, Probolinggo, Banyuwangi</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">#059669</span></code> (Hijau Zamrud Gelap)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><strong>3</strong></p></td>
+<td class="text-left"><p><strong>Lahan Hijau</strong></p></td>
+<td class="text-left"><p>Hutan pegunungan lebat (<em>dense mountain forest</em>), hutan lindung, cagar alam, dan perkebunan berkanopi rapat.</p></td>
+<td class="text-left"><p>Tahura Raden Soerjo, TN Bromo Tengger Semeru, Ijen, Meru Betiri</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">#15803d</span></code> (Hijau Rimba Tua)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><strong>4</strong></p></td>
+<td class="text-left"><p><strong>Perairan Terbuka (Laut)</strong></p></td>
+<td class="text-left"><p>Tubuh perairan asin laut lepas, selat, dan perairan dalam yang menyerap radiasi inframerah dekat secara sempurna.</p></td>
+<td class="text-left"><p>Selat Madura, Laut Jawa (Utara Gresik-Tuban), Samudera Hindia</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">#1d4ed8</span></code> (Biru Samudra)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><strong>5</strong></p></td>
+<td class="text-left"><p><strong>Danau (Ranu-ranu)</strong></p></td>
+<td class="text-left"><p>Tubuh air tawar daratan yang mencakup danau vulkanik maar alami (Ranu) dan waduk retensi air di pedalaman Jatim.</p></td>
+<td class="text-left"><p>Ranu Grati Pasuruan, Ranu Klakah Lumajang, Ranu Kumbolo/Pane TNBTS</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">#06b6d4</span></code> (Cyan / Aqua Danau)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="4-modeling-kmeans-clustering.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Modeling - K-Means Clustering pada Gabungan 3 Polutan (204 Fitur TSFEL) &amp; Analisis Multi-Dimensi (203, 74, 37)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Klasifikasi_Tutupan_Lahan_Multikelas_Jatim.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Klasifikasi Tutupan Lahan Multikelas Jawa Timur menggunakan Sentinel-2A</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding-latar-belakang-wilayah">1. Data Understanding &amp; Latar Belakang Wilayah</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tekanan-spasial-utama-di-jawa-timur">1.1 Tekanan Spasial Utama di Jawa Timur</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-analisis-land-use-and-land-cover-lulc">2. Tujuan Analisis Land Use and Land Cover (LULC)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acuan-klasifikasi-lahan-di-indonesia-bukan-sekadar-sawah-vs-non-sawah">3. Acuan Klasifikasi Lahan di Indonesia (Bukan Sekadar Sawah vs Non-Sawah)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standar-nasional-indonesia-sni-7645-2010-sni-7645-1-2014">3.1 Standar Nasional Indonesia (SNI 7645:2010 &amp; SNI 7645-1:2014)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regulasi-dan-kebijakan-tata-ruang-terkait-di-indonesia">3.2 Regulasi dan Kebijakan Tata Ruang Terkait di Indonesia</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definisi-6-kelas-tutupan-lahan-terpilih-di-jawa-timur">4. Definisi 6 Kelas Tutupan Lahan Terpilih di Jawa Timur</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rifqi Fairurrafi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
