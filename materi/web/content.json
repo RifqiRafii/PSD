@@ -1,0 +1,216 @@
+{
+ "judul": "Klasifikasi Penggunaan dan Penutup Lahan Jawa Timur dengan Sentinel-2A",
+ "tujuan": [
+  "Memetakan penutup/penggunaan lahan (land cover & land use) Jawa Timur ke dalam 6 kelas: sawah, bangunan, mangrove, lahan hijau, laut lepas, danau (ranu).",
+  "Membedakan sawah dari lahan non-sawah yang terbangun/bervegetasi lain memakai band spektral dan indeks vegetasi, air, serta lahan terbangun.",
+  "Membandingkan beberapa algoritma machine learning dan memilih model dengan akurasi dan F1 tertinggi pada data uji yang terpisah per poligon.",
+  "Menyajikan hasil sebagai sistem informasi geografis berbasis web di atas citra satelit, sebagai dasar analisis spasial tata guna lahan dan kebijakan (alih fungsi lahan sawah, perlindungan mangrove, pengelolaan danau)."
+ ],
+ "koleksi": [
+  "Citra: Sentinel-2 Level-2A melalui OpenEO Copernicus Data Space (koleksi SENTINEL2_L2A), komposit median pada periode yang diatur di notebook.",
+  "Pra-proses: masking awan dan bayangan awan dengan band SCL (mask_scl_dilation), lalu median terhadap waktu. 10 band: B02-B07, B08, B8A, B11, B12; diproyeksikan ke EPSG:32749 (UTM 49S).",
+  "Zona unduhan: sawah+bangunan dan lahan hijau (10 m), danau, mangrove, dan laut (20 m), mengikuti sebaran sampel.",
+  "Sampel: 291 poligon hasil digitasi (shapefile) untuk 6 kelas; kelas Bangunan berasal dari sampel non-sawah. Satu sampel = rata-rata nilai band satu poligon."
+ ],
+ "acuan": {
+  "sumber": "SNI 7645-1:2014 Klasifikasi penutup lahan (skala kecil dan menengah) dan klasifikasi penutup lahan KLHK (23 kelas). Periksa kode dan nama resmi pada dokumen aslinya sebelum dikutip di laporan.",
+  "struktur": [
+   [
+    "Daerah bervegetasi - pertanian",
+    "Sawah, pertanian lahan kering, perkebunan, tambak"
+   ],
+   [
+    "Daerah bervegetasi - bukan pertanian",
+    "Hutan lahan kering, hutan mangrove, hutan rawa, hutan tanaman, semak belukar, padang rumput"
+   ],
+   [
+    "Daerah tak bervegetasi",
+    "Permukiman dan lahan bukan pertanian yang berkaitan, tanah terbuka, pertambangan"
+   ],
+   [
+    "Perairan",
+    "Tubuh air (danau, waduk, sungai), rawa, laut"
+   ]
+  ],
+  "pemetaan": [
+   [
+    "Sawah",
+    "Pertanian - sawah"
+   ],
+   [
+    "Bangunan",
+    "Permukiman / lahan terbangun (kelas non-sawah)"
+   ],
+   [
+    "Mangrove",
+    "Hutan mangrove"
+   ],
+   [
+    "Lahan hijau",
+    "Vegetasi non-sawah: hutan lahan kering, kebun campur, semak"
+   ],
+   [
+    "Laut lepas",
+    "Perairan - laut"
+   ],
+   [
+    "Danau",
+    "Perairan darat - danau/ranu"
+   ]
+  ]
+ },
+ "band": [
+  {
+   "kode": "B1",
+   "nama": "Coastal aerosol",
+   "panjang_gelombang_nm": 442.7,
+   "resolusi_m": 60,
+   "kegunaan": "Koreksi aerosol atmosfer, studi pesisir"
+  },
+  {
+   "kode": "B2",
+   "nama": "Blue",
+   "panjang_gelombang_nm": 492.4,
+   "resolusi_m": 10,
+   "kegunaan": "Penetrasi air, pembeda tanah/vegetasi, komponen EVI/BSI"
+  },
+  {
+   "kode": "B3",
+   "nama": "Green",
+   "panjang_gelombang_nm": 559.8,
+   "resolusi_m": 10,
+   "kegunaan": "Puncak pantulan hijau vegetasi, komponen NDWI/MNDWI"
+  },
+  {
+   "kode": "B4",
+   "nama": "Red",
+   "panjang_gelombang_nm": 664.6,
+   "resolusi_m": 10,
+   "kegunaan": "Serapan klorofil, komponen NDVI"
+  },
+  {
+   "kode": "B5",
+   "nama": "Vegetation Red Edge 1",
+   "panjang_gelombang_nm": 704.1,
+   "resolusi_m": 20,
+   "kegunaan": "Kandungan klorofil, NDRE"
+  },
+  {
+   "kode": "B6",
+   "nama": "Vegetation Red Edge 2",
+   "panjang_gelombang_nm": 740.5,
+   "resolusi_m": 20,
+   "kegunaan": "Struktur kanopi"
+  },
+  {
+   "kode": "B7",
+   "nama": "Vegetation Red Edge 3",
+   "panjang_gelombang_nm": 782.8,
+   "resolusi_m": 20,
+   "kegunaan": "Struktur kanopi, transisi ke NIR"
+  },
+  {
+   "kode": "B8",
+   "nama": "NIR",
+   "panjang_gelombang_nm": 832.8,
+   "resolusi_m": 10,
+   "kegunaan": "Biomassa vegetasi, batas darat-air"
+  },
+  {
+   "kode": "B8A",
+   "nama": "Narrow NIR",
+   "panjang_gelombang_nm": 864.7,
+   "resolusi_m": 20,
+   "kegunaan": "Vegetasi (NIR sempit), NDRE"
+  },
+  {
+   "kode": "B9",
+   "nama": "Water vapour",
+   "panjang_gelombang_nm": 945.1,
+   "resolusi_m": 60,
+   "kegunaan": "Uap air atmosfer (tidak dipakai)"
+  },
+  {
+   "kode": "B10",
+   "nama": "SWIR - Cirrus",
+   "panjang_gelombang_nm": 1373.5,
+   "resolusi_m": 60,
+   "kegunaan": "Deteksi awan cirrus (tidak ada di Level-2A)"
+  },
+  {
+   "kode": "B11",
+   "nama": "SWIR 1",
+   "panjang_gelombang_nm": 1613.7,
+   "resolusi_m": 20,
+   "kegunaan": "Kadar air vegetasi/tanah, lahan terbangun, MNDWI/NDBI"
+  },
+  {
+   "kode": "B12",
+   "nama": "SWIR 2",
+   "panjang_gelombang_nm": 2202.4,
+   "resolusi_m": 20,
+   "kegunaan": "Tanah terbuka, lahan terbangun, BSI"
+  }
+ ],
+ "indeks": [
+  {
+   "nama": "NDVI",
+   "rumus": "(B8 - B4) / (B8 + B4)",
+   "kegunaan": "Kehijauan vegetasi (-1..1)"
+  },
+  {
+   "nama": "EVI",
+   "rumus": "2.5 x (B8 - B4) / (B8 + 6xB4 - 7.5xB2 + 1)",
+   "kegunaan": "Vegetasi, tidak mudah jenuh pada kanopi rapat"
+  },
+  {
+   "nama": "SAVI",
+   "rumus": "1.5 x (B8 - B4) / (B8 + B4 + 0.5)",
+   "kegunaan": "Vegetasi dengan koreksi pengaruh tanah"
+  },
+  {
+   "nama": "NDWI",
+   "rumus": "(B3 - B8) / (B3 + B8)",
+   "kegunaan": "Tubuh air terbuka (McFeeters)"
+  },
+  {
+   "nama": "MNDWI",
+   "rumus": "(B3 - B11) / (B3 + B11)",
+   "kegunaan": "Air; menekan bangunan dibanding NDWI"
+  },
+  {
+   "nama": "NDBI",
+   "rumus": "(B11 - B8) / (B11 + B8)",
+   "kegunaan": "Lahan terbangun"
+  },
+  {
+   "nama": "NDMI",
+   "rumus": "(B8 - B11) / (B8 + B11)",
+   "kegunaan": "Kadar air vegetasi (sawah tergenang, mangrove)"
+  },
+  {
+   "nama": "NDRE",
+   "rumus": "(B8A - B5) / (B8A + B5)",
+   "kegunaan": "Klorofil / kondisi tanaman"
+  },
+  {
+   "nama": "BSI",
+   "rumus": "((B11 + B4) - (B8 + B2)) / ((B11 + B4) + (B8 + B2))",
+   "kegunaan": "Tanah terbuka / lahan kering"
+  },
+  {
+   "nama": "CMRI",
+   "rumus": "NDVI - NDWI",
+   "kegunaan": "Combined Mangrove Recognition Index"
+  },
+  {
+   "nama": "MVI",
+   "rumus": "(B8 - B3) / (B11 - B3)",
+   "kegunaan": "Mangrove Vegetation Index (dipotong -50..50)"
+  }
+ ],
+ "catatan": [
+  "Nilai band dibagi 10000 menjadi reflektansi 0-1 sebelum indeks dihitung.",
+  "Total fitur model: 10 band + 11 indeks = 21 fitur."
+ ]
+}

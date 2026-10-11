@@ -1,0 +1,356 @@
+{
+ "classes": {
+  "Sawah": "#e6c229",
+  "Bangunan": "#d1495b",
+  "Mangrove": "#2a9d8f",
+  "Lahan hijau": "#6a994e",
+  "Laut lepas": "#1d3557",
+  "Danau": "#4cc9f0"
+ },
+ "features": [
+  "B02",
+  "B03",
+  "B04",
+  "B05",
+  "B06",
+  "B07",
+  "B08",
+  "B8A",
+  "B11",
+  "B12",
+  "NDVI",
+  "EVI",
+  "SAVI",
+  "NDWI",
+  "MNDWI",
+  "NDBI",
+  "NDMI",
+  "NDRE",
+  "BSI",
+  "CMRI",
+  "MVI"
+ ],
+ "counts": {
+  "Sawah": {
+   "sampel_total": 60,
+   "sampel_train": 48,
+   "sampel_test": 12
+  },
+  "Bangunan": {
+   "sampel_total": 60,
+   "sampel_train": 48,
+   "sampel_test": 12
+  },
+  "Mangrove": {
+   "sampel_total": 50,
+   "sampel_train": 40,
+   "sampel_test": 10
+  },
+  "Lahan hijau": {
+   "sampel_total": 50,
+   "sampel_train": 40,
+   "sampel_test": 10
+  },
+  "Laut lepas": {
+   "sampel_total": 44,
+   "sampel_train": 35,
+   "sampel_test": 9
+  },
+  "Danau": {
+   "sampel_total": 50,
+   "sampel_train": 40,
+   "sampel_test": 10
+  }
+ },
+ "models": [
+  {
+   "model": "Random Forest",
+   "cv_acc_mean": 0.8067450980392158,
+   "cv_f1_mean": 0.7805815261354476,
+   "cv_f1_std": 0.01886511279701972,
+   "test_accuracy": 0.8253968253968254,
+   "test_f1_macro": 0.7737060041407867,
+   "test_kappa": 0.7887195121951219,
+   "seconds": 16.4
+  },
+  {
+   "model": "Extra Trees",
+   "cv_acc_mean": 0.8067450980392158,
+   "cv_f1_mean": 0.7701401646021322,
+   "cv_f1_std": 0.020869564391779182,
+   "test_accuracy": 0.8253968253968254,
+   "test_f1_macro": 0.7737060041407867,
+   "test_kappa": 0.7887195121951219,
+   "seconds": 12.4
+  },
+  {
+   "model": "HistGradientBoosting",
+   "cv_acc_mean": 0.8067450980392158,
+   "cv_f1_mean": 0.7701401646021322,
+   "cv_f1_std": 0.020869564391779182,
+   "test_accuracy": 0.8253968253968254,
+   "test_f1_macro": 0.7737060041407867,
+   "test_kappa": 0.7887195121951219,
+   "seconds": 14.3
+  },
+  {
+   "model": "SVM (RBF)",
+   "cv_acc_mean": 0.8027450980392157,
+   "cv_f1_mean": 0.766247098603803,
+   "cv_f1_std": 0.0178219112617186,
+   "test_accuracy": 0.8095238095238095,
+   "test_f1_macro": 0.7626262626262625,
+   "test_kappa": 0.7695121951219512,
+   "seconds": 0.5
+  },
+  {
+   "model": "k-NN",
+   "cv_acc_mean": 0.8027450980392157,
+   "cv_f1_mean": 0.7854470912000975,
+   "cv_f1_std": 0.03185034333527347,
+   "test_accuracy": 0.7936507936507936,
+   "test_f1_macro": 0.7604303908651735,
+   "test_kappa": 0.753758268190018,
+   "seconds": 0.6
+  },
+  {
+   "model": "MLP",
+   "cv_acc_mean": 0.7907450980392158,
+   "cv_f1_mean": 0.7599853239940708,
+   "cv_f1_std": 0.07506468149532308,
+   "test_accuracy": 0.7936507936507936,
+   "test_f1_macro": 0.7604303908651735,
+   "test_kappa": 0.753758268190018,
+   "seconds": 21.3
+  },
+  {
+   "model": "Logistic Regression",
+   "cv_acc_mean": 0.7987450980392157,
+   "cv_f1_mean": 0.7619053619091252,
+   "cv_f1_std": 0.022684721056929712,
+   "test_accuracy": 0.8095238095238095,
+   "test_f1_macro": 0.7578643578643578,
+   "test_kappa": 0.7696526508226691,
+   "seconds": 2.2
+  },
+  {
+   "model": "XGBoost",
+   "cv_acc_mean": 0.8027450980392157,
+   "cv_f1_mean": 0.7675076859696535,
+   "cv_f1_std": 0.01832241348808454,
+   "test_accuracy": 0.8253968253968254,
+   "test_f1_macro": 0.7737060041407867,
+   "test_kappa": 0.7887195121951219,
+   "seconds": 12.8
+  },
+  {
+   "model": "LightGBM",
+   "cv_acc_mean": 0.8087058823529413,
+   "cv_f1_mean": 0.7645674449241493,
+   "cv_f1_std": 0.014359542025817651,
+   "test_accuracy": 0.8253968253968254,
+   "test_f1_macro": 0.7737060041407867,
+   "test_kappa": 0.7887195121951219,
+   "seconds": 6.2
+  }
+ ],
+ "best_model": "LightGBM",
+ "test_size": 0.2,
+ "confusion": {
+  "labels": [
+   "Sawah",
+   "Bangunan",
+   "Mangrove",
+   "Lahan hijau",
+   "Laut lepas",
+   "Danau"
+  ],
+  "matrix": [
+   [
+    11,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    12,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    10,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    10,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    9,
+    0
+   ],
+   [
+    0,
+    10,
+    0,
+    0,
+    0,
+    0
+   ]
+  ]
+ },
+ "report": {
+  "Sawah": {
+   "precision": 1.0,
+   "recall": 0.9166666666666666,
+   "f1-score": 0.9565217391304348,
+   "support": 12.0
+  },
+  "Bangunan": {
+   "precision": 0.5217391304347826,
+   "recall": 1.0,
+   "f1-score": 0.6857142857142857,
+   "support": 12.0
+  },
+  "Mangrove": {
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1-score": 1.0,
+   "support": 10.0
+  },
+  "Lahan hijau": {
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1-score": 1.0,
+   "support": 10.0
+  },
+  "Laut lepas": {
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1-score": 1.0,
+   "support": 9.0
+  },
+  "Danau": {
+   "precision": 0.0,
+   "recall": 0.0,
+   "f1-score": 0.0,
+   "support": 10.0
+  },
+  "accuracy": 0.8253968253968254,
+  "macro avg": {
+   "precision": 0.7536231884057972,
+   "recall": 0.8194444444444443,
+   "f1-score": 0.7737060041407867,
+   "support": 63.0
+  },
+  "weighted avg": {
+   "precision": 0.7501725327812284,
+   "recall": 0.8253968253968254,
+   "f1-score": 0.7731243221926452,
+   "support": 63.0
+  }
+ },
+ "importance": [
+  [
+   "B02",
+   0.3523809523809524
+  ],
+  [
+   "B03",
+   0.12380952380952379
+  ],
+  [
+   "NDBI",
+   0.020634920634920582
+  ],
+  [
+   "NDMI",
+   0.020634920634920582
+  ],
+  [
+   "BSI",
+   0.007936507936507908
+  ],
+  [
+   "B04",
+   0.0
+  ],
+  [
+   "B05",
+   0.0
+  ],
+  [
+   "B06",
+   0.0
+  ],
+  [
+   "B07",
+   0.0
+  ],
+  [
+   "B08",
+   0.0
+  ],
+  [
+   "B8A",
+   0.0
+  ],
+  [
+   "B11",
+   0.0
+  ],
+  [
+   "B12",
+   0.0
+  ],
+  [
+   "NDVI",
+   0.0
+  ],
+  [
+   "EVI",
+   0.0
+  ],
+  [
+   "SAVI",
+   0.0
+  ],
+  [
+   "NDWI",
+   0.0
+  ],
+  [
+   "MNDWI",
+   0.0
+  ],
+  [
+   "NDRE",
+   0.0
+  ],
+  [
+   "CMRI",
+   0.0
+  ],
+  [
+   "MVI",
+   0.0
+  ]
+ ]
+}

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LULC Jawa Timur - Sentinel-2A</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--ink:#14232b;--mut:#5b6b73;--bg:#f4f7f8;--card:#fff;--ln:#d5dee2;--ac:#0b6e7f}
+@media(prefers-color-scheme:dark){:root{--ink:#e6eef1;--mut:#9fb0b8;--bg:#10181c;--card:#172228;--ln:#2b3a41;--ac:#4fb6c7}}
+*{box-sizing:border-box}body{margin:0;font:16px/1.55 "Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:28px 5vw 12px}h1{margin:0 0 4px;font-size:1.6rem}header p{margin:0;color:var(--mut);max-width:70ch}
+#mapwrap{display:grid;grid-template-columns:1fr 280px;gap:16px;padding:12px 5vw}
+#map{height:68vh;min-height:420px;border:1px solid var(--ln);border-radius:6px}
+aside{background:var(--card);border:1px solid var(--ln);border-radius:6px;padding:14px;font-size:.92rem;overflow:auto;max-height:68vh}
+aside h3{margin:.2rem 0 .5rem;font-size:1rem}.sw{display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:8px;vertical-align:-2px}
+main{padding:0 5vw 48px;max-width:1200px}section{margin-top:36px}h2{font-size:1.25rem;border-bottom:2px solid var(--ac);padding-bottom:4px}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:.9rem}th,td{border:1px solid var(--ln);padding:6px 9px;text-align:left}th{background:color-mix(in srgb,var(--ac) 14%,var(--card))}
+.scroll{overflow-x:auto}code{font-family:Consolas,monospace;font-size:.88em}li{margin:.25rem 0}.note{color:var(--mut);font-size:.9rem}
+.best{font-weight:600;background:color-mix(in srgb,var(--ac) 12%,var(--card))}
+@media(max-width:860px){#mapwrap{grid-template-columns:1fr}aside{max-height:none}}
+</style></head><body>
+<header><h1 id="judul"></h1><p>Web statis: proses, data, dan hasil klasifikasi. Dibuka lewat server lokal (<code>python -m http.server</code> di folder <code>web</code>).</p></header>
+<div id="mapwrap"><div id="map"></div>
+<aside><h3>Legenda</h3><div id="legend"></div><h3 style="margin-top:14px">Lapisan</h3><div id="layers"></div>
+<label>Opasitas <input id="op" type="range" min="0.1" max="1" step="0.05" value="0.8"></label><br>
+<label><input id="smp" type="checkbox"> Poligon sampel</label>
+<h3 style="margin-top:14px">Luas (ha)</h3><div id="area" class="note">Pilih zona pada peta.</div></aside></div>
+<main>
+<section><h2>Tujuan analisis</h2><ul id="tujuan"></ul></section>
+<section><h2>Pengumpulan data</h2><ul id="koleksi"></ul></section>
+<section><h2>Acuan klasifikasi lahan di Indonesia</h2><p id="acuan" class="note"></p>
+<div class="scroll"><table id="struktur"></table></div><p></p><div class="scroll"><table id="pemetaan"></table></div></section>
+<section><h2>Jumlah kelas, data training, dan testing</h2><p id="split" class="note"></p><div class="scroll"><table id="counts"></table></div></section>
+<section><h2>Band Sentinel-2A</h2><div class="scroll"><table id="band"></table></div></section>
+<section><h2>Fitur turunan dan rumus</h2><div class="scroll"><table id="indeks"></table></div><p id="catatan" class="note"></p></section>
+<section><h2>Perbandingan model</h2><div class="scroll"><table id="models"></table></div><p id="bestnote"></p></section>
+<section><h2>Confusion matrix (data uji)</h2><div class="scroll"><table id="cm"></table></div></section>
+<section><h2>Kepentingan fitur</h2><div class="scroll"><table id="imp"></table></div></section>
+<section><h2>Proses</h2><ol>
+<li>Ambil komposit median Sentinel-2 L2A 10 band dari OpenEO Copernicus (GeoTIFF per zona).</li><li>Hitung rata-rata band di dalam tiap poligon sampel.</li>
+<li>Hitung 10 band + 11 indeks (21 fitur).</li><li>Bagi data 80% training dan 20% testing (stratifikasi).</li>
+<li>Latih dan bandingkan 9 algoritma dengan CV 5-fold dan data uji.</li><li>Pakai model terbaik untuk mengklasifikasi seluruh GeoTIFF.</li>
+<li>Tampilkan di Leaflet di atas Google Satellite.</li></ol></section>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const tbl=(el,head,rows,cls)=>{$(el).innerHTML="<thead><tr>"+head.map(h=>`<th>${h}</th>`).join("")+"</tr></thead><tbody>"+rows.map((r,i)=>`<tr class="${cls&&cls(i)||""}">`+r.map(c=>`<td>${c}</td>`).join("")+"</tr>").join("")+"</tbody>";};
+const ul=(el,a)=>$(el).innerHTML=a.map(x=>`<li>${x}</li>`).join("");
+const get=u=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.json()}).catch(()=>null);
+const map=L.map("map").setView([-7.3,112.5],9);
+L.tileLayer("https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",{maxZoom:20,attribution:"Google Satellite"}).addTo(map);
+const f2=x=>(+x).toFixed(3);
+(async()=>{
+ const C=await get("content.json"); if(!C){document.body.insertAdjacentHTML("afterbegin","<p style='padding:20px'>content.json tidak ditemukan. Buka lewat server lokal.</p>");return}
+ $("judul").textContent=C.judul; ul("tujuan",C.tujuan); ul("koleksi",C.koleksi); $("acuan").textContent=C.acuan.sumber;
+ tbl("struktur",["Kelompok","Contoh kelas"],C.acuan.struktur); tbl("pemetaan",["Kelas penelitian","Padanan pada acuan"],C.acuan.pemetaan);
+ tbl("band",["Band","Nama","Panjang gelombang (nm)","Resolusi (m)","Kegunaan"],C.band.map(b=>[b.kode,b.nama,b.panjang_gelombang_nm,b.resolusi_m,b.kegunaan]));
+ tbl("indeks",["Indeks","Rumus","Kegunaan"],C.indeks.map(i=>[i.nama,`<code>${i.rumus}</code>`,i.kegunaan])); $("catatan").textContent=C.catatan.join(" ");
+ const M=await get("artifacts/metrics.json"),T=await get("artifacts/tiles.json");
+ if(!M){$("split").textContent="Hasil belum ada. Jalankan 02_pipeline.py.";return}
+ $("legend").innerHTML=Object.entries(M.classes).map(([k,v])=>`<div><span class="sw" style="background:${v}"></span>${k}</div>`).join("");
+ const k=Object.keys(M.counts); $("split").textContent=`${k.length} kelas. Split stratifikasi ${(1-M.test_size)*100}% training / ${M.test_size*100}% testing. Satu sampel = rata-rata band satu poligon.`;
+ const keys=["sampel_total","sampel_train","sampel_test"];
+ const rows=k.map(c=>[c,...keys.map(x=>M.counts[c][x])]); rows.push(["Total",...keys.map((x,i)=>rows.reduce((s,r)=>s+r[i+1],0))]);
+ tbl("counts",["Kelas","Total sampel","Training","Testing"],rows);
+ const ms=[...M.models].sort((a,b)=>b.test_accuracy-a.test_accuracy);
+ tbl("models",["Model","CV F1 (rerata)","CV F1 (sd)","Akurasi uji","F1-macro uji","Kappa uji","Waktu (s)"],ms.map(m=>[m.model,f2(m.cv_f1_mean),f2(m.cv_f1_std),f2(m.test_accuracy),f2(m.test_f1_macro),f2(m.test_kappa),m.seconds]),i=>ms[i].model===M.best_model?"best":"");
+ $("bestnote").innerHTML=`Model terbaik: <b>${M.best_model}</b>`;
+ tbl("cm",["Aktual \\ Prediksi",...M.confusion.labels],M.confusion.matrix.map((r,i)=>[M.confusion.labels[i],...r]));
+ tbl("imp",["Fitur","Penurunan F1 saat diacak"],M.importance.map(x=>[x[0],f2(x[1])]));
+ const layers={},ov=()=>+$("op").value;
+ T.forEach((t,i)=>{layers[t.name]=L.imageOverlay(t.png,t.bounds,{opacity:ov()}); layers[t.name].addTo(map);
+  $("layers").insertAdjacentHTML("beforeend",`<label><input type="checkbox" checked data-n="${t.name}"> ${t.name} (${t.resolution_m} m)</label><br>`);});
+ const showArea=()=>{const on=[...document.querySelectorAll("#layers input:checked")].map(x=>x.dataset.n);
+  $("area").innerHTML=T.filter(t=>on.includes(t.name)).map(t=>`<b>${t.name}</b><br>`+Object.entries(t.area_ha).map(([a,b])=>`${a}: ${b.toLocaleString("id-ID")}`).join("<br>")).join("<hr>")||"Pilih zona.";};
+ $("layers").onchange=e=>{const l=layers[e.target.dataset.n];e.target.checked?l.addTo(map):map.removeLayer(l);showArea()};
+ $("op").oninput=()=>Object.values(layers).forEach(l=>l.setOpacity(ov())); showArea();
+ const s=await get("artifacts/samples.geojson"); let sl=null;
+ if(s)$("smp").onchange=e=>{if(e.target.checked){sl=L.geoJSON(s,{style:f=>({color:f.properties.warna,weight:2,fill:false})}).bindTooltip(l=>l.feature.properties.kelas).addTo(map)}else if(sl)map.removeLayer(sl)};
+ if(T.length)map.fitBounds(L.featureGroup(Object.values(layers)).getBounds());
+})();
+</script></body></html>

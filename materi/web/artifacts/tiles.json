@@ -1,0 +1,117 @@
+[
+ {
+  "name": "zona_danau",
+  "png": "artifacts/zona_danau_kelas.png",
+  "bounds": [
+   [
+    -7.399549629709843,
+    112.17904691326771
+   ],
+   [
+    -7.0299999999999985,
+    112.80130327505856
+   ]
+  ],
+  "resolution_m": 100,
+  "area_ha": {
+   "Sawah": 32.1,
+   "Bangunan": 279093.1,
+   "Mangrove": 45.1,
+   "Lahan hijau": 0.0,
+   "Laut lepas": 0.0,
+   "Danau": 0.0
+  }
+ },
+ {
+  "name": "zona_lahan_hijau",
+  "png": "artifacts/zona_lahan_hijau_kelas.png",
+  "bounds": [
+   [
+    -7.4000003157123055,
+    112.02990774299992
+   ],
+   [
+    -7.359999999999995,
+    112.07990813764032
+   ]
+  ],
+  "resolution_m": 50,
+  "area_ha": {
+   "Sawah": 0.0,
+   "Bangunan": 0.0,
+   "Mangrove": 0.0,
+   "Lahan hijau": 2438.2,
+   "Laut lepas": 0.0,
+   "Danau": 0.0
+  }
+ },
+ {
+  "name": "zona_laut",
+  "png": "artifacts/zona_laut_kelas.png",
+  "bounds": [
+   [
+    -10.453499521536056,
+    109.50000000000001
+   ],
+   [
+    -5.699999999999994,
+    115.39995841471875
+   ]
+  ],
+  "resolution_m": 500,
+  "area_ha": {
+   "Sawah": 0.0,
+   "Bangunan": 925.8,
+   "Mangrove": 500.4,
+   "Lahan hijau": 0.0,
+   "Laut lepas": 33845221.5,
+   "Danau": 0.0
+  }
+ },
+ {
+  "name": "zona_mangrove",
+  "png": "artifacts/zona_mangrove_kelas.png",
+  "bounds": [
+   [
+    -7.599653572534688,
+    111.99906170967871
+   ],
+   [
+    -7.180000000000007,
+    112.86193471411288
+   ]
+  ],
+  "resolution_m": 100,
+  "area_ha": {
+   "Sawah": 0.0,
+   "Bangunan": 568.0,
+   "Mangrove": 438138.3,
+   "Lahan hijau": 24.0,
+   "Laut lepas": 0.0,
+   "Danau": 0.0
+  }
+ },
+ {
+  "name": "zona_sawah_bangunan",
+  "png": "artifacts/zona_sawah_bangunan_kelas.png",
+  "bounds": [
+   [
+    -7.260113862576758,
+    112.15942483487238
+   ],
+   [
+    -7.030000000000008,
+    112.76098233389192
+   ]
+  ],
+  "resolution_m": 100,
+  "area_ha": {
+   "Sawah": 166454.1,
+   "Bangunan": 882.5,
+   "Mangrove": 30.1,
+   "Lahan hijau": 0.0,
+   "Laut lepas": 0.0,
+   "Danau": 0.0
+  }
+ }
+]

@@ -1,0 +1,888 @@
+{
+  "split_info": {
+    "total_samples": 2100,
+    "total_features": 18,
+    "feature_names": [
+      "B2",
+      "B3",
+      "B4",
+      "B5",
+      "B6",
+      "B7",
+      "B8",
+      "B8A",
+      "B11",
+      "B12",
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI",
+      "BSI",
+      "SAVI",
+      "NDRE",
+      "CMRI"
+    ],
+    "n_classes": 6,
+    "class_names": [
+      "Sawah",
+      "Bangunan",
+      "Mangrove",
+      "Lahan Hijau",
+      "Perairan Terbuka (Laut)",
+      "Danau (Ranu-ranu)"
+    ],
+    "train_samples": 1680,
+    "test_samples": 420,
+    "train_samples_per_class": {
+      "Mangrove": 280,
+      "Lahan Hijau": 280,
+      "Danau (Ranu-ranu)": 280,
+      "Sawah": 280,
+      "Bangunan": 280,
+      "Perairan Terbuka (Laut)": 280
+    },
+    "test_samples_per_class": {
+      "Mangrove": 70,
+      "Bangunan": 70,
+      "Lahan Hijau": 70,
+      "Perairan Terbuka (Laut)": 70,
+      "Sawah": 70,
+      "Danau (Ranu-ranu)": 70
+    }
+  },
+  "best_model_name": "Hist Gradient Boosting",
+  "best_model_accuracy": 0.9929,
+  "best_model_kappa": 0.9914,
+  "feature_importances": [
+    {
+      "feature": "CMRI",
+      "importance": 0.1375
+    },
+    {
+      "feature": "BSI",
+      "importance": 0.0894
+    },
+    {
+      "feature": "NDVI",
+      "importance": 0.085
+    },
+    {
+      "feature": "B8",
+      "importance": 0.0787
+    },
+    {
+      "feature": "B4",
+      "importance": 0.0747
+    },
+    {
+      "feature": "B12",
+      "importance": 0.0648
+    },
+    {
+      "feature": "SAVI",
+      "importance": 0.0606
+    },
+    {
+      "feature": "B8A",
+      "importance": 0.0575
+    },
+    {
+      "feature": "NDWI",
+      "importance": 0.0513
+    },
+    {
+      "feature": "B11",
+      "importance": 0.0476
+    },
+    {
+      "feature": "B5",
+      "importance": 0.0474
+    },
+    {
+      "feature": "B7",
+      "importance": 0.0428
+    },
+    {
+      "feature": "B2",
+      "importance": 0.0396
+    },
+    {
+      "feature": "MNDWI",
+      "importance": 0.0354
+    },
+    {
+      "feature": "B6",
+      "importance": 0.0275
+    },
+    {
+      "feature": "NDRE",
+      "importance": 0.0257
+    },
+    {
+      "feature": "NDBI",
+      "importance": 0.023
+    },
+    {
+      "feature": "B3",
+      "importance": 0.0117
+    }
+  ],
+  "model_comparison": {
+    "Random Forest": {
+      "accuracy": 0.9905,
+      "kappa": 0.9886,
+      "macro_f1": 0.9905,
+      "macro_precision": 0.9907,
+      "macro_recall": 0.9905,
+      "confusion_matrix": [
+        [
+          70,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          70,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          67,
+          3,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          69,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          70,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          70
+        ]
+      ],
+      "classification_report": {
+        "Sawah": {
+          "precision": 0.9859154929577465,
+          "recall": 1.0,
+          "f1-score": 0.9929078014184397,
+          "support": 70.0
+        },
+        "Bangunan": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Mangrove": {
+          "precision": 1.0,
+          "recall": 0.9571428571428572,
+          "f1-score": 0.9781021897810219,
+          "support": 70.0
+        },
+        "Lahan Hijau": {
+          "precision": 0.9583333333333334,
+          "recall": 0.9857142857142858,
+          "f1-score": 0.971830985915493,
+          "support": 70.0
+        },
+        "Perairan Terbuka (Laut)": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Danau (Ranu-ranu)": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "accuracy": 0.9904761904761905,
+        "macro avg": {
+          "precision": 0.99070813771518,
+          "recall": 0.9904761904761905,
+          "f1-score": 0.9904734961858258,
+          "support": 420.0
+        },
+        "weighted avg": {
+          "precision": 0.9907081377151798,
+          "recall": 0.9904761904761905,
+          "f1-score": 0.9904734961858258,
+          "support": 420.0
+        }
+      }
+    },
+    "Hist Gradient Boosting": {
+      "accuracy": 0.9929,
+      "kappa": 0.9914,
+      "macro_f1": 0.9928,
+      "macro_precision": 0.9929,
+      "macro_recall": 0.9929,
+      "confusion_matrix": [
+        [
+          70,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          70,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          69,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          68,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          70,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          70
+        ]
+      ],
+      "classification_report": {
+        "Sawah": {
+          "precision": 0.9859154929577465,
+          "recall": 1.0,
+          "f1-score": 0.9929078014184397,
+          "support": 70.0
+        },
+        "Bangunan": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Mangrove": {
+          "precision": 0.9857142857142858,
+          "recall": 0.9857142857142858,
+          "f1-score": 0.9857142857142858,
+          "support": 70.0
+        },
+        "Lahan Hijau": {
+          "precision": 0.9855072463768116,
+          "recall": 0.9714285714285714,
+          "f1-score": 0.9784172661870504,
+          "support": 70.0
+        },
+        "Perairan Terbuka (Laut)": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Danau (Ranu-ranu)": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "accuracy": 0.9928571428571429,
+        "macro avg": {
+          "precision": 0.992856170841474,
+          "recall": 0.9928571428571429,
+          "f1-score": 0.9928398922199627,
+          "support": 420.0
+        },
+        "weighted avg": {
+          "precision": 0.9928561708414739,
+          "recall": 0.9928571428571429,
+          "f1-score": 0.9928398922199626,
+          "support": 420.0
+        }
+      }
+    },
+    "Gradient Boosting": {
+      "accuracy": 0.9881,
+      "kappa": 0.9857,
+      "macro_f1": 0.9881,
+      "macro_precision": 0.9881,
+      "macro_recall": 0.9881,
+      "confusion_matrix": [
+        [
+          70,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          70,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          67,
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          68,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          70,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          70
+        ]
+      ],
+      "classification_report": {
+        "Sawah": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Bangunan": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Mangrove": {
+          "precision": 0.9710144927536232,
+          "recall": 0.9571428571428572,
+          "f1-score": 0.9640287769784173,
+          "support": 70.0
+        },
+        "Lahan Hijau": {
+          "precision": 0.9577464788732394,
+          "recall": 0.9714285714285714,
+          "f1-score": 0.9645390070921985,
+          "support": 70.0
+        },
+        "Perairan Terbuka (Laut)": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Danau (Ranu-ranu)": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "accuracy": 0.9880952380952381,
+        "macro avg": {
+          "precision": 0.9881268286044772,
+          "recall": 0.9880952380952381,
+          "f1-score": 0.988094630678436,
+          "support": 420.0
+        },
+        "weighted avg": {
+          "precision": 0.9881268286044772,
+          "recall": 0.9880952380952381,
+          "f1-score": 0.988094630678436,
+          "support": 420.0
+        }
+      }
+    },
+    "Support Vector Machine (RBF)": {
+      "accuracy": 0.9929,
+      "kappa": 0.9914,
+      "macro_f1": 0.9929,
+      "macro_precision": 0.9929,
+      "macro_recall": 0.9929,
+      "confusion_matrix": [
+        [
+          70,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          70,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          68,
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          69,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          70,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          70
+        ]
+      ],
+      "classification_report": {
+        "Sawah": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Bangunan": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Mangrove": {
+          "precision": 0.9855072463768116,
+          "recall": 0.9714285714285714,
+          "f1-score": 0.9784172661870504,
+          "support": 70.0
+        },
+        "Lahan Hijau": {
+          "precision": 0.971830985915493,
+          "recall": 0.9857142857142858,
+          "f1-score": 0.9787234042553191,
+          "support": 70.0
+        },
+        "Perairan Terbuka (Laut)": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Danau (Ranu-ranu)": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "accuracy": 0.9928571428571429,
+        "macro avg": {
+          "precision": 0.9928897053820508,
+          "recall": 0.9928571428571429,
+          "f1-score": 0.9928567784070615,
+          "support": 420.0
+        },
+        "weighted avg": {
+          "precision": 0.9928897053820508,
+          "recall": 0.9928571428571429,
+          "f1-score": 0.9928567784070617,
+          "support": 420.0
+        }
+      }
+    },
+    "K-Nearest Neighbors (KNN)": {
+      "accuracy": 0.9857,
+      "kappa": 0.9829,
+      "macro_f1": 0.9857,
+      "macro_precision": 0.986,
+      "macro_recall": 0.9857,
+      "confusion_matrix": [
+        [
+          70,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          70,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          66,
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          69,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          69,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          70
+        ]
+      ],
+      "classification_report": {
+        "Sawah": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Bangunan": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Mangrove": {
+          "precision": 0.9850746268656716,
+          "recall": 0.9428571428571428,
+          "f1-score": 0.9635036496350365,
+          "support": 70.0
+        },
+        "Lahan Hijau": {
+          "precision": 0.9452054794520548,
+          "recall": 0.9857142857142858,
+          "f1-score": 0.965034965034965,
+          "support": 70.0
+        },
+        "Perairan Terbuka (Laut)": {
+          "precision": 1.0,
+          "recall": 0.9857142857142858,
+          "f1-score": 0.9928057553956835,
+          "support": 70.0
+        },
+        "Danau (Ranu-ranu)": {
+          "precision": 0.9859154929577465,
+          "recall": 1.0,
+          "f1-score": 0.9929078014184397,
+          "support": 70.0
+        },
+        "accuracy": 0.9857142857142858,
+        "macro avg": {
+          "precision": 0.9860325998792453,
+          "recall": 0.9857142857142858,
+          "f1-score": 0.9857086952473542,
+          "support": 420.0
+        },
+        "weighted avg": {
+          "precision": 0.9860325998792455,
+          "recall": 0.9857142857142858,
+          "f1-score": 0.9857086952473542,
+          "support": 420.0
+        }
+      }
+    },
+    "XGBoost": {
+      "accuracy": 0.9905,
+      "kappa": 0.9886,
+      "macro_f1": 0.9905,
+      "macro_precision": 0.9905,
+      "macro_recall": 0.9905,
+      "confusion_matrix": [
+        [
+          70,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          70,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          68,
+          2,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          68,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          70,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          70
+        ]
+      ],
+      "classification_report": {
+        "Sawah": {
+          "precision": 0.9859154929577465,
+          "recall": 1.0,
+          "f1-score": 0.9929078014184397,
+          "support": 70.0
+        },
+        "Bangunan": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Mangrove": {
+          "precision": 0.9855072463768116,
+          "recall": 0.9714285714285714,
+          "f1-score": 0.9784172661870504,
+          "support": 70.0
+        },
+        "Lahan Hijau": {
+          "precision": 0.9714285714285714,
+          "recall": 0.9714285714285714,
+          "f1-score": 0.9714285714285714,
+          "support": 70.0
+        },
+        "Perairan Terbuka (Laut)": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Danau (Ranu-ranu)": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "accuracy": 0.9904761904761905,
+        "macro avg": {
+          "precision": 0.9904752184605217,
+          "recall": 0.9904761904761905,
+          "f1-score": 0.9904589398390103,
+          "support": 420.0
+        },
+        "weighted avg": {
+          "precision": 0.9904752184605216,
+          "recall": 0.9904761904761905,
+          "f1-score": 0.9904589398390102,
+          "support": 420.0
+        }
+      }
+    },
+    "LightGBM": {
+      "accuracy": 0.9905,
+      "kappa": 0.9886,
+      "macro_f1": 0.9905,
+      "macro_precision": 0.9905,
+      "macro_recall": 0.9905,
+      "confusion_matrix": [
+        [
+          70,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          70,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          68,
+          2,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          68,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          70,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          70
+        ]
+      ],
+      "classification_report": {
+        "Sawah": {
+          "precision": 0.9859154929577465,
+          "recall": 1.0,
+          "f1-score": 0.9929078014184397,
+          "support": 70.0
+        },
+        "Bangunan": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Mangrove": {
+          "precision": 0.9855072463768116,
+          "recall": 0.9714285714285714,
+          "f1-score": 0.9784172661870504,
+          "support": 70.0
+        },
+        "Lahan Hijau": {
+          "precision": 0.9714285714285714,
+          "recall": 0.9714285714285714,
+          "f1-score": 0.9714285714285714,
+          "support": 70.0
+        },
+        "Perairan Terbuka (Laut)": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "Danau (Ranu-ranu)": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 70.0
+        },
+        "accuracy": 0.9904761904761905,
+        "macro avg": {
+          "precision": 0.9904752184605217,
+          "recall": 0.9904761904761905,
+          "f1-score": 0.9904589398390103,
+          "support": 420.0
+        },
+        "weighted avg": {
+          "precision": 0.9904752184605216,
+          "recall": 0.9904761904761905,
+          "f1-score": 0.9904589398390102,
+          "support": 420.0
+        }
+      }
+    }
+  }
+}

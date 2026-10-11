@@ -193,6 +193,14 @@
 <li class="toctree-l2"><a class="reference internal" href="4-modeling-kmeans-clustering.html">Modeling - K-Means Clustering pada Gabungan 3 Polutan (204 Fitur TSFEL) &amp; Analisis Multi-Dimensi (203, 74, 37)</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="uts-pengantar-lulc-kebijakan.html">UTS SIG: Data Understanding &amp; Kebijakan LULC Jawa Timur</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi_Tutupan_Lahan_Multikelas_Jatim.html">Klasifikasi Tutupan Lahan Multikelas Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="klasifikasi_lulc_jatim.html">Klasifikasi Penggunaan dan Penutup Lahan Jawa Timur menggunakan Sentinel-2A</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-band-sentinel2a-ekstraksi-fitur.html">UTS SIG: Karakteristik Band Sentinel-2A &amp; Ekstraksi Fitur Spektral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-koleksi-data-dan-pemodelan-ml.html">UTS SIG: Koleksi Data, Eksperimen Machine Learning &amp; Evaluasi Akurasi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uts-visualisasi-spasial-dan-kebijakan.html">UTS SIG: Visualisasi Spasial Google Satelit WMS, Deployment Streamlit &amp; Kebijakan Tata Ruang</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -790,9 +798,7 @@ calc_median                         2.6607980241048306e-05
 calc_min                            3.7077027172927046e-06
 calc_std                            9.971890947142217e-06
 calc_var                            9.943860906169691e-11
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dfa                                 1.1054594192460196
+dfa                                 1.1054594192460196
 distance                            365.00000000771587
 ecdf                                0.015027322404371584
 ecdf_percentile                     2.7339038001267155e-05
@@ -819,7 +825,13 @@ median_abs_diff                     1.666416260882721e-06
 median_diff                         -2.6757110886551055e-07
 median_frequency                    0.04918032786885246
 mfcc                                9.857791713544538
-mse                                 1.2209268166361593
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\ASUS\AppData\Local\Programs\Python\Python39\lib\site-packages\tsfel\feature_extraction\features_utils.py:534: RuntimeWarning: invalid value encountered in divide
+  rs = np.divide(r, s)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mse                                 1.2209268166361593
 negative_turning                    40.0
 neighbourhood_peaks                 12.0
 petrosian_fractal_dimension         1.014929871984861
@@ -863,13 +875,7 @@ calc_median                         0.028533080872148217
 calc_min                            0.0198961831629276
 calc_std                            0.0031255145072405822
 calc_var                            9.76884093497134e-06
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ASUS\AppData\Local\Programs\Python\Python39\lib\site-packages\tsfel\feature_extraction\features_utils.py:534: RuntimeWarning: invalid value encountered in divide
-  rs = np.divide(r, s)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dfa                                 1.1428042512863357
+dfa                                 1.1428042512863357
 distance                            365.00132960654224
 ecdf                                0.015027322404371584
 ecdf_percentile                     0.02848729118704795
@@ -940,9 +946,7 @@ calc_median                         7.011534398770891e-05
 calc_min                            -0.0004268730117473
 calc_std                            0.0001895428489940636
 calc_var                            3.592649160478639e-08
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dfa                                 1.0537596513252923
+dfa                                 1.0537596513252923
 distance                            365.0000043177675
 ecdf                                0.015027322404371584
 ecdf_percentile                     7.98137261881291e-05
@@ -1254,12 +1258,12 @@ Tidak ada missing value pada 68 fitur.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NO2 wide : ../data/csv\NO2_Bangkalan_TSFEL_fixed.csv
-NO2 long : ../data/csv\NO2_Bangkalan_TSFEL_fixed_long.csv
-CO wide : ../data/csv\CO_Bangkalan_TSFEL_fixed.csv
-CO long : ../data/csv\CO_Bangkalan_TSFEL_fixed_long.csv
-SO2 wide : ../data/csv\SO2_Bangkalan_TSFEL_fixed.csv
-SO2 long : ../data/csv\SO2_Bangkalan_TSFEL_fixed_long.csv
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NO2 wide : NO2_Bangkalan_TSFEL_fixed.csv
+NO2 long : NO2_Bangkalan_TSFEL_fixed_long.csv
+CO wide : CO_Bangkalan_TSFEL_fixed.csv
+CO long : CO_Bangkalan_TSFEL_fixed_long.csv
+SO2 wide : SO2_Bangkalan_TSFEL_fixed.csv
+SO2 long : SO2_Bangkalan_TSFEL_fixed_long.csv
 </pre></div>
 </div>
 </div>
@@ -1405,32 +1409,6 @@ bukan observasi Sentinel-5P asli. Hal ini perlu disebutkan dalam laporan.</p>
     <span class="n">output_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">CSV_DIR</span><span class="si">}</span><span class="s2">/All-Pollutants-Bangkalan-TSFEL-</span><span class="si">{</span><span class="n">method_name</span><span class="si">}</span><span class="s2">.csv&quot;</span>
     <span class="n">extracted_final</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Berhasil! Total kolom: </span><span class="si">{</span><span class="n">extracted_final</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">, Disimpan -&gt; </span><span class="si">{</span><span class="n">output_filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah fitur per polutan: 68
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total target fitur keseluruhan: 204
-
-=== Ekstraksi 204 Fitur (Metode: LINEAR) ===
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ASUS\AppData\Local\Programs\Python\Python39\lib\site-packages\tsfel\feature_extraction\features_utils.py:534: RuntimeWarning: invalid value encountered in divide
-  rs = np.divide(r, s)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Berhasil! Total kolom: 204, Disimpan -&gt; ../data/csv/All-Pollutants-Bangkalan-TSFEL-linear.csv
-
-=== Ekstraksi 204 Fitur (Metode: POLYNOMIAL) ===
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ASUS\AppData\Local\Programs\Python\Python39\lib\site-packages\tsfel\feature_extraction\features_utils.py:534: RuntimeWarning: invalid value encountered in divide
-  rs = np.divide(r, s)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Berhasil! Total kolom: 204, Disimpan -&gt; ../data/csv/All-Pollutants-Bangkalan-TSFEL-polynomial.csv
 </pre></div>
 </div>
 </div>
